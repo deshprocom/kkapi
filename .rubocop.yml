@@ -39,3 +39,5 @@ Style/BlockComments:
 Rails/TimeZone:
   Enabled: false
 
+Layout/TrailingBlankLines:
+  Enabled: false
