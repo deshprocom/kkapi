@@ -44,3 +44,6 @@ Layout/TrailingBlankLines:
 
 Style/RescueStandardError:
   Enabled: false
+
+Rails/SkipsModelValidations:
+  Enabled: false
