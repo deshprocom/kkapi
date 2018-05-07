@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
   rescue_from(ActiveRecord::RecordNotFound) do
-    render json: { error: I18n.t('errors.record_not_found') }, status: 404
+    render json: { error: 'Not Found', message: I18n.t('errors.record_not_found') }, status: :not_found
   end
 
   def render_api_error(msg, code = 1)
