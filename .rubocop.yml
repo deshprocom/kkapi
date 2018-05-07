@@ -47,3 +47,6 @@ Style/RescueStandardError:
 
 Rails/SkipsModelValidations:
   Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
