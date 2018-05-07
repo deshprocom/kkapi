@@ -27,13 +27,7 @@ class ApiResult
 
   ##
   # 返回给定错误码的api result
-  def self.error_result(msg)
-    new(1, msg)
-  end
-
-  ##
-  # 返回错误码的api result
-  def self.error_with_code(code, msg)
+  def self.error_result(msg, code = 1)
     new(code, msg)
   end
 end
