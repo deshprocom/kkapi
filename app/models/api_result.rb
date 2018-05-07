@@ -16,7 +16,7 @@ class ApiResult
   ##
   # 返回缺省的成功对象, 用于避免内存中生成过多的默认成功实例
   def self.success_result
-    @success_api_result ||= new
+    @success_result ||= new
   end
 
   ##
@@ -27,13 +27,13 @@ class ApiResult
 
   ##
   # 返回给定错误码的api result
-  def self.error_result(code, msg)
-    new(code, msg)
+  def self.error_result(msg)
+    new(1, msg)
   end
 
   ##
   # 返回错误码的api result
-  def self.error_common_result(msg)
-    new(1, msg)
+  def self.error_with_code(code, msg)
+    new(code, msg)
   end
 end

@@ -1,0 +1,5 @@
+"zh-CN":
+  errors:
+    invalid_credential: '无效的access token'
+    login_required: '需要登录后才可以操作'
+    user_self_required: '需要用户本人才可以操作'

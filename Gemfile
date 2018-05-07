@@ -26,6 +26,8 @@ gem 'puma', '~> 3.7'
 # gem 'rack-cors'
 gem 'dotenv-rails'
 gem 'redis-rails'
+gem 'jwt'
+gem 'second_level_cache', '~> 2.3.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -41,3 +41,6 @@ Rails/TimeZone:
 
 Layout/TrailingBlankLines:
   Enabled: false
+
+Style/RescueStandardError:
+  Enabled: false
