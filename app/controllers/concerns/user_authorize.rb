@@ -13,7 +13,7 @@ module UserAuthorize
   end
 
   def login_required
-    @current_user || render_login_failed
+    current_user || render_login_failed
   end
 
   def user_self_required
