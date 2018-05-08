@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :test, only: [:index]
+
   namespace :v1 do
     namespace :account do
       post 'login', to: 'sessions#create'
