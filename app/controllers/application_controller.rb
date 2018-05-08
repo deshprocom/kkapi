@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
     render 'common/basic', locals: { api_result: ApiResult.success_result }
   end
 
-  def raise_error(msg, i18n=true)
+  def raise_error(msg, i18n = true)
     msg = i18n ? I18n.t("errors.#{msg}") : msg
     raise CommonError, msg
   end

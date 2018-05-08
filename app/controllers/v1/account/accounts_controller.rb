@@ -2,13 +2,11 @@ module V10
   module Account
     # 处理注册相关的业务逻辑
     class AccountsController < ApplicationController
-      ALLOW_TYPES = %w(email mobile).freeze
+      ALLOW_TYPES = %w[email mobile].freeze
 
       def create
         register_type = params[:type]
-        unless ALLOW_TYPES.include?(register_type)
-          return render_api_error(I18n.t('errors.unsupported_type'))
-        end
+        return render_api_error(I18n.t('errors.unsupported_type')) unless ALLOW_TYPES.include?(register_type)
         send("register_by_#{register_type}")
       end
 
