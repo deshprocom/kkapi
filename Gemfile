@@ -29,6 +29,11 @@ gem 'redis-rails'
 gem 'jwt'
 gem 'second_level_cache', '~> 2.3.0'
 
+# 图片处理
+gem 'carrierwave'
+gem 'carrierwave-upyun'
+gem 'mini_magick'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

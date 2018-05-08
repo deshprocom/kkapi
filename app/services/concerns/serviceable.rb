@@ -6,4 +6,9 @@ module Serviceable
       new(*args).call
     end
   end
+
+  def raise_error(msg, i18n = true)
+    msg = i18n ? I18n.t("errors.#{msg}") : msg
+    raise ApplicationController::CommonError, msg
+  end
 end
