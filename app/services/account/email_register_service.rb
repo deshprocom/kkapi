@@ -18,7 +18,7 @@ module Services
         raise_error 'email_already_userd' if UserValidator.email_exists?(email)
 
         # 检查密码是否合法
-        raise_error 'mobile_format_error' unless UserValidator.pwd_valid?(password)
+        raise_error 'password_format_wrong' unless UserValidator.pwd_valid?(password)
 
         # 可以注册, 创建一个用户
         user = User.create_by_email(email, password)

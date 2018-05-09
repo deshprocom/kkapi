@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post 'register', to: 'accounts#create'
 
       resource :v_codes, only: [:create]
+      resource :verify_vcode, only: [:create]
     end
 
     resources :users, module: :users, only: [] do

@@ -6,6 +6,7 @@
     user_self_required: '需要用户本人才可以操作'
     record_not_found: '找不到相应的记录'
     unsupported_type: '不支持的操作类型'
+    params_missing: '缺少参数'
 
     # 登录注册香相关
     email_format_error: '无效的邮箱格式'
