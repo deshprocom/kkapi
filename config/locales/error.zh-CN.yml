@@ -19,3 +19,8 @@
     password_not_match: '用户密码不匹配'
     vcode_not_match: '验证码不匹配'
     account_already_bind: '账户已被绑定'
+
+    # 文件上传相关
+    file_format_error: '图片格式错误'
+    file_upload_error: '图片上传失败'
+
