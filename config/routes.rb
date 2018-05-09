@@ -9,6 +9,10 @@ Rails.application.routes.draw do
 
       resource :v_codes, only: [:create]
       resource :verify_vcode, only: [:create]
+      resource :reset_password, only: [:create]
+      resources :users, only: [] do
+        resource :profile, only: [:show, :update]
+      end
     end
 
     resources :users, module: :users, only: [] do

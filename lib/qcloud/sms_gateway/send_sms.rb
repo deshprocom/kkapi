@@ -20,7 +20,7 @@ module Qcloud
       #   code: 号码的区号，默认是 +86
       #   sms_type: 0 -> 普通短信   1-> 营销短信
       #   options: 可扩展字段,默认为空
-      def send(mobile, msg, type = 0, options = {})
+      def send(mobile, msg, type = 0, options = {}) # rubocop:disable Metrics/MethodLength
         self.uri = MULTIPLE_SMS_URI unless type.zero?
         random = Random.new.rand(100000..999999)
         cur_time = Time.now.to_i
