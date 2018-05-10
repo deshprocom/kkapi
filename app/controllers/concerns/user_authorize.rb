@@ -15,6 +15,7 @@ module UserAuthorize
   end
 
   def user_self_required
+    login_required
     verified = @current_user.present? && @current_user.user_uuid.eql?(params[:user_id])
     render_not_user_self unless verified
   end
