@@ -22,6 +22,8 @@ Rails.application.routes.draw do
         get :profile
       end
     end
+
+    resources :hotels
   end
 
 end
