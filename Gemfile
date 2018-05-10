@@ -30,13 +30,15 @@ gem 'redis-rails'
 gem 'jwt'
 gem 'second_level_cache', '~> 2.3.0'
 gem 'resque', github: 'resque/resque'
+gem 'kaminari'
 
 # 图片处理
 gem 'carrierwave'
 gem 'carrierwave-upyun'
 gem 'mini_magick'
 
-gem 'kaminari'
+# 微信登录
+gem 'weixin_authorize'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

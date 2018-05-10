@@ -6,6 +6,7 @@
     user_self_required: '需要用户本人才可以操作'
     record_not_found: '找不到相应的记录'
     unsupported_type: '不支持的操作类型'
+    account_already_bind: '该账户已被绑定'
     params_missing: '缺少参数'
 
     # 登录注册香相关
@@ -23,4 +24,8 @@
     # 文件上传相关
     file_format_error: '图片格式错误'
     file_upload_error: '图片上传失败'
+
+    # 微信相关
+    weixin_auth_error: '微信授权失败'
+    weixin_already_bind: '该微信已绑定过其它账户'
 
