@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post 'login', to: 'sessions#create'
       post 'logout', to: 'sessions#destroy'
       post 'register', to: 'accounts#create'
+      get 'verify', to: 'accounts#verify'
 
       resource :v_codes, only: [:create]
       resource :verify_vcode, only: [:create]
@@ -14,6 +15,8 @@ Rails.application.routes.draw do
         resource :profile, only: [:show, :update]
         resource :avatar, only: [:update]
         resource :change_password, only: [:create]
+        resources :change_account, only: [:create]
+        resources :bind_account, only: [:create]
       end
     end
 
@@ -21,6 +24,12 @@ Rails.application.routes.draw do
       member do
         get :profile
       end
+    end
+
+    namespace :weixin do
+      resources :auth, only: [:create]
+      resources :bind, only: [:create]
+      resources :js_sign, only: [:create]
     end
   end
 
