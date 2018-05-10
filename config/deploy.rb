@@ -5,6 +5,8 @@ set :application, "kkapi"
 set :repo_url, "git@github.com:deshprocom/kkapi.git"
 
 set :deploy_to, '/home/deploy/deploy/tournament-api'
+set :rvm_ruby_version, 'ruby-2.5.0'
+
 append :linked_files, '.env'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
 
