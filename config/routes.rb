@@ -29,11 +29,11 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :hotels
     namespace :weixin do
       resources :auth, only: [:create]
       resources :bind, only: [:create]
       resources :js_sign, only: [:create]
     end
   end
-
 end
