@@ -10,6 +10,11 @@ module V1
         send("register_by_#{register_type}")
       end
 
+      def verify
+        account = params[:account]
+        @flag = UserValidator.mobile_exists?(account) || UserValidator.email_exists?(account)
+      end
+
       private
 
       def register_by_mobile

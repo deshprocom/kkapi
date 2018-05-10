@@ -1,8 +1,5 @@
 module UserAuthorize
   extend ActiveSupport::Concern
-  included do
-    before_action :user_authenticate!
-  end
 
   def http_token
     @http_token ||= request.headers['HTTP_X_ACCESS_TOKEN']
@@ -13,6 +10,7 @@ module UserAuthorize
   end
 
   def login_required
+    user_authenticate!
     current_user || render_login_failed
   end
 

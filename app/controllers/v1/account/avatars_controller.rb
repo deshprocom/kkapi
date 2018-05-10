@@ -8,7 +8,7 @@ module V1
         @current_user.avatar = params[:avatar]
         raise_error 'file_format_error' if @current_user.avatar.blank? || @current_user.avatar.path.blank?
         raise_error 'file_upload_error' unless @current_user.save
-        render 'v1/users/base'
+        render 'v1/users/base', locals: { user: @current_user }
       end
     end
   end
