@@ -2,7 +2,7 @@ module V1
   module Account
     class AvatarsController < ApplicationController
       include UserAuthorize
-      before_action :login_required, :user_self_required
+      before_action :user_self_required
 
       def update
         @current_user.avatar = params[:avatar]

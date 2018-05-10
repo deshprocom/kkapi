@@ -18,6 +18,9 @@ Rails.application.routes.draw do
         resources :change_account, only: [:create]
         resources :bind_account, only: [:create]
       end
+      resources :address, only: [:index, :create, :update, :destroy] do
+        post :default, on: :member
+      end
     end
 
     resources :users, module: :users, only: [] do
