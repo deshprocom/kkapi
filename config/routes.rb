@@ -30,6 +30,9 @@ Rails.application.routes.draw do
     end
 
     resources :hotels
+    resources :info_types, only: [] do
+      resources :infos, only: [:show, :index]
+    end
     namespace :weixin do
       resources :auth, only: [:create]
       resources :bind, only: [:create]
