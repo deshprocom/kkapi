@@ -50,3 +50,18 @@ Rails/SkipsModelValidations:
 
 Style/ClassAndModuleChildren:
   Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Layout/TrailingWhitespace:
+  Enabled: false

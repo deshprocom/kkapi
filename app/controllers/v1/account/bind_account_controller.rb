@@ -4,7 +4,7 @@ module V1
     class BindAccountController < ApplicationController
       ACCOUNT_TYPES = %w[mobile email].freeze
       include UserAuthorize
-      before_action :login_required, :user_self_required
+      before_action :user_self_required
       def create
         user_params = permit_params.dup
 
