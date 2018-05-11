@@ -3,7 +3,7 @@ module V1
     # 个人中心 个人信息部分
     class ProfilesController < ApplicationController
       include UserAuthorize
-      before_action :login_required, :user_self_required
+      before_action :user_self_required
 
       def show; end
 

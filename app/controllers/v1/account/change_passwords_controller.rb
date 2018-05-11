@@ -4,7 +4,7 @@ module V1
     class ChangePasswordsController < ApplicationController
       CHANGE_PWD_TYPE = %w[vcode pwd].freeze
       include UserAuthorize
-      before_action :login_required, :user_self_required
+      before_action :user_self_required
 
       def create
         raise_error 'unsupported_type' unless user_params[:type].in?(CHANGE_PWD_TYPE)
