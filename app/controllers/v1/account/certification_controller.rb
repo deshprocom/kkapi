@@ -11,7 +11,7 @@ module V1
       before_action :set_certification, only: [:update, :destroy, :default]
 
       def index
-        @certs = @current_user.user_extras.group_by{ |item| item.cert_type }
+        @certs = @current_user.user_extras.group_by(&:cert_type)
       end
 
       def create
