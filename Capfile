@@ -12,7 +12,7 @@ require "capistrano/deploy"
 # require "capistrano/scm/svn"
 # install_plugin Capistrano::SCM::Svn
 # or
-require "capistrano/scm/git"
+require 'capistrano/scm/git'
 install_plugin Capistrano::SCM::Git
 
 require 'capistrano/rvm'
@@ -24,7 +24,7 @@ install_plugin Capistrano::Puma::Workers  # if you want to control the workers (
 # install_plugin Capistrano::Puma::Jungle # if you need the jungle tasks
 # install_plugin Capistrano::Puma::Monit  # if you need the monit tasks
 # install_plugin Capistrano::Puma::Nginx  # if you want to upload a nginx site template
-require "capistrano/scm/git-with-submodules"
+require 'capistrano/scm/git-with-submodules'
 install_plugin Capistrano::SCM::Git::WithSubmodules
 
 # Include tasks from other gems included in your Gemfile
