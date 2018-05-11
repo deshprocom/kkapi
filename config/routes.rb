@@ -21,6 +21,9 @@ Rails.application.routes.draw do
       resources :address, only: [:index, :create, :update, :destroy] do
         post :default, on: :member
       end
+      resources :certification, only: [:index, :create, :update, :destroy] do
+        post :default, on: :member
+      end
     end
 
     resources :users, module: :users, only: [] do

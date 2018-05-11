@@ -1,0 +1,2 @@
+class CardImageUploader < BaseUploader
+end
