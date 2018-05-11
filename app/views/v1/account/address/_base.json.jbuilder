@@ -5,5 +5,6 @@ json.province   address.province
 json.city       address.city
 json.area       address.area
 json.address    address.address.to_s
+json.zip        address.zip.to_s
 json.default    address.default
 json.created_at address.created_at.to_i
