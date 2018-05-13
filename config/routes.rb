@@ -32,10 +32,18 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :hotels
+    # 酒店相关
+    resources :hotels, only: [:show, :index]
+
+    # 资讯相关
+    resources :infos, only: [:show]
     resources :info_types, only: [] do
-      resources :infos, only: [:show, :index]
+      resources :infos, only: [:show, :index] do
+        get :stickied, on: :collection
+      end
     end
+
+    # 微信相关
     namespace :weixin do
       resources :auth, only: [:create]
       resources :bind, only: [:create]
