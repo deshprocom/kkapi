@@ -49,5 +49,7 @@ Rails.application.routes.draw do
       resources :bind, only: [:create]
       resources :js_sign, only: [:create]
     end
+
+    resources :exchange_rates, only: [:index]
   end
 end
