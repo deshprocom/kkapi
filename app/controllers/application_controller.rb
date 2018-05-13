@@ -1,8 +1,14 @@
 class ApplicationController < ActionController::API
+  include RequestParamsInspector
   class CommonError < StandardError; end
+  class AuthorizedError < StandardError; end
 
   rescue_from(CommonError) do |err|
     render_api_error(err)
+  end
+
+  rescue_from(AuthorizedError) do |err|
+    render json: { error: 'Unauthorized', message: err }, status: :unauthorized
   end
 
   rescue_from(ActiveRecord::RecordNotFound) do
