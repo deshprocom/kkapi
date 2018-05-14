@@ -15,6 +15,10 @@ class ApplicationController < ActionController::API
     render json: { error: 'Not Found', message: I18n.t('errors.record_not_found') }, status: :not_found
   end
 
+  rescue_from(ActiveRecord::RecordInvalid) do
+    render json: { error: 'RecordInvalid', message: I18n.t('errors.record_invalid') }, status: :bad_request
+  end
+
   def render_api_error(msg, code = 1)
     render 'common/basic', locals: { api_result: ApiResult.error_result(msg, code) }
   end
