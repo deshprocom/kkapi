@@ -29,7 +29,10 @@ Rails.application.routes.draw do
     resources :users, module: :users, only: [] do
       member do
         get :profile
+        get :topics
       end
+      resources :followers, only: [:index, :destroy]
+      resources :following, only: [:index, :create, :destroy]
     end
 
     # 酒店相关
@@ -48,6 +51,12 @@ Rails.application.routes.draw do
       resources :auth, only: [:create]
       resources :bind, only: [:create]
       resources :js_sign, only: [:create]
+    end
+
+    # 说说或长帖
+    resources :topics, only: [:index, :create, :destroy] do
+      post :image, on: :collection
+      get :essence, on: :collection
     end
   end
 end
