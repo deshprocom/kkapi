@@ -58,5 +58,7 @@ Rails.application.routes.draw do
       post :image, on: :collection
       get :essence, on: :collection
     end
+
+    resources :exchange_rates, only: [:index]
   end
 end
