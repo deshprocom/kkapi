@@ -51,5 +51,9 @@ Rails.application.routes.draw do
     end
 
     resources :exchange_rates, only: [:index]
+
+    # app 首页相关
+    resources :banners, only: [:index]
+    resources :recommends, only: [:index]
   end
 end
