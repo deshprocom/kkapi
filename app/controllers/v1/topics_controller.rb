@@ -2,6 +2,7 @@ module V1
   class TopicsController < ApplicationController
     include UserAuthorize
     before_action :login_required, except: [:index, :essence, :show]
+    before_action :current_user, only: [:show]
 
     # 获取广场列表
     def index
