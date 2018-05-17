@@ -7,7 +7,9 @@ json.data do
       json.option_type option_type
 
       if option_type.eql? 'follow'
-        next json.partial! 'v1/briefs/base', model_type: 'user', target: @target_user
+        json.partial! 'v1/briefs/base', model_type: 'user', target: @target_user
+        json.created_at item.created_at.to_i
+        next
       end
 
       target = option_type.eql?('like') ? item.target : item.target.target
@@ -15,7 +17,9 @@ json.data do
       json.target_type target_type
 
       if option_type.eql? 'like'
-        next json.partial! 'v1/briefs/base', model_type: target_type, target: target
+        json.partial! 'v1/briefs/base', model_type: target_type, target: target
+        json.created_at item.created_at.to_i
+        next
       end
 
       if option_type.eql?('comment') || option_type.eql?('reply')
