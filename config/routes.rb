@@ -33,7 +33,9 @@ Rails.application.routes.draw do
         get :dynamics
       end
       resources :followers, only: [:index, :destroy]
-      resources :following, only: [:index, :create, :destroy]
+      resources :following, only: [:index, :create, :destroy] do
+        get :uids, on: :collection
+      end
       resources :likes, only: [:index, :create] do
         post :cancel, on: :collection
       end
