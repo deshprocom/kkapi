@@ -30,9 +30,11 @@ Rails.application.routes.draw do
       member do
         get :profile
         get :topics
+        get :dynamics
       end
       resources :followers, only: [:index, :destroy]
       resources :following, only: [:index, :create, :destroy]
+      resources :likes, only: [:index, :create, :destroy]
     end
 
     # 酒店相关
@@ -61,6 +63,12 @@ Rails.application.routes.draw do
 
     resources :exchange_rates, only: [:index]
 
+    # 评论和回复
+    resources :comments, only: [:create, :destroy] do
+      get  :replies, on: :member
+    end
+    resources :replies, only: [:create, :destroy]
+    
     # app 首页相关
     resources :banners, only: [:index]
     resources :recommends, only: [:index]
