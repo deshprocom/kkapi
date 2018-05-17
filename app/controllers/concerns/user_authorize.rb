@@ -10,19 +10,17 @@ module UserAuthorize
   end
 
   def login_required
-    current_user! || authorized_error('login_required')
+    user_authenticate!
+    user_uuid = @user_authenticate[:user_uuid]
+    @current_user ||= User.by_uuid(user_uuid)
+
+    @current_user || authorized_error('login_required')
   end
 
   def user_self_required
     login_required
     verified = @current_user.present? && @current_user.user_uuid.eql?(params[:user_id])
     authorized_error('user_self_required') unless verified
-  end
-
-  def current_user!
-    user_authenticate!
-    user_uuid = @user_authenticate[:user_uuid]
-    @current_user ||= User.by_uuid(user_uuid)
   end
 
   def current_user
