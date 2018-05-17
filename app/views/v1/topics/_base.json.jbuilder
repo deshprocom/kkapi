@@ -16,4 +16,7 @@ json.images do
     json.url image.to_s
   end
 end
-json.created_at topic.created_at.to_i
+json.total_views    topic.total_views
+json.total_comments topic.total_comments
+json.total_likes    topic.likes_count
+json.created_at     topic.created_at.to_i

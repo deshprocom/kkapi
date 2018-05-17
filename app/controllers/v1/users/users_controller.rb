@@ -12,6 +12,10 @@ module V1
         render 'v1/topics/index'
       end
 
+      def dynamics
+        @dynamics = @target_user.dynamics.order(created_at: :desc).page(params[:page]).per(params[:page_size])
+      end
+
       private
 
       def target_user
