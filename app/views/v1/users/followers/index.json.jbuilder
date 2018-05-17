@@ -6,5 +6,5 @@ json.data do
       json.partial! 'v1/users/user_brief', user: user
     end
   end
-  json.following_count @followers.count
+  json.followers @followers.count
 end
