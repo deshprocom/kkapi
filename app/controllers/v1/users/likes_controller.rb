@@ -21,9 +21,9 @@ module V1
       end
 
       # 取消点赞
-      def destroy
+      def cancel
         @current_user.destroy_action(:like, target: @target)
-        @current_user.dynamics.find_by(target: @target).destroy
+        @current_user.dynamics.find_by!(target: @target).destroy
       end
 
       private
