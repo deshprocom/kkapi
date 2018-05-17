@@ -56,7 +56,7 @@ Rails.application.routes.draw do
     end
 
     # 说说或长帖
-    resources :topics, only: [:index, :create, :destroy] do
+    resources :topics, only: [:index, :show, :create, :destroy] do
       post :image, on: :collection
       get :essence, on: :collection
     end
