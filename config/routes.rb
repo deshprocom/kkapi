@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       resources :likes, only: [:index, :create] do
         post :cancel, on: :collection
       end
+      resources :nearbys, only: [:index, :create]
     end
 
     # 酒店相关

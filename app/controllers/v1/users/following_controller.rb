@@ -22,7 +22,7 @@ module V1
       def destroy
         @target_user = User.find_by!(user_uuid: params[:id])
         @current_user.destroy_action(:follow, target: @target_user)
-        @current_user.dynamics.find_by(target: @target_user).destroy
+        @current_user.dynamics.find_by!(target: @target_user).destroy
         render_api_success
       end
 

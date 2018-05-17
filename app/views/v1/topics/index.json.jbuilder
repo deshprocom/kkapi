@@ -7,6 +7,7 @@ json.data do
       json.user do
         json.partial! 'v1/users/user_brief', user: topic.user
       end
+      json.current_user_liked @current_user&.find_action(:like, target: topic).present?
     end
   end
 end
