@@ -34,7 +34,9 @@ Rails.application.routes.draw do
       end
       resources :followers, only: [:index, :destroy]
       resources :following, only: [:index, :create, :destroy]
-      resources :likes, only: [:index, :create, :destroy]
+      resources :likes, only: [:index, :create] do
+        post :cancel, on: :collection
+      end
     end
 
     # 酒店相关
@@ -72,5 +74,8 @@ Rails.application.routes.draw do
     # app 首页相关
     resources :banners, only: [:index]
     resources :recommends, only: [:index]
+
+    # 获取位置服务
+    resources :locations, only: [:index]
   end
 end
