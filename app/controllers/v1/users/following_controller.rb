@@ -25,6 +25,10 @@ module V1
         @current_user.dynamics.find_by(target: @target_user).destroy
         render_api_success
       end
+
+      def uids
+        @uids = User.find(@current_user.follow_user_ids).pluck(:user_uuid)
+      end
     end
   end
 end
