@@ -1,17 +1,22 @@
 module V1
   class TopicsController < ApplicationController
     include UserAuthorize
-    before_action :login_required, except: [:index, :essence]
+    before_action :login_required, except: [:index, :essence, :show]
 
     # 获取广场列表
     def index
-      @topics = Topic.page(params[:page]).per(params[:page_size])
+      @topics = Topic.order(created_at: :desc).page(params[:page]).per(params[:page_size])
     end
 
     # 获取精华列表
     def essence
-      @topics = Topic.excellent.page(params[:page]).per(params[:page_size])
+      @topics = Topic.excellent.order(created_at: :desc).page(params[:page]).per(params[:page_size])
       render :index
+    end
+
+    def show
+      @topic = Topic.find(params[:id])
+      @topic.increase_page_views
     end
 
     def create
