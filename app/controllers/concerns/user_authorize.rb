@@ -10,8 +10,7 @@ module UserAuthorize
   end
 
   def login_required
-    user_authenticate!
-    current_user || authorized_error('login_required')
+    current_user! || authorized_error('login_required')
   end
 
   def user_self_required
@@ -20,9 +19,17 @@ module UserAuthorize
     authorized_error('user_self_required') unless verified
   end
 
-  def current_user
+  def current_user!
+    user_authenticate!
     user_uuid = @user_authenticate[:user_uuid]
     @current_user ||= User.by_uuid(user_uuid)
+  end
+
+  def current_user
+    token = UserToken.decode(http_token)
+    return @current_user = nil if http_token.blank? || token.blank?
+
+    @current_user ||= User.by_uuid(token[:user_uuid])
   end
 
   def authorized_error(msg)

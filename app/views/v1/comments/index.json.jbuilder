@@ -7,4 +7,5 @@ json.data do
     end
   end
   json.total_comments @target.total_comments
+  json.total_replies  @target.replies_count
 end
