@@ -80,5 +80,10 @@ Rails.application.routes.draw do
 
     # 获取位置服务
     resources :locations, only: [:index]
+
+    # 消息通知
+    resources :topic_notifications, only: [:index, :destroy] do
+      get 'unread_count', on: :collection
+    end
   end
 end
