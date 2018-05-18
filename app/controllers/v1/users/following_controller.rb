@@ -15,6 +15,7 @@ module V1
         raise_error 'cannot_follow_self' if @current_user.eql?(@target_user)
         @current_user.create_action(:follow, target: @target_user)
         @current_user.dynamics.create(option_type: 'follow', target: @target_user)
+        TopicNotification.create(user_id: @target_user.id, target: @current_user, notify_type: 'follow')
         render_api_success
       end
 
@@ -23,6 +24,7 @@ module V1
         @target_user = User.find_by!(user_uuid: params[:id])
         @current_user.destroy_action(:follow, target: @target_user)
         @current_user.dynamics.find_by!(target: @target_user).destroy
+        TopicNotification.where(notify_type: 'follow', target: @current_user).delete_all
         render_api_success
       end
 
