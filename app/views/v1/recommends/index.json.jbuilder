@@ -5,7 +5,7 @@ json.data do
     json.array! @recommends do |recommend|
       next if recommend.source.nil?
 
-      json.source_type  recommend.source_type
+      json.source_type recommend.source_type
       json.partial!    'source', source: recommend.source
     end
   end
