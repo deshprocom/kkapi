@@ -31,6 +31,7 @@ gem 'jwt'
 gem 'second_level_cache', '~> 2.3.0'
 gem 'resque', github: 'resque/resque'
 gem 'kaminari'
+gem 'awesome_nested_set' # 多级类别
 
 # 图片处理
 gem 'carrierwave'
