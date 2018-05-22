@@ -1,21 +1,21 @@
 class CreateShopVariants < ActiveRecord::Migration[5.1]
   def change
     create_table :shop_option_types do |t|
-      t.references :shop_product
+      t.references :product
       t.string    :name
       t.integer   :position,     default: 0, null: false
       t.timestamps
     end
 
     create_table :shop_option_values do |t|
-      t.references :shop_option_type
+      t.references :option_type
       t.string     :name
       t.integer    :position, default: 0
       t.timestamps
     end
 
     create_table :shop_variants do |t|
-      t.references :shop_product
+      t.references :product
       t.string     :sku,                default: '', null: false, comment: 'sku'
       t.string     :sku_option_values,  default: '', null: false, comment: '该sku(单品)所有选项值的json数据'
       t.decimal    :price,              precision: 11, scale: 2, default: 0, comment: '实付金额'
@@ -29,9 +29,9 @@ class CreateShopVariants < ActiveRecord::Migration[5.1]
     end
 
     create_table :shop_variant_option_values do |t|
-      t.references :shop_variant
-      t.references :shop_option_value
-      t.references :shop_option_type
+      t.references :variant
+      t.references :option_value
+      t.references :option_type
     end
   end
 end
