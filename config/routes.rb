@@ -92,8 +92,9 @@ Rails.application.routes.draw do
         get 'children', on: :member
       end
 
-      resources :products
-      # resources :recommended_products, only:[:index]
+      resources :products do
+        get 'recommended', on: :collection
+      end
     end
   end
 end
