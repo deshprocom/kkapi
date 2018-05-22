@@ -85,5 +85,15 @@ Rails.application.routes.draw do
     resources :topic_notifications, only: [:index, :destroy] do
       get 'unread_count', on: :collection
     end
+
+    # 商城模块
+    namespace :shop do
+      resources :categories, only: [:index] do
+        get 'children', on: :member
+      end
+
+      # resources :products
+      # resources :recommended_products, only:[:index]
+    end
   end
 end
