@@ -74,6 +74,9 @@ Rails.application.routes.draw do
     end
     resources :replies, only: [:create, :destroy]
 
+    # 举报
+    resources :reports, only: [:create]
+
     # app 首页相关
     resources :banners, only: [:index]
     resources :recommends, only: [:index]
