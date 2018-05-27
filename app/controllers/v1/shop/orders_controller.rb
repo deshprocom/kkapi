@@ -2,15 +2,18 @@ module V1::Shop
   class OrdersController < ApplicationController
     include UserAuthorize
     before_action :login_required
-    before_action :set_order, only: [:wx_paid_result, :show, :destroy]
-
+    before_action :set_order, only: [:show, :cancel]
+    SEARCH_STATUS_MAP = {
+      unpaid: 'unpaid',
+      undelivered: 'paid',
+      delivered: 'delivered',
+      completed: 'completed'
+    }
     def index
+      status = SEARCH_STATUS_MAP[params[:status].to_s.to_sym]
       @orders = @current_user.shop_orders.order(id: :desc)
-                            .page(params[:page]).per(params[:page_size])
-      if Shop::Order.statuses.keys.include?(params[:status])
-        status = params[:status] == 'paid' ? %w(paid delivered) : params[:status]
-        @orders = @orders.where(status: status)
-      end
+                             .page(params[:page]).per(params[:page_size])
+                             .yield_self { |it| status ? it.where(status: status) : it }
       render 'index'
     end
 
@@ -33,21 +36,9 @@ module V1::Shop
       render 'create', locals: result
     end
 
-    def destroy
-      return render_api_error(CANNOT_DELETE) unless @order.could_delete?
-      @order.deleted!
-      render_api_success
-    end
-
-    def wx_paid_result
-      result = WxPay::Service.order_query(out_trade_no: @order.order_number)
-      unless result['trade_state'] == 'SUCCESS'
-        return render_api_error(INVALID_ORDER, result['trade_state_desc'] || result['err_code_des'])
-      end
-      api_result = Services::Notify::WxShopNotifyNotifyService.call(result[:raw]['xml'])
-
-      return render_api_error(INVALID_ORDER, api_result.msg) if api_result.failure?
-
+    def cancel
+      return render_api_error('该订单已支付，不允许取消订单') unless @order.status == 'unpaid'
+      @order.cancel_order(params[:reason])
       render_api_success
     end
 

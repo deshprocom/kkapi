@@ -101,6 +101,7 @@ Rails.application.routes.draw do
 
       resources :orders do
         post 'new', on: :collection, as: :new
+        post  :cancel, on: :member
       end
     end
   end
