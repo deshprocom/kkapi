@@ -14,6 +14,10 @@ module V1::Shop
       render 'index'
     end
 
+    def show
+      render 'show'
+    end
+
     def new
       shipping_info = params[:shipping_info] || {}
       province = shipping_info[:address] && shipping_info[:address][:province]
@@ -27,10 +31,6 @@ module V1::Shop
     def create
       result = Shop::CreateOrderService.call(@current_user, params)
       render 'create', locals: result
-    end
-
-    def show
-      render 'v10/shop_order/shop_orders/show'
     end
 
     def destroy
