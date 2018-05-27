@@ -9,4 +9,4 @@ json.weight            variant.weight
 json.volume            variant.volume
 json.stock             variant.stock
 json.origin_point      variant.origin_point
-json.image             variant.image&.preview
+json.image             variant.image&.preview || variant.product.preview_icon

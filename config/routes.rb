@@ -98,6 +98,10 @@ Rails.application.routes.draw do
       resources :products do
         get 'recommended', on: :collection
       end
+
+      resources :orders do
+        post 'new', on: :collection, as: :new
+      end
     end
   end
 end
