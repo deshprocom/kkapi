@@ -5,9 +5,10 @@ class CreateShopOrder < ActiveRecord::Migration[5.1]
       t.string   :order_number, limit: 32, null: false, comment: '商品订单编号', index: true
       t.string   :status,     default: 'unpaid', comment: '订单状态'
       t.string   :pay_status, default: 'unpaid', comment: '支付状态'
-      t.decimal  :shipping_price,      precision: 15, scale: 2, default: '0.0'
-      t.decimal  :total_product_price, precision: 15, scale: 2, default: '0.0'
-      t.decimal  :total_price,         precision: 15, scale: 2, default: '0.0'
+      t.decimal  :shipping_price,      precision: 15, scale: 2, default: '0.0', comment: '总运金额'
+      t.decimal  :total_product_price, precision: 15, scale: 2, default: '0.0', comment: '总商品金额'
+      t.decimal  :total_price,         precision: 15, scale: 2, default: '0.0', comment: '总金额'
+      t.decimal  :final_price,         precision: 15, scale: 2, default: '0.0', comment: '最终支付金额'
       t.datetime :cancelled_at,  comment: '取消时间'
       t.string   :cancel_reason, default: '', comment: '取消原因'
       t.datetime :deleted_at,  comment: '删除时间'
