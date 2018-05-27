@@ -14,7 +14,7 @@ module Shop
 
     def discern_items(variant)
       obj = Variant.find_by(id: variant[:id])
-      return @invalid_order_items << variant[:id] if obj.nil?
+      return @invalid_order_items << variant[:id] if obj.nil? || obj.product.nil?
 
       return @invalid_order_items << obj.id unless obj.product.published?
 
@@ -76,7 +76,7 @@ module Shop
     end
 
     def save_order_item(item, order)
-      item.product_order = order
+      item.order = order
       item.syn_variant
       item.save
     end

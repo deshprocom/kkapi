@@ -31,10 +31,8 @@ module V1::Shop
     end
 
     def create
-      result = Services::ShopOrders::CreateOrderService.call(@current_user, params)
-      return render_api_error(result.code, result.msg) if result.failure?
-
-      render 'v10/shop_order/product_orders/create', locals: { order: result.data[:order] }
+      result = Shop::CreateOrderService.call(@current_user, params)
+      render 'create', locals: result
     end
 
     def show

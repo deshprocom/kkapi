@@ -11,4 +11,8 @@ module Serviceable
     msg = i18n ? I18n.t("errors.#{msg}") : msg
     raise ApplicationController::CommonError, msg
   end
+
+  def raise_error_msg(msg)
+    raise ApplicationController::CommonError, msg
+  end
 end
