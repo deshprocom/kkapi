@@ -5,19 +5,13 @@ module V1::Shop
     before_action :set_order, only: [:wx_paid_result, :show, :destroy]
 
     def index
-      page_size = params[:page_size].blank? ? '10' : params[:page_size]
-      next_id = params[:next_id].to_i <= 0 ? 1 : params[:next_id].to_i
-      orders = @current_user.product_orders.order(created_at: :desc)
-      if ProductOrder.statuses.keys.include?(params[:status])
+      @orders = @current_user.shop_orders.order(id: :desc)
+                            .page(params[:page]).per(params[:page_size])
+      if Shop::Order.statuses.keys.include?(params[:status])
         status = params[:status] == 'paid' ? %w(paid delivered) : params[:status]
-        orders = orders.where(status: status)
+        @orders = @orders.where(status: status)
       end
-      orders = orders.page(next_id).per(page_size)
-      next_id += 1
-      template = 'v10/shop_order/product_orders/index'
-      render template, locals: { api_result: ApiResult.success_result,
-                                 orders: orders,
-                                 next_id: next_id }
+      render 'index'
     end
 
     def new
@@ -36,7 +30,7 @@ module V1::Shop
     end
 
     def show
-      render 'v10/shop_order/product_orders/show'
+      render 'v10/shop_order/shop_orders/show'
     end
 
     def destroy
@@ -60,7 +54,7 @@ module V1::Shop
     private
 
     def set_order
-      @order = @current_user.product_orders.find_by!(order_number: params[:id])
+      @order = @current_user.shop_orders.find_by!(order_number: params[:id])
     end
   end
 end
