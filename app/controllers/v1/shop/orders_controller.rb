@@ -2,7 +2,7 @@ module V1::Shop
   class OrdersController < ApplicationController
     include UserAuthorize
     before_action :login_required
-    before_action :set_order, only: [:show, :cancel]
+    before_action :set_order, only: [:show, :cancel, :confirm]
     SEARCH_STATUS_MAP = {
       unpaid: 'unpaid',
       undelivered: 'paid',
@@ -39,6 +39,12 @@ module V1::Shop
     def cancel
       return render_api_error('该订单已支付，不允许取消订单') unless @order.status == 'unpaid'
       @order.cancel_order(params[:reason])
+      render_api_success
+    end
+
+    def confirm
+      return render_api_error('当前状态不允许确认收货') unless @order.status == 'delivered'
+      @order.completed!
       render_api_success
     end
 
