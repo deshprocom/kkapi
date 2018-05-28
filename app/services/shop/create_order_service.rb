@@ -1,7 +1,7 @@
-# rubocop:disable Metrics/MethodLength
 module Shop
   class CreateOrderService
     include Serviceable
+    # 下单参数
     # {
     #   "variants":[
     #                {
