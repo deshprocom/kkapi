@@ -16,7 +16,7 @@ module V1
     end
 
     def show
-      @topic = Topic.user_visible.find(params[:id])
+      @topic = Topic.find(params[:id])
       @topic.increase_page_views
     end
 
