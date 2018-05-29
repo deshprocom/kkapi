@@ -2,7 +2,7 @@ module V1::Shop
   class OrdersController < ApplicationController
     include UserAuthorize
     before_action :login_required
-    before_action :set_order, only: [:show, :cancel, :confirm, :wx_pay]
+    before_action :set_order, only: [:show, :cancel, :confirm, :wx_pay, :wx_paid_result]
     SEARCH_STATUS_MAP = {
       unpaid: 'unpaid',
       undelivered: 'paid',
@@ -53,6 +53,19 @@ module V1::Shop
       #  需要在nginx中设置 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       client_ip = request.env['HTTP_X_FORWARDED_FOR']
       @prepay_result = Shop::WxPayService.call(@order, client_ip)
+    end
+
+    def wx_paid_result
+      result = WxPay::Service.order_query(out_trade_no: @order.order_number)
+      unless result['trade_state'] == 'SUCCESS'
+        Rails.logger.info "shop_order(#{@order.order_number}) wx_paid_result:#{result}"
+        return render_api_error(result['trade_state_desc'] || result['err_code_des'])
+      end
+      api_result = Services::Notify::WxShopNotifyNotifyService.call(result[:raw]['xml'])
+
+      return render_api_error(INVALID_ORDER, api_result.msg) if api_result.failure?
+
+      render_api_success
     end
 
     private
