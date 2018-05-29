@@ -6,17 +6,17 @@ module V1
 
     # 获取广场列表
     def index
-      @topics = Topic.user_visible.order(created_at: :desc).page(params[:page]).per(params[:page_size])
+      @topics = Topic.order(created_at: :desc).page(params[:page]).per(params[:page_size])
     end
 
     # 获取精华列表
     def essence
-      @topics = Topic.user_visible.excellent.order(created_at: :desc).page(params[:page]).per(params[:page_size])
+      @topics = Topic.excellent.order(created_at: :desc).page(params[:page]).per(params[:page_size])
       render :index
     end
 
     def show
-      @topic = Topic.user_visible.find(params[:id])
+      @topic = Topic.find(params[:id])
       @topic.increase_page_views
     end
 
