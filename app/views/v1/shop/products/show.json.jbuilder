@@ -1,7 +1,5 @@
-# meta info
-json.partial! 'common/meta'
-# code & msg
-json.partial! 'common/api_result', api_result: ApiResult.success_result
+json.partial! 'common/basic', api_result: ApiResult.success_result
+
 # data
 json.data do # rubocop:disable Metrics/BlockLength
   json.product do
@@ -12,8 +10,7 @@ json.data do # rubocop:disable Metrics/BlockLength
     json.price          @product.master.price
     json.description    @product.description
     json.returnable     @product.returnable
-    # json.freight_fee    @product.freight_fee
-    # json.freight_free   @product.freight_free
+    json.freight_fee    [0,12].sample # 后期需要修改
 
     json.master do
       json.partial! 'variant', variant: @product.master

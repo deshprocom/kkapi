@@ -40,6 +40,7 @@ Rails.application.routes.draw do
         post :cancel, on: :collection
       end
       resources :nearbys, only: [:index, :create]
+      resources :jmessage, only: [:index, :create, :destroy]
     end
 
     # 酒店相关
@@ -97,6 +98,12 @@ Rails.application.routes.draw do
 
       resources :products do
         get 'recommended', on: :collection
+      end
+
+      resources :orders do
+        post 'new', on: :collection, as: :new
+        post  :cancel, on: :member
+        post  :confirm, on: :member
       end
     end
   end
