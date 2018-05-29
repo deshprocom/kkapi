@@ -40,6 +40,7 @@ Rails.application.routes.draw do
         post :cancel, on: :collection
       end
       resources :nearbys, only: [:index, :create]
+      resources :jmessage, only: [:index, :create, :destroy]
     end
 
     # 酒店相关
