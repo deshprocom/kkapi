@@ -106,6 +106,8 @@ Rails.application.routes.draw do
         post :wx_pay, on: :member
         get :wx_paid_result, on: :member
       end
+
+      resources :wx_notify, only: [:create]
     end
   end
 end

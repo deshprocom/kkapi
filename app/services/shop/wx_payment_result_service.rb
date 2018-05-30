@@ -7,8 +7,8 @@ module Shop
     def initialize(order, result, result_type)
       @order = order
       @result  = result
-      @wx_bill = WxBill.find_by(transaction_id: @result['transaction_id'])
       @result_type = result_type
+      @wx_bill = WxBill.find_by(transaction_id: @result['transaction_id'])
       Rails.logger.info "WxPaymentResult order_number(#{result['out_trade_no']}): #{result}"
     end
 
