@@ -44,7 +44,7 @@ module V1::Shop
 
     def confirm
       return render_api_error('当前状态不允许确认收货') unless @order.status == 'delivered'
-      @order.completed!
+      @order.complete!
       render_api_success
     end
 
