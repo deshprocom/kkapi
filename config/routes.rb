@@ -100,10 +100,11 @@ Rails.application.routes.draw do
       end
 
       resources :orders do
-        post :new, on: :collection, as: :new
+        post 'new', on: :collection, as: :new
         post :cancel, on: :member
         post :confirm, on: :member
         post :wx_pay, on: :member
+        get :wx_paid_result, on: :member
       end
     end
   end

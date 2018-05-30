@@ -57,14 +57,7 @@ module V1::Shop
 
     def wx_paid_result
       result = WxPay::Service.order_query(out_trade_no: @order.order_number)
-      unless result['trade_state'] == 'SUCCESS'
-        Rails.logger.info "shop_order(#{@order.order_number}) wx_paid_result:#{result}"
-        return render_api_error(result['trade_state_desc'] || result['err_code_des'])
-      end
-      api_result = Services::Notify::WxShopNotifyNotifyService.call(result[:raw]['xml'])
-
-      return render_api_error(INVALID_ORDER, api_result.msg) if api_result.failure?
-
+      Shop::WxPaymentResultService.call(@order, result[:raw]['xml'], 'from_query')
       render_api_success
     end
 
