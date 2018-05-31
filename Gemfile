@@ -38,9 +38,12 @@ gem 'carrierwave'
 gem 'carrierwave-upyun'
 gem 'mini_magick'
 
-# 微信登录
+# 微信相关
 gem 'weixin_authorize'
+gem 'wx_pay'
 
+#  ActionStore - 一步到位的 Like, Follow, Star, Block ... 等动作的解决方案
+#  https://ruby-china.org/topics/32262
 gem 'action-store'
 
 # 附近的人

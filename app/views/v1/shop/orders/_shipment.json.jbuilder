@@ -1,3 +1,3 @@
-json.shipping_number  order.shipment&.shipping_number.to_s
-json.shipping_company order.shipment&.shipping_company.to_s
-json.express_code     order.shipment&.express_code&.express_code.to_s
+json.express_number  order.shipment.express_number
+json.express_name    order.shipment.express.name
+json.express_code    order.shipment.express.code

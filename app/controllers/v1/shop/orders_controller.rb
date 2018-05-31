@@ -2,7 +2,7 @@ module V1::Shop
   class OrdersController < ApplicationController
     include UserAuthorize
     before_action :login_required
-    before_action :set_order, only: [:show, :cancel, :confirm]
+    before_action :set_order, only: [:show, :cancel, :confirm, :wx_pay, :wx_paid_result]
     SEARCH_STATUS_MAP = {
       unpaid: 'unpaid',
       undelivered: 'paid',
@@ -44,7 +44,20 @@ module V1::Shop
 
     def confirm
       return render_api_error('当前状态不允许确认收货') unless @order.status == 'delivered'
-      @order.completed!
+      @order.complete!
+      render_api_success
+    end
+
+    def wx_pay
+      # 获取用户真实ip
+      #  需要在nginx中设置 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      client_ip = request.env['HTTP_X_FORWARDED_FOR']
+      @prepay_result = Shop::WxPayService.call(@order, client_ip)
+    end
+
+    def wx_paid_result
+      result = WxPay::Service.order_query(out_trade_no: @order.order_number)
+      Shop::WxPaymentResultService.call(@order, result[:raw]['xml'], 'from_query')
       render_api_success
     end
 
