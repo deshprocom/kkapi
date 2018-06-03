@@ -102,9 +102,13 @@ Rails.application.routes.draw do
 
       resources :orders do
         post 'new', on: :collection, as: :new
-        post  :cancel, on: :member
-        post  :confirm, on: :member
+        post :cancel, on: :member
+        post :confirm, on: :member
+        post :wx_pay, on: :member
+        get :wx_paid_result, on: :member
       end
+
+      resources :wx_notify, only: [:create]
     end
   end
 end

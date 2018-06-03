@@ -11,7 +11,7 @@ module V1
       private
 
       def set_wx_authorize
-        @wx_authorize = WeixinAuthorize::Client.new(ENV['APP_ID'], ENV['APP_SECRET'])
+        @wx_authorize = WeixinAuthorize::Client.new(ENV['WX_APP_ID'], ENV['WX_APP_SECRET'])
       end
 
       def user_params
