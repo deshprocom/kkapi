@@ -16,10 +16,11 @@ class CreateIntegrals < ActiveRecord::Migration[5.1]
 
     # 积分规则表
     create_table :integral_rules do |t|
-      t.string  :option_type, default: '',   comment: '操作类型'
-      t.integer :limit_times, default: 0,    comment: '次数上限'
-      t.integer :points,      default: 0,    comment: '增加积分'
-      t.boolean :opened,      default: true, comment: '开关'
+      t.string  :option_type_alias, default: '',   comment: '操作类型别名'
+      t.string  :option_type,       default: '',   comment: '操作类型'
+      t.integer :limit_times,       default: 0,    comment: '次数上限'
+      t.integer :points,            default: 0,    comment: '增加积分'
+      t.boolean :opened,            default: true, comment: '开关'
       t.timestamps
     end
     add_index :integral_rules, [:option_type]
