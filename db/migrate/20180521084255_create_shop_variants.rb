@@ -20,8 +20,8 @@ class CreateShopVariants < ActiveRecord::Migration[5.1]
       t.string     :sku_option_values,  default: '', null: false, comment: '该sku(单品)所有选项值的json数据'
       t.decimal    :price,              precision: 11, scale: 2, default: 0, comment: '实付金额'
       t.decimal    :original_price,     precision: 11, scale: 2, default: 0
-      t.decimal    :weight,             precision: 11, scale: 3, comment: '商品重量，计量单位为kg'
-      t.decimal    :volume,             precision: 11, scale: 2, comment: '商品体积，计量单位为m3'
+      t.decimal    :weight,             precision: 11, scale: 3, default: 0.0, comment: '商品重量，计量单位为kg'
+      t.decimal    :volume,             precision: 11, scale: 2, default: 0.0, comment: '商品体积，计量单位为m3'
       t.integer    :stock,              default: 0, comment: '库存'
       t.string     :origin_point,       comment: '发货地点'
       t.boolean    :is_master,          default: false, comment: 'true 为商品的默认variant的属性'
