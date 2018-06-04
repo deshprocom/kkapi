@@ -1,6 +1,6 @@
 server '36.255.222.190',
        user: 'deploy',
-       roles: %w{app db cache},
+       roles: %w{app db cache resque_worker},
        ssh_options: {
            user: 'deploy', # overrides user setting above
            keys: %w(~/.ssh/id_rsa),
@@ -10,8 +10,8 @@ server '36.255.222.190',
            # password: 'please use keys'
        }
 
-role :resque_worker, %w{36.255.222.190}
-# set :workers, {send_email_sms: 1, send_mobile_sms: 1}
+# role :resque_worker, %w{36.255.222.190}
+set :workers, {send_email_sms: 1, send_mobile_sms: 1}
 
 set :deploy_to, '/deploy/test/kkapi'
 set :branch, ENV.fetch('REVISION', ENV.fetch('BRANCH', 'test'))
