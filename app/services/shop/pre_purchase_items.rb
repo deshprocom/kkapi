@@ -3,7 +3,7 @@ module Shop
     attr_reader :order_items
     attr_reader :invalid_order_items
     def initialize(variants, province = nil)
-      @province = province
+      @province = Province.find_by(name: province)
       @order_items = []
       @invalid_order_items = []
 
@@ -20,7 +20,9 @@ module Shop
 
       return @invalid_order_items << obj.id if variant[:number].to_i > obj.stock
 
-      @order_items << OrderItem.new(variant: obj, number: variant[:number].to_i)
+      @order_items << OrderItem.new(variant: obj,
+                                    number: variant[:number].to_i,
+                                    product_id: obj.product_id)
     end
 
     def purchasable_check
@@ -55,12 +57,30 @@ module Shop
     # end
 
     def shipping_price
-      [0,12].sample # 后期需要修改
-      # return 0 if freight_free?
-      #
-      # @shipping_price ||= @order_items.map do |item|
-      #   item.variant.product.freight_fee(@province, item.number)
-      # end.max
+      @shipping_price ||= classified_items_by_shipping.map do |shipping, items|
+        next 0.0 if shipping.free_shipping?
+
+        shipping_method = shipping.by_code_or_default_method(@province&.province_id)
+        if shipping.based_weight?
+          calc_number = items.map{ |item| item.variant.weight * item.number }.sum
+        else
+          calc_number = items.map(&:number).sum
+        end
+        shipping_method.freight_fee(calc_number)
+      end.sum
+    end
+
+    def classified_items_by_shipping
+      classified_items = {}
+      @order_items.each do |item|
+        shipping = item.product.shipping
+        if classified_items[shipping]
+          classified_items[shipping] << item
+        else
+          classified_items[shipping] = [item]
+        end
+      end
+      classified_items
     end
 
     def save_to_order(order)
