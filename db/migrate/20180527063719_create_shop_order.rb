@@ -28,7 +28,7 @@ class CreateShopOrder < ActiveRecord::Migration[5.1]
       t.integer  :number, null: false, comment: '购买数量'
       t.string   :sku_value, default: '', comment: '商品属性组合'
       t.boolean  :returnable, default: false,  comment: '是否支持退货'
-      t.string   :refund_status, default: 'none', comment: 'none, open, close, completed'
+      t.string   :refund_status, default: 'none', comment: 'none 没有退款申请， pending 退款申请中, refused 拒绝退款， completed 完成退款'
       t.timestamps
     end
   end
