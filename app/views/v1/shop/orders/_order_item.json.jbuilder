@@ -5,7 +5,6 @@ json.original_price item.original_price
 json.price          item.price
 json.number         item.number
 json.sku_value      item.sku_value
-json.return_status  item.recent_return&.return_status
 json.returnable     item.returnable
-# json.image          item.variant.image&.preview || item.product.preview_icon
 json.image          item.variant_image
+json.return_status_text  item.recent_return&.return_status_text
