@@ -61,13 +61,16 @@ module Shop
         next 0.0 if shipping.free_shipping?
 
         shipping_method = shipping.by_code_or_default_method(@province&.province_id)
-        if shipping.based_weight?
-          calc_number = items.map{ |item| item.variant.weight * item.number }.sum
-        else
-          calc_number = items.map(&:number).sum
-        end
-        shipping_method.freight_fee(calc_number)
+        shipping_method.freight_fee(items_calc_number(shipping, items))
       end.sum
+    end
+
+    def items_calc_number(shipping, items)
+      if shipping.based_weight?
+        return items.map { |item| item.variant.weight * item.number }.sum
+      end
+
+      items.map(&:number).sum
     end
 
     def classified_items_by_shipping

@@ -32,9 +32,9 @@ module Shop
     end
 
     def call
-      raise_error'params_missing' if shipping_info_invalid?
-
+      raise_error('params_missing') if shipping_info_invalid?
       @pre_purchase_items = PrePurchaseItems.new(@params[:variants], @shipping_info[:address][:province])
+
       if @pre_purchase_items.check_result != 'ok'
         raise_error_msg @pre_purchase_items.check_result
       end
@@ -42,7 +42,7 @@ module Shop
       order = create_order
       @pre_purchase_items.save_to_order(order)
       create_product_shipping(order)
-      {order: order}
+      { order: order }
     end
 
     def create_product_shipping(order)
