@@ -17,6 +17,11 @@ Rails.application.routes.draw do
         resource :change_password, only: [:create]
         resources :change_account, only: [:create]
         resources :bind_account, only: [:create]
+        resources :integral, only: [] do
+          post :tasks, on: :collection
+          get  :details, on: :collection
+          post :award, on: :collection
+        end
       end
       resources :address, only: [:index, :create, :update, :destroy] do
         post :default, on: :member
@@ -41,6 +46,8 @@ Rails.application.routes.draw do
       end
       resources :nearbys, only: [:index, :create]
       resources :jmessage, only: [:index, :create, :destroy]
+      resources :login_count, only: [:create]
+      resources :share_count, only: [:create]
     end
 
     # 酒店相关

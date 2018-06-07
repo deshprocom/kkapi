@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/radar/by_star
+  revision: 422c06ec1ea8ce633aca014a4403fbac92630057
+  specs:
+    by_star (3.0.0)
+      activesupport (> 3)
+
+GIT
   remote: https://github.com/resque/resque.git
   revision: 1d85f7c705ee8a609531c29035f8cf7cc6d67b19
   specs:
@@ -312,6 +319,7 @@ PLATFORMS
 DEPENDENCIES
   action-store
   awesome_nested_set
+  by_star!
   byebug
   capistrano
   capistrano-git-with-submodules (~> 2.0)
