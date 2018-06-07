@@ -2,7 +2,7 @@ module Shop
   class CustomerReturnService
     include Serviceable
 
-    #params
+    # params
     # {
     #   "return_type":"refund",
     #   "return_items":[1， 2],
@@ -17,6 +17,7 @@ module Shop
 
     def call
       raise_error_msg '已有待处理的售后申请' if exist_pending_return?
+      raise_error_msg '订单未付款，不允许申请退回' if @order.unpaid?
       raise_error_msg '超过了发货时间30天，不允许申请退回' if @order.delivered_over_30_days?
       raise_error_msg '有已退款的商品, 不允许重复申请退回' if items_refunded?
 
@@ -38,9 +39,10 @@ module Shop
 
       refund_product_price + refund_shipping_price
     end
+
     # 申请换货，退款金额为0
     def refund_product_price
-      @return_items.map{|item| item.number * item.price }.sum
+      @return_items.map { |item| item.number * item.price }.sum
     end
 
     def refund_shipping_price
@@ -63,7 +65,5 @@ module Shop
 
       false
     end
-
-
   end
 end
