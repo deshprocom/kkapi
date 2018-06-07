@@ -20,6 +20,8 @@ json.data do
         json.option_type         result[:option_type]
         json.mark                result[:mark]
         json.icon                result[:icon]
+        json.limit_times         result[:limit_times]
+        json.done_times          result[:done]
         json.total_done_points   result[:total_done_points]
       end
     end

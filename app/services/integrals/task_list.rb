@@ -32,7 +32,7 @@ module Services
             option_type: rule.option_type,
             mark: rule.option_type_alias,
             limit_times: rule.limit_times,
-            icon: rule.icon,
+            icon: rule.icon_path,
             done: done,
             doing: doing,
             total_doing_points: doing_points,
