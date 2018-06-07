@@ -6,7 +6,7 @@ module Shop
     # result_type   from_notified 微信支付通知请求， from_query 服务器主动查询账单
     def initialize(order, result, result_type)
       @order = order
-      @result  = result
+      @result = result
       @result_type = result_type
       @wx_bill = WxBill.find_by(transaction_id: @result['transaction_id'])
       Rails.logger.info "WxPaymentResult order_number(#{result['out_trade_no']}): #{result}"
@@ -44,7 +44,7 @@ module Shop
     # 不需要对微信结果处理
     # 微信账单已存在并且支付成功了
     def result_no_need_processing?
-      @wx_bill && @wx_bill.pay_success
+      @wx_bill&.pay_success
     end
 
     def result_pay_success?
@@ -58,7 +58,7 @@ module Shop
         @result['trade_state'] == 'SUCCESS'
       else
         # 判断微信支付通知请求是否成功
-        @result['return_code'] == 'SUCCESS' &&  @result['result_code'] == 'SUCCESS'
+        @result['return_code'] == 'SUCCESS' && @result['result_code'] == 'SUCCESS'
       end
     end
 

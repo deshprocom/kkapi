@@ -59,7 +59,7 @@ module Services
     end
 
     def last_record_number
-      @record_number ||= model.last&.send(key)
+      @last_record_number ||= model.last&.send(key)
     end
 
     def today_cache_key
