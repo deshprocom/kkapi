@@ -23,6 +23,8 @@ module V1
     def create
       requires! :body_type, values: %w[short long]
       send("create_#{params[:body_type]}")
+      # 生成积分
+      Services::Integrals::RecordService.call(@current_user, 'topic', target: @topic)
     end
 
     def destroy

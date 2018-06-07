@@ -8,6 +8,8 @@ module V1
     def create
       comment? ? create_comment_replies : create_reply_replies
       @current_user.dynamics.create(option_type: 'reply', target: @reply)
+      # 生成积分
+      Services::Integrals::RecordService.call(@current_user, 'comment', target: @reply)
     end
 
     def destroy
