@@ -8,34 +8,36 @@ module Services
       end
 
       def call
+        @rules  = IntegralRule.where(opened: true).order(created_at: :desc)
         records = @user.integrals.where(category: 'tasks').today.order(created_at: :desc).group_by { |t| t.option_type }
-        records.collect do |item|
+
+        @rules.collect do |rule|
+          items = records[rule.option_type]
           done = 0
           doing = 0
           doing_points = 0
           done_points = 0
-          integral_rule = IntegralRule.find_by(option_type: item.first)
-          next if integral_rule.blank? || !integral_rule.opened
 
-          item.last.each do |val|
-            if val.active_at.blank?
+          items&.each do |item|
+            if item.active_at.blank?
               doing += 1
-              doing_points += val.points
+              doing_points += item.points
             else
               done += 1
-              done_points += val.points
+              done_points += item.points
             end
           end
 
           {
-            option_type: item.first,
+            option_type: rule.option_type,
+            mark: rule.option_type_alias,
+            limit_times: rule.limit_times,
+            icon: rule.icon,
             done: done,
             doing: doing,
-            limit_times: integral_rule.limit_times,
-            mark: integral_rule.option_type_alias,
             total_doing_points: doing_points,
             total_done_points: done_points,
-            finished: done.eql?(integral_rule.limit_times)
+            finished: done.eql?(rule.limit_times)
           }
         end
       end
