@@ -18,9 +18,9 @@ Rails.application.routes.draw do
         resources :change_account, only: [:create]
         resources :bind_account, only: [:create]
         resources :integral, only: [] do
-          post :tasks, on: :collection
-          get  :details, on: :collection
-          post :award, on: :collection
+          post :tasks,     on: :collection
+          get  :details,   on: :collection
+          post :award,     on: :collection
         end
       end
       resources :address, only: [:index, :create, :update, :destroy] do
