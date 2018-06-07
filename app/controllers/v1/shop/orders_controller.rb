@@ -2,7 +2,7 @@ module V1::Shop
   class OrdersController < ApplicationController
     include UserAuthorize
     before_action :login_required
-    before_action :set_order, only: [:show, :cancel, :confirm, :wx_pay, :wx_paid_result]
+    before_action :set_order, only: [:show, :cancel, :confirm, :wx_pay, :wx_paid_result, :customer_return]
     SEARCH_STATUS_MAP = {
       unpaid: 'unpaid',
       undelivered: 'paid',
@@ -45,6 +45,17 @@ module V1::Shop
     def confirm
       return render_api_error('当前状态不允许确认收货') unless @order.status == 'delivered'
       @order.complete!
+      render_api_success
+    end
+
+    #params
+    # {
+    #   "return_type":"refund",
+    #   "return_items":[1， 2],
+    #   "memo":"商品坏了"
+    # }
+    def customer_return
+      Shop::CustomerReturnService.call(@order, params)
       render_api_success
     end
 
