@@ -2,7 +2,7 @@ module Shop
   class CustomerReturnService
     include Serviceable
 
-    #params
+    # params
     # {
     #   "return_type":"refund",
     #   "return_items":[1， 2],
@@ -39,9 +39,10 @@ module Shop
 
       refund_product_price + refund_shipping_price
     end
+
     # 申请换货，退款金额为0
     def refund_product_price
-      @return_items.map{|item| item.number * item.price }.sum
+      @return_items.map { |item| item.number * item.price }.sum
     end
 
     def refund_shipping_price

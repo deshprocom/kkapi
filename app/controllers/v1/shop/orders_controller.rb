@@ -8,7 +8,7 @@ module V1::Shop
       undelivered: 'paid',
       delivered: 'delivered',
       completed: 'completed'
-    }
+    }.freeze
     def index
       status = SEARCH_STATUS_MAP[params[:status].to_s.to_sym]
       @orders = @current_user.shop_orders.order(id: :desc)
@@ -48,7 +48,7 @@ module V1::Shop
       render_api_success
     end
 
-    #params
+    # params
     # {
     #   "return_type":"refund",
     #   "return_items":[1， 2],
