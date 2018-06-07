@@ -17,6 +17,7 @@ module Shop
 
     def call
       raise_error_msg '已有待处理的售后申请' if exist_pending_return?
+      raise_error_msg '订单未付款，不允许申请退回' if @order.unpaid?
       raise_error_msg '超过了发货时间30天，不允许申请退回' if @order.delivered_over_30_days?
       raise_error_msg '有已退款的商品, 不允许重复申请退回' if items_refunded?
 
@@ -63,7 +64,5 @@ module Shop
 
       false
     end
-
-
   end
 end
