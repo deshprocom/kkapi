@@ -15,6 +15,8 @@ module V1
                                 target: @target,
                                 body: params[:body])
       @current_user.dynamics.create(option_type: 'comment', target: @comment)
+      # 生成积分
+      Services::Integrals::RecordService.call(@current_user, 'comment', target: @comment)
     end
 
     def replies
