@@ -52,7 +52,10 @@ gem 'geocoder'
 # 极光IM gem
 gem 'jmessage'
 
-gem 'by_star', git: "git://github.com/radar/by_star"
+gem 'by_star', git: 'git://github.com/radar/by_star'
+
+# 物流查询接口
+gem 'kuaidiniao'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
