@@ -8,7 +8,7 @@ module Services
       end
 
       def call
-        @rules  = IntegralRule.where(opened: true).position_desc
+        @rules  = IntegralRule.where(opened: true).position_asc
         records = @user.integrals.where(category: 'tasks').today.order(created_at: :desc).group_by { |t| t.option_type }
 
         @rules.collect do |rule|
