@@ -11,6 +11,7 @@ module V1
     end
 
     def create
+      illegal_keyword_check! :body
       @comment = Comment.create(user: @current_user,
                                 target: @target,
                                 body: params[:body])

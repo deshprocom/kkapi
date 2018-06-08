@@ -43,6 +43,7 @@ module V1
     private
 
     def create_short
+      illegal_keyword_check! :body
       raise_error 'image_number_exceed' if params[:images]&.count.to_i > 9
       create_params = user_params.dup
       create_params[:cover_link] ||= params[:images]&.first
@@ -51,6 +52,7 @@ module V1
 
     def create_long
       requires! :title
+      illegal_keyword_check! :title, :body
       @topic = @current_user.topics.create!(user_params)
     end
 
