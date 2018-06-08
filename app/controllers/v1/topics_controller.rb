@@ -22,6 +22,8 @@ module V1
 
     def create
       requires! :body_type, values: %w[short long]
+      requires! :body
+      similarity?(params[:body])
       send("create_#{params[:body_type]}")
       # 生成积分
       Services::Integrals::RecordService.call(@current_user, 'topic', target: @topic)
@@ -58,6 +60,13 @@ module V1
 
     def user_params
       params.permit(:title, :cover_link, :body, :body_type, :lat, :lng, :address_title, :address, images: [])
+    end
+
+    def similarity?(body)
+      white = Text::WhiteSimilarity.new
+      Topic.last(2).each do |topic|
+        raise_error 'similarity_body'  if white.similarity(body, topic.body) > 0.95
+      end
     end
   end
 end

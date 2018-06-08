@@ -39,5 +39,6 @@
     cert_cannot_update: '证件当前状态不支持修改'
     cannot_follow_self: '不能关注自己'
     illegal_keyword: '很抱歉，您发布的内容中存在敏感字符'
+    similarity_body: '抱歉，您发布的内容相似度过高已被忽略'
 
 
