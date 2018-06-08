@@ -6,7 +6,6 @@ module V1
 
       def tasks
         @result = Services::Integrals::TaskList.call(@current_user).group_by { |t| t[:finished] }
-        @result
       end
 
       def details
