@@ -114,6 +114,7 @@ Rails.application.routes.draw do
         post :wx_pay, on: :member
         post :customer_return, on: :member
         get :wx_paid_result, on: :member
+        get :express_tracking, on: :member
       end
 
       resources :wx_notify, only: [:create]
