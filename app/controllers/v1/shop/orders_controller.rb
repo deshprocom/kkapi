@@ -2,7 +2,8 @@ module V1::Shop
   class OrdersController < ApplicationController
     include UserAuthorize
     before_action :login_required
-    before_action :set_order, only: [:show, :cancel, :confirm, :wx_pay, :wx_paid_result, :customer_return]
+    before_action :set_order, only: [:show, :cancel, :confirm, :wx_pay, :wx_paid_result,
+                                     :customer_return, :express_tracking]
     SEARCH_STATUS_MAP = {
       unpaid: 'unpaid',
       undelivered: 'paid',
@@ -70,6 +71,13 @@ module V1::Shop
       result = WxPay::Service.order_query(out_trade_no: @order.order_number)
       Shop::WxPaymentResultService.call(@order, result[:raw]['xml'], 'from_query')
       render_api_success
+    end
+
+    def express_tracking
+      return render_api_error('该订单未发货') unless @order.delivered?
+
+      @shipment = @order.shipment
+      @tracking = Kuaidiniao::Service.get_trace(@shipment.express.code, @shipment.express_number)
     end
 
     private
