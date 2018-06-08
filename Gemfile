@@ -42,6 +42,9 @@ gem 'mini_magick'
 gem 'weixin_authorize'
 gem 'wx_pay'
 
+gem 'text'
+gem 'harmonious_dictionary'
+
 #  ActionStore - 一步到位的 Like, Follow, Star, Block ... 等动作的解决方案
 #  https://ruby-china.org/topics/32262
 gem 'action-store'
