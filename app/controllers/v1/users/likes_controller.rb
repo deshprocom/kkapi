@@ -8,10 +8,8 @@ module V1
       # 用户喜欢列表，keyword用来获取某个类别喜欢列表
       def index
         keyword = params[:keyword]
-        like_actions = @current_user.action_likes.page(params[:page]).per(params[:page_size])
+        @like_actions = @current_user.action_likes.page(params[:page]).per(params[:page_size])
                                     .yield_self { |it| keyword ? it.where(target_type: keyword.classify) : it }
-
-        @likes = like_actions.collect(&:target)
       end
 
       # 说说长帖，资讯, 酒店..点赞

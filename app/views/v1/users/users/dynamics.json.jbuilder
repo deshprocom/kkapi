@@ -3,6 +3,8 @@ json.partial! 'common/basic', api_result: ApiResult.success_result
 json.data do
   json.items do
     json.array! @dynamics do |item|
+      next if item.target.blank?
+
       option_type = item.option_type
       json.option_type option_type
 
