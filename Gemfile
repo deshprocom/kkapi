@@ -55,8 +55,6 @@ gem 'geocoder'
 # 极光IM gem
 gem 'jmessage'
 
-gem 'by_star', git: 'git://github.com/radar/by_star'
-
 # 物流查询接口
 gem 'kuaidiniao'
 
