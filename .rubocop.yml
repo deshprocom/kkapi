@@ -65,3 +65,6 @@ Style/IfUnlessModifier:
 
 Layout/TrailingWhitespace:
   Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false

@@ -11,10 +11,14 @@ module V1
     end
 
     def create
+      silenced_check! @current_user
+      illegal_keyword_check! :body
       @comment = Comment.create(user: @current_user,
                                 target: @target,
                                 body: params[:body])
       @current_user.dynamics.create(option_type: 'comment', target: @comment)
+      # 生成积分
+      Services::Integrals::RecordService.call(@current_user, 'comment', target: @comment)
     end
 
     def replies

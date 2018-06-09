@@ -22,7 +22,12 @@ module V1
 
     def create
       requires! :body_type, values: %w[short long]
+      requires! :body
+      silenced_check! @current_user
+      similarity?(params[:body])
       send("create_#{params[:body_type]}")
+      # 生成积分
+      Services::Integrals::RecordService.call(@current_user, 'topic', target: @topic)
     end
 
     def destroy
@@ -41,6 +46,7 @@ module V1
     private
 
     def create_short
+      illegal_keyword_check! :body
       raise_error 'image_number_exceed' if params[:images]&.count.to_i > 9
       create_params = user_params.dup
       create_params[:cover_link] ||= params[:images]&.first
@@ -49,11 +55,19 @@ module V1
 
     def create_long
       requires! :title
+      illegal_keyword_check! :title, :body
       @topic = @current_user.topics.create!(user_params)
     end
 
     def user_params
       params.permit(:title, :cover_link, :body, :body_type, :lat, :lng, :address_title, :address, images: [])
+    end
+
+    def similarity?(body)
+      white = Text::WhiteSimilarity.new
+      Topic.last(2).each do |topic|
+        raise_error 'similarity_body'  if white.similarity(body, topic.body) > 0.95
+      end
     end
   end
 end

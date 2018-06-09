@@ -10,6 +10,8 @@
     account_already_bind: '该账户已被绑定'
     params_missing: '缺少参数'
     params_format_error: '参数类型或参数值不在指定范围内'
+    account_blocked: '很抱歉，您的账户已被停用！'
+    account_silenced: '很抱歉，您的账户已被禁言！'
 
     # 登录注册香相关
     email_format_error: '无效的邮箱格式'
@@ -38,5 +40,7 @@
     cert_no_already_exists: '您已提交过该证件的实名信息，不能再次添加'
     cert_cannot_update: '证件当前状态不支持修改'
     cannot_follow_self: '不能关注自己'
+    illegal_keyword: '很抱歉，您发布的内容中存在敏感字符'
+    similarity_body: '抱歉，您发布的内容相似度过高已被忽略'
 
 

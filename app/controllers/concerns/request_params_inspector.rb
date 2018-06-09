@@ -25,4 +25,10 @@ module RequestParamsInspector
   def param_in_values?(value, values)
     value.in?(values) || value.to_i.in?(values)
   end
+
+  def illegal_keyword_check!(*names)
+    names.each do |name|
+      raise_error 'illegal_keyword' unless HarmoniousDictionary.clean? params[name]
+    end
+  end
 end

@@ -6,8 +6,12 @@ module V1
     before_action :body_valid?, only: [:create]
 
     def create
+      silenced_check! @current_user
+      illegal_keyword_check! :body
       comment? ? create_comment_replies : create_reply_replies
       @current_user.dynamics.create(option_type: 'reply', target: @reply)
+      # 生成积分
+      Services::Integrals::RecordService.call(@current_user, 'comment', target: @reply)
     end
 
     def destroy
