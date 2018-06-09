@@ -9,7 +9,7 @@ module V1
       end
 
       def details
-        @result = Integral.active.order(created_at: :desc).page(params[:page]).per(params[:page_size])
+        @result = Integral.where(user_id: @current_user.id).active.order(created_at: :desc).page(params[:page]).per(params[:page_size])
       end
 
       def award
