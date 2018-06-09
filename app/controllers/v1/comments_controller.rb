@@ -11,6 +11,7 @@ module V1
     end
 
     def create
+      silenced_check! @current_user
       illegal_keyword_check! :body
       @comment = Comment.create(user: @current_user,
                                 target: @target,

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include RequestParamsInspector
+  include UserAuthCheck
   class CommonError < StandardError; end
   class AuthorizedError < StandardError; end
 

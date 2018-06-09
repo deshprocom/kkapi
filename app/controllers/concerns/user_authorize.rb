@@ -15,6 +15,7 @@ module UserAuthorize
     @current_user ||= User.by_uuid(user_uuid)
 
     @current_user || authorized_error('login_required')
+    blocked_check!(@current_user)
   end
 
   def user_self_required

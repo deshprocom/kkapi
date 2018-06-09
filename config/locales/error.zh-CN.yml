@@ -10,6 +10,8 @@
     account_already_bind: '该账户已被绑定'
     params_missing: '缺少参数'
     params_format_error: '参数类型或参数值不在指定范围内'
+    account_blocked: '很抱歉，您的账户已被停用！'
+    account_silenced: '很抱歉，您的账户已被禁言！'
 
     # 登录注册香相关
     email_format_error: '无效的邮箱格式'
