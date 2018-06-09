@@ -23,6 +23,7 @@ module V1
     def create
       requires! :body_type, values: %w[short long]
       requires! :body
+      silenced_check! @current_user
       similarity?(params[:body])
       send("create_#{params[:body_type]}")
       # 生成积分
