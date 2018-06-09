@@ -4,7 +4,7 @@ module UserAuthCheck
   end
 
   def silenced_check!(user)
-    msg = I18n.t('errors.account_silenced') + "禁言至:#{user.silence_till.strftime('%F %T')}"
+    msg = I18n.t('errors.account_silenced') + "禁言至:#{user.silence_till&.strftime('%F %T')}"
     raise_error(msg, false) if user.silenced_and_till?
   end
 end
