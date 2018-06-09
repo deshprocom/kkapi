@@ -20,7 +20,7 @@ module Services
       private
 
       def limited?
-        current_times = Integral.where(option_type: @type).today.count
+        current_times = Integral.where(user_id: @user.id).where(option_type: @type).today.count
         return false if @integral_rule.limit_times <= 0
         current_times >= @integral_rule.limit_times
       end
