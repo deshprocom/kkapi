@@ -5,6 +5,7 @@ module V1
 
     def index
       @notifications = @current_user.topic_notifications
+                                    .where.not(target_id: @current_user.id)
                                     .order(created_at: :desc)
                                     .page(params[:page])
                                     .per(params[:page_size])
