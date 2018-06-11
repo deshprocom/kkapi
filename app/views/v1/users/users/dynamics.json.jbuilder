@@ -9,7 +9,7 @@ json.data do
       json.option_type option_type
 
       if option_type.eql? 'follow'
-        json.partial! 'v1/briefs/base', model_type: 'user', target: @target_user
+        json.partial! 'v1/briefs/base', model_type: 'user', target: item.target
         json.created_at item.created_at.to_i
         next
       end
