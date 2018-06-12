@@ -4,7 +4,7 @@ json.partial! 'common/basic', api_result: ApiResult.success_result
 json.data do
   json.notifications do
     json.array! @notifications do |notification|
-      next if notification.source.blank?
+      next unless notification.view_visible?
 
       json.id            notification.id
       json.created_at    notification.created_at.to_i

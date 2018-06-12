@@ -7,7 +7,7 @@ module V1
 
       def topics
         params[:type] && optional!(:type, values: %w[short long])
-        @topics = @target_user.topics.user_visible.order(created_at: :desc).page(params[:page]).per(params[:page_size])
+        @topics = @target_user.topics.order(created_at: :desc).page(params[:page]).per(params[:page_size])
                               .yield_self { |it| params[:type] ? it.where(body_type: params[:type]) : it }
         render 'v1/topics/index'
       end

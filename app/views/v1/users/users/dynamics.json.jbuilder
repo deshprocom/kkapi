@@ -3,13 +3,13 @@ json.partial! 'common/basic', api_result: ApiResult.success_result
 json.data do
   json.items do
     json.array! @dynamics do |item|
-      next if item.target.blank?
+      next unless item.view_visible?
 
       option_type = item.option_type
       json.option_type option_type
 
       if option_type.eql? 'follow'
-        json.partial! 'v1/briefs/base', model_type: 'user', target: @target_user
+        json.partial! 'v1/briefs/base', model_type: 'user', target: item.target
         json.created_at item.created_at.to_i
         next
       end
