@@ -50,9 +50,6 @@ Rails.application.routes.draw do
       resources :share_count, only: [:create]
     end
 
-    # 酒店相关
-    resources :hotels, only: [:show, :index]
-
     # 资讯相关
     resources :infos, only: [:show]
     resources :info_types, only: [] do
@@ -95,6 +92,11 @@ Rails.application.routes.draw do
     # 消息通知
     resources :topic_notifications, only: [:index, :destroy] do
       get 'unread_count', on: :collection
+    end
+
+    # 酒店模块
+    resources :hotels, only: [:show, :index] do
+      get 'rooms', on: :member
     end
 
     # 商城模块
