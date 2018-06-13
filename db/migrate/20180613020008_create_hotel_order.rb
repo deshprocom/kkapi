@@ -15,6 +15,7 @@ class CreateHotelOrder < ActiveRecord::Migration[5.1]
       t.decimal :refund_price, precision: 15, scale: 2, default: '0.0'
       t.date    :checkin_date, comment: '入住时间'
       t.date    :checkout_date, comment: '离店时间'
+      t.timestamps
     end
 
     create_table :checkin_infos do |t|
