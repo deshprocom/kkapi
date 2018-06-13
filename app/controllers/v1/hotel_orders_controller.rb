@@ -5,8 +5,8 @@ module V1
 
     # params
     # {
-    #   "checkin_date": "2019-06-11",
-    #   "checkout_date": "2019-06-13",
+    #   "checkin_date": "2018-06-11",
+    #   "checkout_date": "2018-06-13",
     #   "hotel_room_id": 33,
     #   "room_num": 1
     # }
@@ -17,8 +17,25 @@ module V1
       @room  = order_service.room
     end
 
+    # params
+    # {
+    #   "checkin_date":"2018-06-11",
+    #   "checkout_date":"2018-06-13",
+    #   "hotel_room_id":33,
+    #   "room_num":2,
+    #   "telephone":"13428722299",
+    #   "checkin_infos":[
+    #      {"last_name":"杨", "first_name":"先生"},
+    #      {"last_name":"黄", "first_name":"先生"}
+    #    ]
+    # }
+    def create
+      @order = HotelServices::CreateOrder.call(@current_user, order_params)
+    end
+
     def order_params
-      params.permit(:hotel_room_id, :checkin_date, :checkout_date, :room_num)
+      params.permit(:hotel_room_id, :checkin_date, :checkout_date,
+                    :room_num, :telephone, checkin_infos: [:last_name, :first_name])
     end
   end
 end
