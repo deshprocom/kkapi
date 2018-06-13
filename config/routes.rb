@@ -98,6 +98,9 @@ Rails.application.routes.draw do
     resources :hotels, only: [:show, :index] do
       get 'rooms', on: :member
     end
+    resources :hotel_orders, only:[:show, :index, :create] do
+      post 'new', on: :collection
+    end
 
     # 商城模块
     namespace :shop do
