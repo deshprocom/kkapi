@@ -2,6 +2,7 @@ module V1
   class HotelOrdersController < ApplicationController
     include UserAuthorize
     before_action :login_required
+    before_action :set_order, only: [:show]
 
     # params
     # {
@@ -35,6 +36,14 @@ module V1
 
     def index
       @orders = @current_user.hotel_orders.includes(hotel_room: [:hotel])
+    end
+
+    def show; end
+
+    private
+
+    def set_order
+      @order = @current_user.hotel_orders.find_by!(order_number: params[:id])
     end
 
     def order_params

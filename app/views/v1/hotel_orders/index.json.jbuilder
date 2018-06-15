@@ -13,7 +13,7 @@ json.data do
         json.total_price   order.total_price
         json.checkin_date  order.checkin_date
         json.checkout_date order.checkout_date
-        json.night_num     order.room_items.size
+        json.nights_num    order.nights_num
       end
 
       json.room_title  order.hotel_room.title
