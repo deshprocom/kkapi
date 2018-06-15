@@ -12,6 +12,7 @@ json.data do
 
   json.order do
     json.total_price @order.total_price_from_items
+
     json.room_num    @order.room_num
     json.room_items do
       json.array! @order.room_items do |item|

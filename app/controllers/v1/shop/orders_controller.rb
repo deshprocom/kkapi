@@ -64,12 +64,12 @@ module V1::Shop
       # 获取用户真实ip
       #  需要在nginx中设置 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       client_ip = request.env['HTTP_X_FORWARDED_FOR']
-      @prepay_result = Shop::WxPayService.call(@order, client_ip)
+      @prepay_result = ::Weixin::PayService.call(@order, client_ip)
     end
 
     def wx_paid_result
       result = WxPay::Service.order_query(out_trade_no: @order.order_number)
-      Shop::WxPaymentResultService.call(@order, result[:raw]['xml'], 'from_query')
+      ::Weixin::NotifyService.call(@order, result[:raw]['xml'], 'from_query')
       render_api_success
     end
 
