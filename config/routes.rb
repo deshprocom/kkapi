@@ -63,6 +63,7 @@ Rails.application.routes.draw do
       resources :auth, only: [:create]
       resources :bind, only: [:create]
       resources :js_sign, only: [:create]
+      resources :notify, only: [:create]
     end
 
     # 说说或长帖
@@ -100,6 +101,8 @@ Rails.application.routes.draw do
     end
     resources :hotel_orders, only:[:show, :index, :create] do
       post 'new', on: :collection
+      post 'wx_pay', on: :member
+      get  'wx_paid_result', on: :member
     end
 
     # 商城模块
@@ -121,8 +124,6 @@ Rails.application.routes.draw do
         get :wx_paid_result, on: :member
         get :express_tracking, on: :member
       end
-
-      resources :wx_notify, only: [:create]
     end
   end
 end

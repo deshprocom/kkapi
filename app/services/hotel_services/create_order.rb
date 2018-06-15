@@ -4,9 +4,9 @@ module HotelServices
 
     attr_accessor :room, :order
     def initialize(user, params)
-      @user   = user
+      @user = user
       @checkin_infos = params.delete(:checkin_infos)
-      @room = HotelRoom.find(params[:hotel_room_id])
+      @room = HotelRoom.published.find(params[:hotel_room_id])
       @order = HotelOrder.new(params)
     end
 
@@ -20,11 +20,12 @@ module HotelServices
     def save_order
       collect_room_items
       @order.order_number = SecureRandom.hex(8)
+      @order.user   = @user
       @order.status = 'unpaid'
       @order.pay_status = 'unpaid'
       @order.total_price = @order.total_price_from_items
       @order.final_price = @order.total_price
-      @order.save
+      raise_error_msg('系统错误：订单创建失败') unless @order.save
     end
 
     def create_checkin_infos

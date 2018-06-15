@@ -1,5 +1,5 @@
-module Shop
-  class WxPaymentResultService
+module Weixin
+  class NotifyService
     include Serviceable
 
     # result 微信支付结果
