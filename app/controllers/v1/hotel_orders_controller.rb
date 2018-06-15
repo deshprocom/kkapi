@@ -33,6 +33,10 @@ module V1
       @order = HotelServices::CreateOrder.call(@current_user, order_params)
     end
 
+    def index
+      @orders = @current_user.hotel_orders.includes(hotel_room: [:hotel])
+    end
+
     def order_params
       params.permit(:hotel_room_id, :checkin_date, :checkout_date,
                     :room_num, :telephone, checkin_infos: [:last_name, :first_name])
