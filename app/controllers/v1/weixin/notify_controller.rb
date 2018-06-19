@@ -1,18 +1,22 @@
 module V1
   module Weixin
     class NotifyController < ApplicationController
-      def create
-        @notify_params = Hash.from_xml(request.body.read)['xml']
-        ::Weixin::NotifyService.call(find_order, @notify_params, 'from_notified')
+      before_action :set_notify_params
+
+      def shop_order
+        order = ::Shop::Order.find_by!(order_number: @notify_params['out_trade_no'])
+        ::Weixin::NotifyService.call(order, @notify_params, 'from_notified')
         render xml: xml_result
       end
 
-      def find_order
-        if params[:order_type] == 'hotel_order'
-          HotelOrder.find_by!(order_number: @notify_params['out_trade_no'])
-        else
-          ::Shop::Order.find_by!(order_number: @notify_params['out_trade_no'])
-        end
+      def hotel_order
+        order = HotelOrder.find_by!(order_number: @notify_params['out_trade_no'])
+        ::Weixin::NotifyService.call(order, @notify_params, 'from_notified')
+        render xml: xml_result
+      end
+
+      def set_notify_params
+        @notify_params = Hash.from_xml(request.body.read)['xml']
       end
 
       def result_to_xml(code, msg)
