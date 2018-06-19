@@ -41,7 +41,7 @@ module Services
         # 测试则不实际发出去
         return ApiResult.success_result if Rails.env.to_s.eql?('test') || ENV['AC_TEST'].present?
 
-        SendMobileSmsJob.set(queue: 'send_mobile_sms').perform_later(option_type, account_id, sms_content)
+        SendMobileSmsJob.perform_later(option_type, account_id, sms_content)
         ApiResult.success_result
       end
 
@@ -55,7 +55,7 @@ module Services
         # 测试则不实际发出去
         return ApiResult.success_result if Rails.env.to_s.eql?('test') || ENV['AC_TEST'].present?
 
-        SendEmailSmsJob.set(queue: 'send_email_sms').perform_later(option_type, account_id, sms_content, sms_title)
+        SendEmailSmsJob.perform_later(option_type, account_id, sms_content, sms_title)
         ApiResult.success_result
       end
 

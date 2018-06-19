@@ -1,6 +1,6 @@
 server '36.255.222.206', user: 'deploy', roles: %w{app db resque_worker} # prod-1
 # server '107.150.124.184', user: 'deploy', roles: %w{app db resque_worker} #prod-2
-set :workers, {send_email_sms: 1, send_mobile_sms: 1}
+set :workers, {send_email_sms_jobs: 1, send_mobile_sms_jobs: 1}
 
 set :ssh_options, {
   user: 'deploy', # overrides user setting above
