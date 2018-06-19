@@ -63,7 +63,10 @@ Rails.application.routes.draw do
       resources :auth, only: [:create]
       resources :bind, only: [:create]
       resources :js_sign, only: [:create]
-      resources :notify, only: [:create]
+      resources :notify, only: [] do
+        post :shop_order, on: :collection
+        post :hotel_order, on: :collection
+      end
     end
 
     # 说说或长帖
