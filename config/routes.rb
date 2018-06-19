@@ -50,9 +50,6 @@ Rails.application.routes.draw do
       resources :share_count, only: [:create]
     end
 
-    # 酒店相关
-    resources :hotels, only: [:show, :index]
-
     # 资讯相关
     resources :infos, only: [:show]
     resources :info_types, only: [] do
@@ -66,6 +63,7 @@ Rails.application.routes.draw do
       resources :auth, only: [:create]
       resources :bind, only: [:create]
       resources :js_sign, only: [:create]
+      resources :notify, only: [:create]
     end
 
     # 说说或长帖
@@ -97,6 +95,16 @@ Rails.application.routes.draw do
       get 'unread_count', on: :collection
     end
 
+    # 酒店模块
+    resources :hotels, only: [:show, :index] do
+      get 'rooms', on: :member
+    end
+    resources :hotel_orders, only:[:show, :index, :create] do
+      post 'new', on: :collection
+      post 'wx_pay', on: :member
+      get  'wx_paid_result', on: :member
+    end
+
     # 商城模块
     namespace :shop do
       resources :categories, only: [:index] do
@@ -116,8 +124,6 @@ Rails.application.routes.draw do
         get :wx_paid_result, on: :member
         get :express_tracking, on: :member
       end
-
-      resources :wx_notify, only: [:create]
     end
   end
 end
