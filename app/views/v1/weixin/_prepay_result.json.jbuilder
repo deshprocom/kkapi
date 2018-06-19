@@ -1,0 +1,7 @@
+json.appid     @prepay_result[:appid]
+json.partnerid @prepay_result[:partnerid]
+json.package   @prepay_result[:package]
+json.timestamp @prepay_result[:timestamp]
+json.prepayid  @prepay_result[:prepayid]
+json.noncestr  @prepay_result[:noncestr]
+json.sign      @prepay_result[:sign]

@@ -1,7 +1,6 @@
-module Shop
-  class WxPayService
+module Weixin
+  class PayService
     include Serviceable
-
     def initialize(order, client_ip)
       @order = order
       @client_ip = client_ip
@@ -42,7 +41,7 @@ module Shop
     end
 
     def notify_url
-      "#{ENV['HOST_URL']}/v1/shop/wx_notify"
+      "#{ENV['HOST_URL']}/v1/weixin/notify?order_type=#{@order.model_name.singular}"
     end
   end
 end
