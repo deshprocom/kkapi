@@ -1,6 +1,6 @@
 # 发送短信验证码任务
 class SendMobileSmsJob < ApplicationJob
-  queue_as :default
+  queue_as :send_mobile_sms_jobs
 
   def perform(sms_type, mobile, content)
     logger = Resque.logger
