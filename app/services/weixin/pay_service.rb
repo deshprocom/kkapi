@@ -41,7 +41,7 @@ module Weixin
     end
 
     def notify_url
-      "#{ENV['HOST_URL']}/v1/weixin/notify?order_type=#{@order.model_name.singular}"
+      "#{ENV['HOST_URL']}/v1/weixin/notify/#{@order.model_name.singular}"
     end
   end
 end
