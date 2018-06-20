@@ -102,10 +102,11 @@ Rails.application.routes.draw do
     resources :hotels, only: [:show, :index] do
       get 'rooms', on: :member
     end
-    resources :hotel_orders, only:[:show, :index, :create] do
+    resources :hotel_orders, only:[:show, :index, :create, :destroy] do
       post 'new', on: :collection
       post 'wx_pay', on: :member
       get  'wx_paid_result', on: :member
+      post 'cancel', on: :member
     end
 
     # 商城模块
