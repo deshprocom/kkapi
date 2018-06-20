@@ -57,7 +57,7 @@ module V1
     end
 
     def destroy
-      return render_api_error('该订单不允许删除') unless @order.confirmed?
+      return render_api_error('该订单不允许删除') unless @order.status.in? %w[confirmed canceled]
       @order.deleted!
       render_api_success
     end
