@@ -14,7 +14,7 @@ module V1
     end
 
     def unread_count
-      @unread_count = TopicNotification.unread_count(@current_user)
+      @unread_count = TopicNotification.where.not(target_id: @current_user.id).unread_count(@current_user)
     end
 
     def destroy
