@@ -35,7 +35,7 @@ module Weixin
     ORDER_TYPE_TRANS = {
       hotel_type: '酒店订单',
       shop_type:  '商品订单'
-    }
+    }.freeze
     def order_trans
       ORDER_TYPE_TRANS[@order.model_name.singular.to_sym]
     end
