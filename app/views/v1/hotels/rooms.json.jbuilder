@@ -10,7 +10,7 @@ json.data do
       json.images room.images.map(&:original)
 
       room_price = @prices.find { |p| p.hotel_room_id == room.id } || room.master
-      json.price  room_price.price
+      json.price room_price.price
     end
   end
 end

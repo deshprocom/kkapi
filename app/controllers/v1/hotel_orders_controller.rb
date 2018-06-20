@@ -34,8 +34,18 @@ module V1
       @order = HotelServices::CreateOrder.call(@current_user, order_params)
     end
 
+    SEARCH_STATUS_MAP = {
+      unpaid: 'unpaid',
+      paid: 'paid',
+      confirmed: 'confirmed'
+    }.freeze
     def index
-      @orders = @current_user.hotel_orders.includes(hotel_room: [:hotel])
+      status = SEARCH_STATUS_MAP[params[:status].to_s.to_sym]
+      @orders = @current_user
+                  .hotel_orders
+                  .yield_self { |it| status ? it.where(status: status) : it }
+                  .includes(hotel_room: [:hotel])
+                  .limit(30)
     end
 
     def show; end

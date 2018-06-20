@@ -68,3 +68,6 @@ Layout/TrailingWhitespace:
 
 Style/TrailingCommaInHashLiteral:
   Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: false

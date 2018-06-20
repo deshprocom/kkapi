@@ -1,7 +1,6 @@
 json.partial! 'common/basic', api_result: ApiResult.success_result
 
-# data
-json.data do
+json.data do # rubocop:disable Metrics/BlockLength
   json.room do
     json.id     @order.hotel_room.id
     json.title  @order.hotel_room.title
