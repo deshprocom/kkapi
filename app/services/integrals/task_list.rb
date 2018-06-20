@@ -9,7 +9,7 @@ module Services
 
       def call
         @rules  = IntegralRule.where(opened: true).position_asc
-        records = @user.integrals.where(category: 'tasks').today.order(created_at: :desc).group_by { |t| t.option_type }
+        records = @user.integrals.where(category: 'tasks').today.order(created_at: :desc).group_by(&:option_type)
 
         @rules.collect do |rule|
           items = records[rule.option_type]

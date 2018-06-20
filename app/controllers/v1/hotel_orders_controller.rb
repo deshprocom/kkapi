@@ -2,7 +2,7 @@ module V1
   class HotelOrdersController < ApplicationController
     include UserAuthorize
     before_action :login_required
-    before_action :set_order, only: [:show, :wx_pay, :wx_paid_result]
+    before_action :set_order, only: [:show, :cancel, :destroy, :wx_pay, :wx_paid_result]
 
     # params
     # {
@@ -34,11 +34,33 @@ module V1
       @order = HotelServices::CreateOrder.call(@current_user, order_params)
     end
 
+    SEARCH_STATUS_MAP = {
+      unpaid: 'unpaid',
+      paid: 'paid',
+      confirmed: 'confirmed'
+    }.freeze
     def index
-      @orders = @current_user.hotel_orders.includes(hotel_room: [:hotel])
+      status = SEARCH_STATUS_MAP[params[:status].to_s.to_sym]
+      @orders = @current_user
+                  .hotel_orders
+                  .yield_self { |it| status ? it.where(status: status) : it }
+                  .includes(hotel_room: [:hotel])
+                  .limit(30)
     end
 
     def show; end
+
+    def cancel
+      return render_api_error('该订单不允许取消') unless @order.unpaid?
+      @order.canceled!
+      render_api_success
+    end
+
+    def destroy
+      return render_api_error('该订单不允许删除') unless @order.confirmed?
+      @order.deleted!
+      render_api_success
+    end
 
     def wx_pay
       # 获取用户真实ip

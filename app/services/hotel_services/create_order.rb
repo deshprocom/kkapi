@@ -34,6 +34,7 @@ module HotelServices
                                     first_name: info[:first_name])
       end
     end
+
     def collect_room_items
       days_num = (@order.checkout_date - @order.checkin_date).to_i
       @order.room_items = (0...days_num).map do |i|

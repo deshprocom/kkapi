@@ -23,13 +23,21 @@ module Weixin
 
     def pay_params
       {
-        body: "订单：#{@order.order_number}",
+        body: "#{order_trans}：#{@order.order_number}",
         out_trade_no: @order.order_number,
         total_fee: (@order.final_price * 100).to_i,
         spbill_create_ip: @client_ip,
         notify_url: notify_url,
         trade_type: 'APP'
       }
+    end
+
+    ORDER_TYPE_TRANS = {
+      hotel_type: '酒店订单',
+      shop_type:  '商品订单'
+    }.freeze
+    def order_trans
+      ORDER_TYPE_TRANS[@order.model_name.singular.to_sym]
     end
 
     def generate_app_pay_req(result)
@@ -41,7 +49,7 @@ module Weixin
     end
 
     def notify_url
-      "#{ENV['HOST_URL']}/v1/weixin/notify?order_type=#{@order.model_name.singular}"
+      "#{ENV['HOST_URL']}/v1/weixin/notify/#{@order.model_name.singular}"
     end
   end
 end
