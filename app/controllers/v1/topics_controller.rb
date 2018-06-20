@@ -66,7 +66,7 @@ module V1
     def similarity?(body)
       white = Text::WhiteSimilarity.new
       Topic.last(2).each do |topic|
-        raise_error 'similarity_body'  if white.similarity(body, topic.body) > 0.95
+        raise_error 'similarity_body' if white.similarity(body, topic.body) > 0.95
       end
     end
   end
