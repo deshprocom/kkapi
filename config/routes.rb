@@ -124,6 +124,7 @@ Rails.application.routes.draw do
         post :cancel, on: :member
         post :confirm, on: :member
         post :wx_pay, on: :member
+        post :alipay, on: :member
         post :customer_return, on: :member
         get :wx_paid_result, on: :member
         get :express_tracking, on: :member

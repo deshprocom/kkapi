@@ -2,8 +2,8 @@ module V1::Shop
   class OrdersController < ApplicationController
     include UserAuthorize
     before_action :login_required
-    before_action :set_order, only: [:show, :cancel, :confirm, :wx_pay, :wx_paid_result,
-                                     :customer_return, :express_tracking]
+    before_action :set_order, only: [:show, :cancel, :confirm, :wx_pay, :alipay,
+                                     :wx_paid_result, :customer_return, :express_tracking]
     SEARCH_STATUS_MAP = {
       unpaid: 'unpaid',
       undelivered: 'paid',
@@ -65,6 +65,10 @@ module V1::Shop
       #  需要在nginx中设置 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       client_ip = request.env['HTTP_X_FORWARDED_FOR']
       @prepay_result = ::Weixin::PayService.call(@order, client_ip)
+    end
+
+    def alipay
+      @payment_params = ::Ali::PayService.call(@order)
     end
 
     def wx_paid_result
