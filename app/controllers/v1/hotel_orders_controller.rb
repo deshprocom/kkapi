@@ -45,7 +45,7 @@ module V1
                   .hotel_orders
                   .yield_self { |it| status ? it.where(status: status) : it }
                   .includes(hotel_room: [:hotel])
-                  .limit(30)
+                  .page(params[:page]).per(params[:page_size])
     end
 
     def show; end
