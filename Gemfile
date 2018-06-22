@@ -42,6 +42,9 @@ gem 'mini_magick'
 gem 'weixin_authorize'
 gem 'wx_pay'
 
+# 支付宝相关
+gem 'alipay', '~> 0.15.1'
+
 gem 'text'
 gem 'harmonious_dictionary'
 

@@ -8,6 +8,7 @@ json.data do
     json.logo         @hotel.logo.url
     json.description  @hotel.description
     json.preview_logo @hotel.preview_logo
+    json.telephone    @hotel.telephone
 
     json.images do
       json.array! @hotel.images do |image|
