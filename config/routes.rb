@@ -63,7 +63,10 @@ Rails.application.routes.draw do
       resources :auth, only: [:create]
       resources :bind, only: [:create]
       resources :js_sign, only: [:create]
-      resources :notify, only: [:create]
+      resources :notify, only: [] do
+        post :shop_order, on: :collection
+        post :hotel_order, on: :collection
+      end
     end
 
     # 说说或长帖
@@ -99,10 +102,11 @@ Rails.application.routes.draw do
     resources :hotels, only: [:show, :index] do
       get 'rooms', on: :member
     end
-    resources :hotel_orders, only:[:show, :index, :create] do
+    resources :hotel_orders, only:[:show, :index, :create, :destroy] do
       post 'new', on: :collection
       post 'wx_pay', on: :member
       get  'wx_paid_result', on: :member
+      post 'cancel', on: :member
     end
 
     # 商城模块
@@ -120,6 +124,7 @@ Rails.application.routes.draw do
         post :cancel, on: :member
         post :confirm, on: :member
         post :wx_pay, on: :member
+        post :alipay, on: :member
         post :customer_return, on: :member
         get :wx_paid_result, on: :member
         get :express_tracking, on: :member

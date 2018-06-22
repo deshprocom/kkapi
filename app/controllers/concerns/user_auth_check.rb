@@ -1,6 +1,6 @@
 module UserAuthCheck
   def blocked_check!(user)
-    raise(ApplicationController::AuthorizedError, I18n.t("errors.account_blocked")) if user.blocked?
+    raise(ApplicationController::AuthorizedError, I18n.t('errors.account_blocked')) if user.blocked?
   end
 
   def silenced_check!(user)

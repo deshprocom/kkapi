@@ -23,7 +23,7 @@ module Weixin
 
     def pay_params
       {
-        body: "订单：#{@order.order_number}",
+        body: "#{@order.pay_title}：#{@order.order_number}",
         out_trade_no: @order.order_number,
         total_fee: (@order.final_price * 100).to_i,
         spbill_create_ip: @client_ip,
@@ -41,7 +41,7 @@ module Weixin
     end
 
     def notify_url
-      "#{ENV['HOST_URL']}/v1/weixin/notify?order_type=#{@order.model_name.singular}"
+      "#{ENV['HOST_URL']}/v1/weixin/notify/#{@order.model_name.singular}"
     end
   end
 end

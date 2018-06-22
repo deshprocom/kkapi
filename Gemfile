@@ -23,7 +23,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
 gem 'dotenv-rails'
 gem 'redis'
 gem 'redis-rails'
@@ -41,6 +41,9 @@ gem 'mini_magick'
 # 微信相关
 gem 'weixin_authorize'
 gem 'wx_pay'
+
+# 支付宝相关
+gem 'alipay', '~> 0.15.1'
 
 gem 'text'
 gem 'harmonious_dictionary'
