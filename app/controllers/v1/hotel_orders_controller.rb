@@ -2,7 +2,8 @@ module V1
   class HotelOrdersController < ApplicationController
     include UserAuthorize
     before_action :login_required
-    before_action :set_order, only: [:show, :cancel, :destroy, :wx_pay, :wx_paid_result]
+    before_action :set_order, only: [:show, :cancel, :destroy, :wx_pay,
+                                     :refund, :wx_paid_result]
 
     # params
     # {
@@ -44,7 +45,7 @@ module V1
       @orders = @current_user
                   .hotel_orders
                   .yield_self { |it| status ? it.where(status: status) : it }
-                  .includes(hotel_room: [:hotel])
+                  .includes(:recent_refund, hotel_room: [:hotel])
                   .page(params[:page]).per(params[:page_size])
     end
 
@@ -72,6 +73,11 @@ module V1
     def wx_paid_result
       result = WxPay::Service.order_query(out_trade_no: @order.order_number)
       ::Weixin::NotifyService.call(@order, result[:raw]['xml'], 'from_query')
+      render_api_success
+    end
+
+    def refund
+      HotelServices::RefundOrder.call(@order, @current_user, params[:memo])
       render_api_success
     end
 

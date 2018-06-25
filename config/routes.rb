@@ -107,6 +107,7 @@ Rails.application.routes.draw do
       post 'wx_pay', on: :member
       get  'wx_paid_result', on: :member
       post 'cancel', on: :member
+      post 'refund', on: :member
     end
 
     # 商城模块
