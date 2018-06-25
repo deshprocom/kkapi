@@ -14,6 +14,8 @@ json.data do # rubocop:disable Metrics/BlockLength
     json.telephone       @order.telephone
     json.status          @order.status
     json.pay_status      @order.pay_status
+    json.status_text     @order.status_text
+    json.refundable      @order.refundable?
     json.room_num        @order.room_num
     json.final_price     @order.final_price
     json.total_price     @order.total_price
@@ -28,5 +30,11 @@ json.data do # rubocop:disable Metrics/BlockLength
 
   json.checkin_infos do
     json.array! @order.checkin_infos, :last_name, :first_name
+  end
+
+  if @order.recent_refund
+    json.recent_refund do
+      json.extract! @order.recent_refund, :admin_memo, :memo, :refund_price
+    end
   end
 end
