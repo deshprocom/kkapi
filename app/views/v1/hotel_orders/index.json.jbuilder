@@ -8,6 +8,8 @@ json.data do
         json.order_number  order.order_number
         json.status        order.status
         json.pay_status    order.pay_status
+        json.status_text   order.status_text
+        json.refundable    order.refundable?
         json.room_num      order.room_num
         json.final_price   order.final_price
         json.total_price   order.total_price

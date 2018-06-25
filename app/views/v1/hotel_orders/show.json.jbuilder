@@ -14,6 +14,8 @@ json.data do # rubocop:disable Metrics/BlockLength
     json.telephone       @order.telephone
     json.status          @order.status
     json.pay_status      @order.pay_status
+    json.status_text     @order.status_text
+    json.refundable      @order.refundable?
     json.room_num        @order.room_num
     json.final_price     @order.final_price
     json.total_price     @order.total_price

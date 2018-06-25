@@ -45,7 +45,7 @@ module V1
       @orders = @current_user
                   .hotel_orders
                   .yield_self { |it| status ? it.where(status: status) : it }
-                  .includes(hotel_room: [:hotel])
+                  .includes(:recent_refund, hotel_room: [:hotel])
                   .page(params[:page]).per(params[:page_size])
     end
 
@@ -77,7 +77,7 @@ module V1
     end
 
     def refund
-      HotelServices::RefundOrder.call(@order, @user, params[:memo])
+      HotelServices::RefundOrder.call(@order, @current_user, params[:memo])
       render_api_success
     end
 
