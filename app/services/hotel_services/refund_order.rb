@@ -29,7 +29,7 @@ module HotelServices
     end
 
     def over_checkin_date?
-      Time.now > @order.checkin_date
+      Time.now > @order.checkin_date + 1.day
     end
   end
 end
