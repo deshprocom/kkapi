@@ -69,6 +69,13 @@ Rails.application.routes.draw do
       end
     end
 
+    namespace :ali do
+      resources :notify, only: [] do
+        post :shop_order, on: :collection
+        post :hotel_order, on: :collection
+      end
+    end
+
     # 说说或长帖
     resources :topics, only: [:index, :show, :create, :destroy] do
       post :image, on: :collection
