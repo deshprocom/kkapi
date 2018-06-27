@@ -22,6 +22,7 @@ Rails.application.routes.draw do
           get  :details,   on: :collection
           post :award,     on: :collection
         end
+        resources :coupons, only: [:index]
       end
       resources :address, only: [:index, :create, :update, :destroy] do
         post :default, on: :member
@@ -108,6 +109,13 @@ Rails.application.routes.draw do
       get  'wx_paid_result', on: :member
       post 'cancel', on: :member
       post 'refund', on: :member
+    end
+
+    # 积分商城
+    namespace :integral_malls do
+      resources :coupons, only: [:index, :show] do
+        post 'exchange', on: :member
+      end
     end
 
     # 商城模块

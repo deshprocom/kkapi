@@ -26,6 +26,9 @@ module Services
         # 可以注册, 创建一个用户
         user = User.create_by_mobile(mobile, password)
 
+        # 新用户送优惠券
+        Services::Account::AwardCouponService.call(user)
+
         # 生成用户令牌
         access_token = UserToken.encode(user.user_uuid)
         LoginResultHelper.call(user, access_token)

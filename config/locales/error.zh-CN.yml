@@ -43,4 +43,8 @@
     illegal_keyword: '很抱歉，您发布的内容中存在敏感字符'
     similarity_body: '抱歉，您发布的内容相似度过高已被忽略'
 
+    # 积分相关
+    under_stock: '库存不足'
+    under_integral: '积分不足'
+
 
