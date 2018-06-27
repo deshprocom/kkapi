@@ -22,7 +22,7 @@ module V1
       end
 
       def set_result
-        @pay_result = params[:notify]
+        @pay_result = request.request_parameters
       end
     end
   end
