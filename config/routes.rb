@@ -113,6 +113,7 @@ Rails.application.routes.draw do
       post 'new', on: :collection
       post 'wx_pay', on: :member
       get  'wx_paid_result', on: :member
+      post 'alipay', on: :member
       post 'cancel', on: :member
       post 'refund', on: :member
     end

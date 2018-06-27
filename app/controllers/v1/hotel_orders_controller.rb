@@ -3,7 +3,7 @@ module V1
     include UserAuthorize
     before_action :login_required
     before_action :set_order, only: [:show, :cancel, :destroy, :wx_pay,
-                                     :refund, :wx_paid_result]
+                                     :alipay, :refund, :wx_paid_result]
 
     # params
     # {
@@ -79,6 +79,10 @@ module V1
     def refund
       HotelServices::RefundOrder.call(@order, @current_user, params[:memo])
       render_api_success
+    end
+
+    def alipay
+      @payment_params = ::Ali::PayService.call(@order)
     end
 
     private
