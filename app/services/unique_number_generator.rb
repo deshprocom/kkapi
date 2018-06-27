@@ -5,8 +5,7 @@
 # incr_min_length   增加量的最小长度
 #
 # return 只返回数字字符
-module Services
-  class UniqueNumberGenerator
+class UniqueNumberGenerator
     include Serviceable
     attr_accessor :model, :key, :incr_min_length
     MODE_PREFIX_MAP = {
@@ -74,4 +73,3 @@ module Services
       @current_time_prefix ||= Time.current.strftime('%y%m%d%H%M')
     end
   end
-end

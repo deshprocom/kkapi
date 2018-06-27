@@ -33,7 +33,7 @@ module V1::Shop
     end
 
     def create
-      result = Shop::CreateOrderService.call(@current_user, params)
+      result = ::Shop::CreateOrderService.call(@current_user, params)
       render 'create', locals: result
     end
 
