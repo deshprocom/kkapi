@@ -10,7 +10,7 @@ GIT
       vegas (~> 0.1.2)
 
 GEM
-  remote: https://gems.ruby-china.org/
+  remote: https://gems.ruby-china.com/
   specs:
     action-store (0.3.3)
       rails (~> 5)
