@@ -68,6 +68,7 @@ group :development, :test do
   gem 'factory_bot'
   gem 'database_cleaner'
   gem 'rubocop', require: false
+  gem 'awesome_print'
 end
 
 group :development do

@@ -1,10 +1,28 @@
 module V1
   module Ali
     class NotifyController < ApplicationController
+      before_action :set_result
+
       def shop_order
-        Rails.logger.info "Ali::NotifyController request.request_parameters #{request.request_parameters}"
-        Rails.logger.info "Ali::NotifyController params #{params}"
-        $alipay.verify?(request.request_parameters)
+        order = ::Shop::Order.find_by!(order_number: @pay_result['out_trade_no'])
+        render_result ::Ali::NotifyService.call(order, @pay_result)
+      end
+
+      def hotel_order
+        order = HotelOrder.find_by!(order_number: @pay_result['out_trade_no'])
+        render_result ::Ali::NotifyService.call(order, @pay_result)
+      end
+
+      def render_result(result)
+        if result == 'fail'
+          render plain: 'fail'
+        else
+          render plain: 'success'
+        end
+      end
+
+      def set_result
+        @pay_result = params[:notify]
       end
     end
   end

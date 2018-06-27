@@ -77,6 +77,7 @@ module Weixin
     def order_to_paid
       @order.status = 'paid' if @order.unpaid?
       @order.pay_status = 'paid' if @order.pay_status == 'unpaid'
+      @order.pay_channel = 'weixin'
       @order.save
     end
 
