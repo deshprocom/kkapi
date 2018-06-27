@@ -70,6 +70,13 @@ Rails.application.routes.draw do
       end
     end
 
+    namespace :ali do
+      resources :notify, only: [] do
+        post :shop_order, on: :collection
+        post :hotel_order, on: :collection
+      end
+    end
+
     # 说说或长帖
     resources :topics, only: [:index, :show, :create, :destroy] do
       post :image, on: :collection
@@ -107,6 +114,7 @@ Rails.application.routes.draw do
       post 'new', on: :collection
       post 'wx_pay', on: :member
       get  'wx_paid_result', on: :member
+      post 'alipay', on: :member
       post 'cancel', on: :member
       post 'refund', on: :member
     end
