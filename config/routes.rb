@@ -49,6 +49,9 @@ Rails.application.routes.draw do
       resources :jmessage, only: [:index, :create, :destroy]
       resources :login_count, only: [:create]
       resources :share_count, only: [:create]
+      resources :coupons, only: [] do
+        get :search, on: :collection
+      end
     end
 
     # 资讯相关

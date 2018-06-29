@@ -5,13 +5,13 @@ module V1
       before_action :user_self_required
 
       def index
-        keyword = params[:keyword] #未使用unused, 已过期used
+        keyword = params[:keyword] # 未使用unused, 已过期used
         @coupons =
-            case keyword
-            when 'unused' then @current_user.coupons.unused
-            when 'used' then @current_user.coupons.used
-            else @current_user.coupons
-            end
+          case keyword
+          when 'unused' then @current_user.coupons.unused
+          when 'used' then @current_user.coupons.used
+          else @current_user.coupons
+          end
         @coupons = @coupons.order(receive_time: :desc).page(params[:page]).per(params[:page_size])
       end
     end
