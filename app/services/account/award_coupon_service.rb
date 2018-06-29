@@ -15,14 +15,8 @@ module Services
 
       def award_new_user
         @coupon_temps = CouponTemp.published.new_user
-        receive_time = Time.zone.now
-        expire_time = receive_time + 30.days
         @coupon_temps.each do |item|
-          Coupon.create(coupon_temp_id: item.id,
-                        expire_day: 30,
-                        expire_time: expire_time,
-                        receive_time: receive_time,
-                        user_id: @user.id)
+          Coupon.create(coupon_temp_id: item.id).received_by_user(@user)
         end
       end
     end
