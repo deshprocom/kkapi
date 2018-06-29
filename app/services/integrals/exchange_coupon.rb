@@ -17,9 +17,7 @@ module Services
         @coupon = @coupon_temp.coupons.unclaimed.first
         raise_error 'under_stock' if @coupon.blank?
 
-        receive_time = Time.zone.now
-        expire_time = receive_time + @coupon.expire_day.day
-        @coupon.update(receive_time: receive_time, expire_time: expire_time, user_id: @user.id)
+        @coupon.received_by_user(@user)
         # 记录积分交易记录
         Integral.create(integral_create_params)
         # 扣除用户对应的积分
