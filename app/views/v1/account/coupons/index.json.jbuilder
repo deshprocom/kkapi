@@ -11,6 +11,7 @@ json.data do
       json.short_desc        coupon_temp.short_desc.to_s
       json.begin_date        item.receive_time.strftime('%Y-%m-%d')
       json.end_date          item.expire_time.strftime('%Y-%m-%d')
+      json.status            item.expired? ? 'expired' : item.coupon_status
     end
   end
 end
