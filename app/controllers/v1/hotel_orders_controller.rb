@@ -13,8 +13,9 @@ module V1
     #   "room_num": 1
     # }
     def new
-      order_service = HotelServices::CreateOrder.new(@current_user, order_params)
+      order_service = HotelServices::CreateOrder.new(@current_user, order_params, params[:coupon_id])
       order_service.collect_room_items
+      order_service.use_coupon
       @order = order_service.order
       @room  = order_service.room
     end
@@ -32,7 +33,7 @@ module V1
     #    ]
     # }
     def create
-      @order = HotelServices::CreateOrder.call(@current_user, order_params)
+      @order = HotelServices::CreateOrder.call(@current_user, order_params, params[:coupon_id])
     end
 
     SEARCH_STATUS_MAP = {
