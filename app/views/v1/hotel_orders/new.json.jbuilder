@@ -11,7 +11,9 @@ json.data do
   end
 
   json.order do
-    json.total_price @order.total_price_from_items
+    json.total_price     @order.total_price
+    json.discount_amount @order.discount_amount
+    json.final_price     @order.total_price - @order.discount_amount
 
     json.room_num    @order.room_num
     json.room_items do
