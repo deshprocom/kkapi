@@ -29,6 +29,7 @@ module Weixin
       end
 
       order_to_paid
+      got_integral
     end
 
     private
@@ -72,6 +73,13 @@ module Weixin
 
     def result_accord_with_order?
       (@order.final_price * 100).to_i == @result['total_fee'].to_i
+    end
+
+    def got_integral
+      Integral.create_paid_to_integral(user: @order.user,
+                                       target: @order,
+                                       price: @order.final_price,
+                                       option_type: @order.model_name.singular)
     end
 
     def order_to_paid
