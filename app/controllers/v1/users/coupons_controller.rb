@@ -8,7 +8,7 @@ module V1
         requires! :coupons_type
         requires! :amount
 
-        @coupons = @current_user.coupons.includes(:coupon_temp).unused
+        @coupons = @current_user.coupons.includes(:coupon_temp).unused.order(expire_time: :asc)
         @coupons = @coupons.collect do |coupon|
           coupon_temp = coupon.coupon_temp
           next unless coupon_temp.coupon_type.eql?(params[:coupons_type])
