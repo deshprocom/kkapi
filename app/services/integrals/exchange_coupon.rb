@@ -19,23 +19,9 @@ module Services
 
         @coupon.received_by_user(@user)
         # 记录积分交易记录
-        Integral.create(integral_create_params)
-        # 扣除用户对应的积分
-        @user.decrease_points(@coupon_temp.integrals)
+        Integral.create_integral_to_coupon(user: @user, target: @coupon, points: -@coupon_temp.integrals)
         # 记录优惠券模版被领取的次数
         @coupon_temp.increment!(:coupon_received_count)
-      end
-
-      def integral_create_params
-        {
-          user_id: @user.id,
-          option_type: 'exchange_coupon',
-          target: @coupon,
-          category: 'integral_mall',
-          points: -@coupon_temp.integrals,
-          mark: '积分换券',
-          active_at: Time.zone.now
-        }
       end
     end
   end
