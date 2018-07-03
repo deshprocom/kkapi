@@ -30,6 +30,7 @@ module Ali
       return unless @result['trade_status'].in?(%w[TRADE_SUCCESS TRADE_FINISHED])
 
       order_to_paid
+      got_integral
     end
 
     def order_to_paid
@@ -37,6 +38,13 @@ module Ali
       @order.pay_status = 'paid' if @order.pay_status == 'unpaid'
       @order.pay_channel = 'ali'
       @order.save
+    end
+
+    def got_integral
+      Integral.create_paid_to_integral(user: @order.user,
+                                       target: @order,
+                                       price: @order.final_price,
+                                       option_type: @order.model_name.singular)
     end
   end
 end
