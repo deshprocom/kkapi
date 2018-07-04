@@ -17,8 +17,8 @@ module HotelServices
       collect_room_items
       use_coupon
       save_order
+      update_coupon
       create_checkin_infos
-      @coupon.update(target: @order, coupon_status: 'used', pay_time: Time.now)
       @order
     end
 
@@ -32,6 +32,10 @@ module HotelServices
       raise_error_msg('优惠卷不符合折扣规则') unless @coupon.conform_discount_rules?(@order.total_price)
 
       @order.discount_amount = @coupon.discount_amount(@order.total_price)
+    end
+
+    def update_coupon
+      @coupon && @coupon.update(target: @order, coupon_status: 'used', pay_time: Time.now)
     end
 
     def save_order
