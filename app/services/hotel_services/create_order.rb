@@ -18,6 +18,7 @@ module HotelServices
       use_coupon
       save_order
       create_checkin_infos
+      @coupon.update(target: @order, coupon_status: 'used', pay_time: Time.now)
       @order
     end
 
