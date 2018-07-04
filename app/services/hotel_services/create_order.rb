@@ -43,7 +43,9 @@ module HotelServices
       @order.user   = @user
       @order.status = 'unpaid'
       @order.pay_status = 'unpaid'
-      @order.final_price = @order.total_price - @order.discount_amount
+      final_price = @order.total_price - @order.discount_amount
+      # 如果优惠金额大于总金额，则默认0.01
+      @order.final_price = final_price.positive? ? final_price : 0.01
       raise_error_msg('系统错误：订单创建失败') unless @order.save
     end
 
