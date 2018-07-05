@@ -31,7 +31,7 @@ module HotelServices
       raise_error_msg('不是酒店类型的优惠卷') unless @coupon.coupon_temp.coupon_type == 'hotel'
       raise_error_msg('优惠卷不符合折扣规则') unless @coupon.conform_discount_rules?(@order.total_price)
 
-      @order.discount_amount = @coupon.discount_amount(@order.total_price)
+      @order.discount_amount = @coupon.discount_amount(@order.total_price).round(2)
     end
 
     def update_coupon
