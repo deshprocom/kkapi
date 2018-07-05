@@ -3,6 +3,23 @@ module V1
 
     # 按现在的产品逻辑，默认只给出 CNY <=> HKD, CNY => MOP 的实时汇率
     def index
+      if params[:exchange_type] == 'local'
+        local_rates
+      else
+        real_time_rates
+      end
+    end
+
+    def local_rates
+      @cny_to_hkd_rate = local_rate('CNY', 'HKD')
+      @cny_to_mop_rate = local_rate('CNY', 'MOP')
+    end
+
+    def local_rate(from, to)
+      ExchangeRate.local.find_by!(s_currency_no: from, t_currency_no: to)
+    end
+
+    def real_time_rates
       @cny_to_hkd_rate = update_and_return_rate('CNY', 'HKD')
       @cny_to_mop_rate = update_and_return_rate('CNY', 'MOP')
     end
