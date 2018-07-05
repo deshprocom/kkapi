@@ -1,7 +1,7 @@
 module V1
   class CommentsController < ApplicationController
     include UserAuthorize
-    before_action :login_required
+    before_action :login_required, except: [:index, :replies]
     before_action :set_comment, except: [:index, :create]
     before_action :target, only: [:index, :create]
     before_action :body_valid?, only: [:create]

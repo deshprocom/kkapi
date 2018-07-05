@@ -4,4 +4,9 @@ json.name              resource.name
 json.cover_link        resource.preview_image
 json.integrals         resource.integrals
 json.short_desc        resource.short_desc.to_s
+json.discount_type     resource.discount_type
+json.limit_price       resource.limit_price
+json.reduce_price      resource.reduce_price
+json.discount          resource.discount
+json.expire_day        resource.expire_day
 json.stock             resource.stock
