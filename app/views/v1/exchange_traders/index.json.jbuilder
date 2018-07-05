@@ -8,6 +8,7 @@ json.data do
       json.nick_name user.nick_name
       json.mobile    user.mobile
       json.avatar    user.avatar_path.to_s
+      json.signature user.signature.to_s
     end
   end
 end
