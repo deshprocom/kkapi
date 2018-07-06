@@ -129,6 +129,13 @@ Rails.application.routes.draw do
       end
     end
 
+    # 邀请奖励模块
+    resources :my_invites, only: [:index] do
+      get 'indirect', on: :collection
+      get 'awards', on: :collection
+      get 'display_check', on: :collection
+    end
+
     # 商城模块
     namespace :shop do
       resources :categories, only: [:index] do
