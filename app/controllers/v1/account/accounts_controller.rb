@@ -28,7 +28,9 @@ module V1
       end
 
       def user_params
-        params.permit(:type, :email, :mobile, :password, :vcode)
+        # params.permit(:type, :email, :mobile, :password, :vcode)
+        # 屏蔽邮箱注册
+        params.permit(:type, :mobile, :password, :vcode, :invite_code)
       end
     end
   end

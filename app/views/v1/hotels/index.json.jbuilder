@@ -6,6 +6,7 @@ json.data do
       json.id          hotel.id
       json.title       hotel.title
       json.location    hotel.location
+      json.amap_poiid  hotel.amap_poiid
       json.logo        hotel.preview_logo
       json.star_level  hotel.star_level
       json.start_price hotel.start_price

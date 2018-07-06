@@ -29,6 +29,7 @@ module Weixin
       end
 
       order_to_paid
+      got_integral
     end
 
     private
@@ -74,9 +75,17 @@ module Weixin
       (@order.final_price * 100).to_i == @result['total_fee'].to_i
     end
 
+    def got_integral
+      Integral.create_paid_to_integral(user: @order.user,
+                                       target: @order,
+                                       price: @order.final_price,
+                                       option_type: @order.model_name.singular)
+    end
+
     def order_to_paid
       @order.status = 'paid' if @order.unpaid?
       @order.pay_status = 'paid' if @order.pay_status == 'unpaid'
+      @order.pay_channel = 'weixin'
       @order.save
     end
 

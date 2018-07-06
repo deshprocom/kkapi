@@ -2,7 +2,8 @@ module V1
   class HotelOrdersController < ApplicationController
     include UserAuthorize
     before_action :login_required
-    before_action :set_order, only: [:show, :cancel, :destroy, :wx_pay, :wx_paid_result]
+    before_action :set_order, only: [:show, :cancel, :destroy, :wx_pay,
+                                     :alipay, :refund, :wx_paid_result]
 
     # params
     # {
@@ -12,8 +13,9 @@ module V1
     #   "room_num": 1
     # }
     def new
-      order_service = HotelServices::CreateOrder.new(@current_user, order_params)
+      order_service = HotelServices::CreateOrder.new(@current_user, order_params, params[:coupon_id])
       order_service.collect_room_items
+      order_service.use_coupon
       @order = order_service.order
       @room  = order_service.room
     end
@@ -31,7 +33,7 @@ module V1
     #    ]
     # }
     def create
-      @order = HotelServices::CreateOrder.call(@current_user, order_params)
+      @order = HotelServices::CreateOrder.call(@current_user, order_params, params[:coupon_id])
     end
 
     SEARCH_STATUS_MAP = {
@@ -44,7 +46,7 @@ module V1
       @orders = @current_user
                   .hotel_orders
                   .yield_self { |it| status ? it.where(status: status) : it }
-                  .includes(hotel_room: [:hotel])
+                  .includes(:recent_refund, hotel_room: [:hotel])
                   .page(params[:page]).per(params[:page_size])
     end
 
@@ -73,6 +75,15 @@ module V1
       result = WxPay::Service.order_query(out_trade_no: @order.order_number)
       ::Weixin::NotifyService.call(@order, result[:raw]['xml'], 'from_query')
       render_api_success
+    end
+
+    def refund
+      HotelServices::RefundOrder.call(@order, @current_user, params[:memo])
+      render_api_success
+    end
+
+    def alipay
+      @payment_params = ::Ali::PayService.call(@order)
     end
 
     private

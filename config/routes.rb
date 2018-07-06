@@ -22,6 +22,7 @@ Rails.application.routes.draw do
           get  :details,   on: :collection
           post :award,     on: :collection
         end
+        resources :coupons, only: [:index]
       end
       resources :address, only: [:index, :create, :update, :destroy] do
         post :default, on: :member
@@ -48,6 +49,9 @@ Rails.application.routes.draw do
       resources :jmessage, only: [:index, :create, :destroy]
       resources :login_count, only: [:create]
       resources :share_count, only: [:create]
+      resources :coupons, only: [] do
+        get :search, on: :collection
+      end
     end
 
     # 资讯相关
@@ -69,6 +73,13 @@ Rails.application.routes.draw do
       end
     end
 
+    namespace :ali do
+      resources :notify, only: [] do
+        post :shop_order, on: :collection
+        post :hotel_order, on: :collection
+      end
+    end
+
     # 说说或长帖
     resources :topics, only: [:index, :show, :create, :destroy] do
       post :image, on: :collection
@@ -76,6 +87,7 @@ Rails.application.routes.draw do
     end
 
     resources :exchange_rates, only: [:index]
+    resources :exchange_traders, only: [:index]
 
     # 评论和回复
     resources :comments, only: [:index, :create, :destroy] do
@@ -106,7 +118,16 @@ Rails.application.routes.draw do
       post 'new', on: :collection
       post 'wx_pay', on: :member
       get  'wx_paid_result', on: :member
+      post 'alipay', on: :member
       post 'cancel', on: :member
+      post 'refund', on: :member
+    end
+
+    # 积分商城
+    namespace :integral_malls do
+      resources :coupons, only: [:index, :show] do
+        post 'exchange', on: :member
+      end
     end
 
     # 商城模块

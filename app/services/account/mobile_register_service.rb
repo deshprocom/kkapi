@@ -2,12 +2,13 @@ module Services
   module Account
     class MobileRegisterService
       include Serviceable
-      attr_accessor :mobile, :vcode, :password
+      attr_accessor :mobile, :vcode, :password, :invite_code
 
       def initialize(params)
         self.mobile = params[:mobile]
         self.vcode = params[:vcode]
         self.password = params[:password]
+        self.invite_code = params[:invite_code]
       end
 
       def call
@@ -26,9 +27,21 @@ module Services
         # 可以注册, 创建一个用户
         user = User.create_by_mobile(mobile, password)
 
+        # 三级分销模式 记录用户关系
+        UserRelationCreator.call(user, invite_user)
+
+        # 新用户送优惠券
+        Services::Account::AwardCouponService.call(user)
+
         # 生成用户令牌
         access_token = UserToken.encode(user.user_uuid)
         LoginResultHelper.call(user, access_token)
+      end
+
+      def invite_user
+        return nil if invite_code.blank? # 没有邀请码
+
+        User.by_uuid(invite_code)
       end
     end
   end

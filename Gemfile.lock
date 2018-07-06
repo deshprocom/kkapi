@@ -10,7 +10,7 @@ GIT
       vegas (~> 0.1.2)
 
 GEM
-  remote: https://gems.ruby-china.org/
+  remote: https://gems.ruby-china.com/
   specs:
     action-store (0.3.3)
       rails (~> 5)
@@ -58,6 +58,7 @@ GEM
     ast (2.4.0)
     awesome_nested_set (3.1.4)
       activerecord (>= 4.0.0, < 5.3)
+    awesome_print (1.8.0)
     builder (3.2.3)
     byebug (10.0.2)
     capistrano (3.10.2)
@@ -318,6 +319,7 @@ DEPENDENCIES
   action-store
   alipay (~> 0.15.1)
   awesome_nested_set
+  awesome_print
   byebug
   capistrano
   capistrano-git-with-submodules (~> 2.0)

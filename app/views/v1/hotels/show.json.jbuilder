@@ -5,6 +5,7 @@ json.data do
     json.id           @hotel.id
     json.title        @hotel.title
     json.location     @hotel.location
+    json.amap_poiid   @hotel.amap_poiid
     json.logo         @hotel.logo.url
     json.description  @hotel.description
     json.preview_logo @hotel.preview_logo
