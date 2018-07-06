@@ -16,7 +16,7 @@ module Services
         raise_error 'mobile_format_error' unless UserValidator.mobile_valid?(mobile)
 
         # 检查验证码是否正确
-        # raise_error 'vcode_not_match' unless VCode.check_vcode('register', mobile, vcode)
+        raise_error 'vcode_not_match' unless VCode.check_vcode('register', mobile, vcode)
 
         # 检查手机号是否存在
         raise_error 'mobile_already_used' if UserValidator.mobile_exists?(mobile)
