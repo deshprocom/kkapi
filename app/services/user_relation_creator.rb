@@ -12,7 +12,7 @@ class UserRelationCreator
     # 没有人邀请的情况下
     return from_nobody if @p_user.blank?
     # 查询p_user用户的等级
-    p_level = @p_user.user_relation.level
+    p_level = @p_user.r_level
 
     from_first_level_user if p_level.eql?(1)
     # 被2级用户邀请
@@ -22,12 +22,12 @@ class UserRelationCreator
   end
 
   def from_nobody
-    create_record(user: @c_user, level: 1)
+    create_record(level: 1)
   end
 
   # 邀请人是1级用户，那么当前用户就是2级
   def from_first_level_user
-    create_record(user: @c_user, pid: @p_user.id, level: 2)
+    create_record(pid: @p_user.id, level: 2)
     PocketMoney.create_direct_invite_money(user: @p_user, target: @c_user )
   end
 
@@ -35,16 +35,18 @@ class UserRelationCreator
   def from_second_level_user
     # 找出2级对应的用户
     g_user = @p_user.user_relation.p_user.user
-    create_record(user: @c_user, pid: @p_user.id, gid: g_user.id, level: 3)
+    create_record(pid: @p_user.id, gid: g_user.id, level: 3)
     PocketMoney.create_indirect_invite_money(user: g_user, target: @p_user, second_target: @c_user)
   end
 
   # 邀请人是3级用户，那么当前用户也是3级
   def from_third_level_user
-    create_record(user: @c_user, level: 3, pid: @p_user.id)
+    create_record(level: 3, pid: @p_user.id)
   end
 
   def create_record(params)
-    UserRelation.create(params)
+    UserRelation.create!({ user: @c_user }.merge(params))
+    # 同步等级
+    @c_user.update(r_level: params[:level])
   end
 end
