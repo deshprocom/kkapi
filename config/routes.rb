@@ -113,6 +113,7 @@ Rails.application.routes.draw do
     # 酒店模块
     resources :hotels, only: [:show, :index] do
       get 'rooms', on: :member
+      get 'regions', on: :collection
     end
     resources :hotel_orders, only:[:show, :index, :create, :destroy] do
       post 'new', on: :collection

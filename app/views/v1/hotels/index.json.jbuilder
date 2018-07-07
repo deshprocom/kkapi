@@ -10,6 +10,7 @@ json.data do
       json.logo        hotel.preview_logo
       json.star_level  hotel.star_level
       json.start_price hotel.start_price
+      json.region      Hotel::REGIONS_MAP[hotel.region]
     end
   end
 end
