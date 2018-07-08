@@ -12,6 +12,7 @@ json.data do
       json.start_price hotel.start_price
       json.region      Hotel::REGIONS_MAP[hotel.region]
       json.amap_navigation_url hotel.amap_navigation_url
+      json.amap_location       hotel.amap_location
     end
   end
 end
