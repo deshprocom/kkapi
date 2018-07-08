@@ -13,8 +13,9 @@ module Services
       def call
         account = user_params[:account]
         type = user_params[:type]
+        account_code = type.eql?('mobile') ? "+#{user_params[:ext]}#{account}" : account
         # 判断验证码是否匹配
-        raise_error 'vcode_not_match' unless check_code('bind_account', account, user_params[:code])
+        raise_error 'vcode_not_match' unless check_code('bind_account', account_code, user_params[:code])
 
         send("update_#{type}", account)
       end
@@ -28,12 +29,12 @@ module Services
 
       def update_mobile(mobile)
         # 判断手机号格式是否正确
-        raise_error 'mobile_format_error' unless UserValidator.mobile_valid?(mobile)
+        raise_error 'mobile_format_error' unless UserValidator.mobile_valid?(mobile, user_params[:ext])
         # 判断账户是否存在
         raise_error 'mobile_already_used' if UserValidator.mobile_exists?(mobile)
 
         # 更新账户
-        user.assign_attributes(mobile: mobile)
+        user.assign_attributes(mobile: mobile, ext: user_params[:ext])
         user.touch_visit!
         # 记录一次账户修改
         ApiResult.success_with_data(user: user)

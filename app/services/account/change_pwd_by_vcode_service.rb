@@ -3,11 +3,12 @@ module Services
     class ChangePwdByVcodeService
       include Serviceable
 
-      attr_accessor :new_pwd, :mobile, :vcode, :user
+      attr_accessor :new_pwd, :mobile, :vcode, :user, :ext
 
       def initialize(params, user)
         self.new_pwd = params[:new_pwd]
         self.mobile = params[:mobile]
+        self.ext = params[:ext]
         self.vcode = params[:vcode]
         self.user = user
       end
@@ -20,7 +21,7 @@ module Services
         raise_error 'password_format_wrong' unless UserValidator.pwd_valid?(new_pwd)
 
         # 判断验证码是否一致
-        raise_error 'vcode_not_match' unless VCode.check_vcode('change_pwd', mobile, vcode)
+        raise_error 'vcode_not_match' unless VCode.check_vcode('change_pwd', "+#{ext}#{mobile}", vcode)
 
         # 生成新的密码 设置新的盐值
         new_salt = SecureRandom.hex(6).slice(0, 6)
