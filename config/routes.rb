@@ -113,6 +113,7 @@ Rails.application.routes.draw do
     # 酒店模块
     resources :hotels, only: [:show, :index] do
       get 'rooms', on: :member
+      get 'regions', on: :collection
     end
     resources :hotel_orders, only:[:show, :index, :create, :destroy] do
       post 'new', on: :collection
@@ -128,6 +129,14 @@ Rails.application.routes.draw do
       resources :coupons, only: [:index, :show] do
         post 'exchange', on: :member
       end
+    end
+
+    # 邀请奖励模块
+    resources :my_invites, only: [:index] do
+      get 'indirect', on: :collection
+      get 'award_details', on: :collection
+      get 'display_check', on: :collection
+      get 'count', on: :collection
     end
 
     # 商城模块

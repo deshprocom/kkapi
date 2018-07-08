@@ -10,6 +10,8 @@ json.data do
     json.description  @hotel.description
     json.preview_logo @hotel.preview_logo
     json.telephone    @hotel.telephone
+    json.region       Hotel::REGIONS_MAP[@hotel.region]
+    json.amap_navigation_url @hotel.amap_navigation_url
 
     json.images do
       json.array! @hotel.images do |image|
