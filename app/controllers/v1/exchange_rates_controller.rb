@@ -33,7 +33,8 @@ module V1
       Rails.logger.info "RealTimeExchangeQuery result: #{result}"
       return rate unless result['error_code'] == 0
 
-      rate.update(rate: result['result'][0]['exchange'])
+      # 手动更新时间，防止因rate没变化，而没有更新updated_at
+      rate.update(rate: result['result'][0]['exchange'], updated_at: Time.now)
       rate
     end
   end
