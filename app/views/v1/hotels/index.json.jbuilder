@@ -11,6 +11,7 @@ json.data do
       json.star_level  hotel.star_level
       json.start_price hotel.start_price
       json.region      Hotel::REGIONS_MAP[hotel.region]
+      json.amap_navigation_url hotel.amap_navigation_url
     end
   end
 end
