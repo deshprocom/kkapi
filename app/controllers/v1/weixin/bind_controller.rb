@@ -1,7 +1,7 @@
 module V1
   module Weixin
     class BindController < ApplicationController
-      ACCOUNT_TYPES = %w[mobile email].freeze
+      ACCOUNT_TYPES = %w[mobile].freeze
       before_action :set_wx_authorize
 
       def create
@@ -18,7 +18,7 @@ module V1
       end
 
       def permit_params
-        params.permit(:type, :account, :code, :access_token, :password)
+        params.permit(:type, :account, :ext, :code, :access_token, :password)
       end
     end
   end

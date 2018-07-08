@@ -3,11 +3,12 @@ module Services
     class VcodeLoginService
       include Serviceable
 
-      attr_accessor :mobile, :vcode
+      attr_accessor :mobile, :vcode, :ext
 
-      def initialize(mobile, vcode)
+      def initialize(mobile, vcode, ext)
         self.mobile = mobile
         self.vcode = vcode
+        self.ext = ext
       end
 
       def call
@@ -19,7 +20,7 @@ module Services
         raise_error 'user_not_found' if user.nil?
 
         # 检查用户输入的验证码是否正确
-        raise_error 'vcode_not_match' unless VCode.check_vcode('login', mobile, vcode)
+        raise_error 'vcode_not_match' unless VCode.check_vcode('login', "+#{ext}#{mobile}", vcode)
 
         # 刷新上次访问时间
         user.touch_visit!

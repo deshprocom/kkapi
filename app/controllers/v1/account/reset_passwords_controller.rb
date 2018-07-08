@@ -20,6 +20,7 @@ module V1
                       :mobile,    # 手机
                       :email,     # 邮箱
                       :password,  # 新的密码
+                      :ext,       # 手机号扩展
                       :vcode)     # 验证码
       end
 

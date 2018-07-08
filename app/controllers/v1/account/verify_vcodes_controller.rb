@@ -33,9 +33,9 @@ module V1
 
       def gain_account
         if params[:option_type].eql?('change_old_account')
-          @current_user[params[:vcode_type]]
+          "+#{@current_user.ext}#{@current_user[params[:vcode_type]]}"
         else
-          params[:account]
+          "+#{params[:ext]}#{params[:account]}"
         end
       end
     end

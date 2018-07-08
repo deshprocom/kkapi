@@ -13,7 +13,7 @@ module V1
       private
 
       def login_by_vcode
-        Services::Account::VcodeLoginService.call(params[:mobile], params[:vcode])
+        Services::Account::VcodeLoginService.call(params[:mobile], params[:vcode], params[:ext])
       end
 
       def login_by_email
