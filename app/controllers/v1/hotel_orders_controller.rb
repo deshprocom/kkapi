@@ -55,6 +55,7 @@ module V1
     def cancel
       return render_api_error('该订单不允许取消') unless @order.unpaid?
       @order.canceled!
+      @order.coupon && @order.coupon.update(coupon_status: 'refund', refund_time: Time.now)
       render_api_success
     end
 
