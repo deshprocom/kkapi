@@ -28,7 +28,6 @@ class UserRelationCreator
   # 邀请人是1级用户，那么当前用户就是2级
   def from_first_level_user
     create_record(pid: @p_user.id, level: 2)
-    PocketMoney.create_direct_invite_money(user: @p_user, target: @c_user )
   end
 
   # 邀请人是2级用户，那么当前用户就是3级
@@ -36,7 +35,6 @@ class UserRelationCreator
     # 找出2级对应的用户
     g_user = @p_user.user_relation.p_user.user
     create_record(pid: @p_user.id, gid: g_user.id, level: 3)
-    PocketMoney.create_indirect_invite_money(user: g_user, target: @p_user, second_target: @c_user)
   end
 
   # 邀请人是3级用户，那么当前用户也是3级
