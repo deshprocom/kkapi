@@ -24,6 +24,7 @@ module V1
       def permit_params
         params.permit(:type,      # 重置账户的类型
                       :account,   # 账户
+                      :ext,
                       :old_code,  # 旧的验证码
                       :new_code)  # 新的验证码
       end
