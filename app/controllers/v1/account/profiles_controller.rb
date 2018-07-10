@@ -8,6 +8,8 @@ module V1
       def show; end
 
       def update
+        illegal_keyword_check! :nick_name
+        illegal_keyword_check! :signature
         @current_user.assign_attributes(user_params)
         @current_user.touch_visit!
         render :show
