@@ -51,7 +51,7 @@ module Qcloud
         SmsLog.create!(mobile: mobile,
                        ext: ext,
                        content: content,
-                       send_time: @current_time,
+                       send_time: Time.zone.now,
                        status: 'sending').id
       end
 

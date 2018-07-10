@@ -10,7 +10,7 @@ class UserRelationCreator
 
   def call
     # 没有人邀请的情况下
-    return from_nobody if @p_user.blank?
+    return from_nobody if @p_user.blank? || @p_user.r_level.zero?
     # 查询p_user用户的等级
     p_level = @p_user.r_level
 
