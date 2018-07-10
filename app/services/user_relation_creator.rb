@@ -33,7 +33,7 @@ class UserRelationCreator
   # 邀请人是2级用户，那么当前用户就是3级
   def from_second_level_user
     # 找出2级对应的用户
-    g_user = @p_user.user_relation.p_user.user
+    g_user = @p_user.p_user
     create_record(pid: @p_user.id, gid: g_user.id, level: 3)
   end
 
