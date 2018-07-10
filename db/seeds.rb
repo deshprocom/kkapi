@@ -10,7 +10,3 @@
 if Province.count.zero?
   require './db/create_address'
 end
-
-if InviteAward.count.zero?
-  InviteAward.create
-end
