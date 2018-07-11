@@ -9,8 +9,8 @@ json.data do
       json.notes  room.notes
       json.images room.images.map(&:original)
 
-      room_price = @prices.find { |p| p.hotel_room_id == room.id } || room.current_wday_price
-      json.price room_price.price
+      room_price = @prices.find { |p| p.hotel_room_id == room.id } || room.wday_price(@date)
+      json.price room_price.price.to_s
     end
   end
 end
