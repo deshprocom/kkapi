@@ -11,6 +11,9 @@ module V1
         Services::Integrals::RecordService.call(@current_user, 'login')
         # 更新访问时间
         @current_user.touch_visit!
+        # 如果是新用户 做完登录活动可以获取奖励
+        @current_user.get_pocket_moneys
+        # 判断是否完成新手任务 下发奖励
         render_api_success
       end
     end

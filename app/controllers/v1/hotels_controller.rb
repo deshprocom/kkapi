@@ -6,18 +6,19 @@ module V1
       keyword = params[:keyword].presence
       region = params[:region].presence
       order = params[:order].presence
+      @date = params[:date].presence ? params[:date].to_date : Date.current
       @hotels = Hotel.user_visible.page(params[:page]).per(params[:page_size])
                      .yield_self { |it| keyword ? it.search_keyword(keyword) : it }
                      .yield_self { |it| region ? it.where_region(region) : it }
-                     .yield_self { |it| order == 'price_desc' ? it.price_desc : it }
-                     .yield_self { |it| order == 'price_asc' ? it.price_asc : it }
+                     .yield_self { |it| order == 'price_desc' ? it.price_desc(@date) : it }
+                     .yield_self { |it| order == 'price_asc' ? it.price_asc(@date) : it }
     end
 
     def show; end
 
     def rooms
       requires! :date
-      @rooms = @hotel.published_rooms.includes(:master, :images)
+      @rooms = @hotel.published_rooms.includes(:images, HotelRoom.s_current_wday_price)
       @prices = HotelRoomPrice.where(hotel_room_id: @rooms.map(&:id),
                                      date: params[:date],
                                      is_master: false)
