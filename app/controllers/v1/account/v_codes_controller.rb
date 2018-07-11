@@ -19,7 +19,7 @@ module V1
       private
 
       def user_params
-        params.permit(:option_type, :vcode_type, :mobile, :email)
+        params.permit(:option_type, :vcode_type, :mobile, :email, :ext)
       end
 
       def login_need?

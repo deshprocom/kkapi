@@ -25,7 +25,7 @@ module V1
       end
 
       def user_params
-        params.permit(:type, :new_pwd, :old_pwd, :vcode, :mobile)
+        params.permit(:type, :new_pwd, :old_pwd, :vcode, :mobile, :ext)
       end
     end
   end

@@ -3,10 +3,11 @@ module Services
     class ResetPwdByMobileService
       include Serviceable
 
-      attr_accessor :mobile, :vcode, :password
+      attr_accessor :mobile, :vcode, :password, :ext
 
       def initialize(params)
         self.mobile = params[:mobile]
+        self.ext = params[:ext]
         self.vcode = params[:vcode]
         self.password = params[:password]
       end
@@ -19,7 +20,7 @@ module Services
         raise_error 'password_format_wrong' unless UserValidator.pwd_valid?(password)
 
         # 检查验证码是否正确
-        raise_error 'vcode_not_match' unless VCode.check_vcode('reset_pwd', mobile, vcode)
+        raise_error 'vcode_not_match' unless VCode.check_vcode('reset_pwd', "+#{ext}#{mobile}", vcode)
 
         # 查询用户
         user = User.by_mobile(mobile)

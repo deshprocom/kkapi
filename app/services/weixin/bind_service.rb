@@ -13,7 +13,7 @@ module Services
       def call
         # 验证手机验证码是否正确
         account = user_params[:account]
-        raise_error 'vcode_not_match' unless check_code('bind_wx_account', account, user_params[:code])
+        raise_error 'vcode_not_match' unless check_code('bind_wx_account', "+#{user_params[:ext]}#{account}", user_params[:code])
 
         access_token = user_params[:access_token]
 
@@ -41,7 +41,7 @@ module Services
         raise_error 'password_format_wrong' if password.present? && !UserValidator.pwd_valid?(password)
 
         # 可以注册, 创建一个用户
-        user = User.create_by_mobile(user_params[:account], password)
+        user = User.create_by_mobile(user_params[:account], password, user_params[:ext])
         gender = wx_user[:sex].to_i.eql?(1) ? 1 : 0
         user.update(nick_name: wx_user[:nick_name], wx_avatar: wx_user[:head_img], gender: gender)
 

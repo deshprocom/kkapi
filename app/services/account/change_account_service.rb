@@ -13,12 +13,13 @@ module Services
       def call
         type = user_params[:type]
         old_account = user[type]
+        old_account_check = "+#{user.ext}#{old_account}"
         account = user_params[:account]
         # 判断旧验证码是否匹配
-        raise_error 'vcode_not_match' unless check_code('change_old_account', old_account, user_params[:old_code])
+        raise_error 'vcode_not_match' unless check_code('change_old_account', old_account_check, user_params[:old_code])
 
         # 判断新验证码是否匹配
-        raise_error 'vcode_not_match' unless check_code('bind_new_account', account, user_params[:new_code])
+        raise_error 'vcode_not_match' unless check_code('bind_new_account', "+#{user_params[:ext]}#{account}", user_params[:new_code])
 
         send("update_#{type}", account)
       end
@@ -32,7 +33,7 @@ module Services
 
       def update_mobile(mobile)
         # 判断手机号格式是否正确
-        raise_error 'mobile_format_error' unless UserValidator.mobile_valid?(mobile)
+        raise_error 'mobile_format_error' unless UserValidator.mobile_valid?(mobile, user_params[:ext])
         # 判断账户是否存在
         raise_error 'mobile_already_used' if UserValidator.mobile_exists?(mobile)
 

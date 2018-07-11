@@ -3,6 +3,7 @@ json.nick_name          user.nick_name
 json.user_name          user.user_name
 json.gender             user.gender
 json.mobile             user.mobile
+json.ext                user.ext
 json.email              user.email
 json.birthday           user.birthday.to_s
 json.avatar             user.avatar_path.to_s

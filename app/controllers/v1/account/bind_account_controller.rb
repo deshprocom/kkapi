@@ -21,6 +21,7 @@ module V1
       def permit_params
         params.permit(:type,
                       :account,
+                      :ext,
                       :code)
       end
     end

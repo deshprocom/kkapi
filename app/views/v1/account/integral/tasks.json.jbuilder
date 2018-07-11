@@ -8,6 +8,7 @@ json.data do
         json.mark                result[:mark]
         json.limit_times         result[:limit_times]
         json.icon                result[:icon]
+        json.point               result[:point]
         json.doing_times         result[:doing]
         json.done_times          result[:done]
         json.total_doing_points  result[:total_doing_points]
