@@ -60,9 +60,7 @@ module HotelServices
       days_num = (@order.checkout_date - @order.checkin_date).to_i
       @order.room_items = (0...days_num).map do |i|
         date = @order.checkin_date + i.days
-        wday = HotelRoomPrice::WDAYS[date.wday]
-        # 找到相应日期或相应星期几的价格
-        room_price = @room.prices.find_by(date: date) || @room.send("#{wday}_price")
+        room_price = @room.prices.find_by(date: date) || @room.master
         { date: date, price: room_price.price * @order.room_num }
       end
       @order.total_price = @order.total_price_from_items
