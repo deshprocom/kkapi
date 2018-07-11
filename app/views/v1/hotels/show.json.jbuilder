@@ -14,7 +14,6 @@ json.data do
     json.amap_navigation_url @hotel.amap_navigation_url
     json.amap_location       @hotel.amap_location
 
-
     json.images do
       json.array! @hotel.images do |image|
         json.id        image.id
