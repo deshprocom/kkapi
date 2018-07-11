@@ -139,6 +139,12 @@ Rails.application.routes.draw do
       get 'count', on: :collection
     end
 
+    # 钱包
+    resource :wallet, only: [] do
+      get 'account', on: :collection
+      get 'account_details', on: :collection
+    end
+
     # 商城模块
     namespace :shop do
       resources :categories, only: [:index] do
