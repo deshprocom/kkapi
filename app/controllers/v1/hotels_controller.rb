@@ -18,7 +18,8 @@ module V1
 
     def rooms
       requires! :date
-      @rooms = @hotel.published_rooms.includes(:images, HotelRoom.s_current_wday_price)
+      @date = params[:date].to_date
+      @rooms = @hotel.published_rooms.includes(:images, HotelRoom.s_wday_price(@date))
       @prices = HotelRoomPrice.where(hotel_room_id: @rooms.map(&:id),
                                      date: params[:date],
                                      is_master: false)
