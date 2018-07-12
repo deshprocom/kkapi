@@ -143,6 +143,7 @@ Rails.application.routes.draw do
     resource :wallet, only: [] do
       get 'account', on: :collection
       get 'account_details', on: :collection
+      post 'withdrawal', on: :collection
     end
 
     # 商城模块
