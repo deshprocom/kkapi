@@ -10,7 +10,7 @@ module V1
         # 奖励积分给用户
         Services::Integrals::RecordService.call(@current_user, 'share')
         # 如果是新用户 做完分享活动可以获取奖励
-        @current_user.get_pocket_moneys
+        @current_user.take_pocket_moneys
         render_api_success
       end
     end

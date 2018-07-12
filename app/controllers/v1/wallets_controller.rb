@@ -15,7 +15,7 @@ module V1
       requires! :account_type, values: %w[alipay bank] # 提款账户类型暂时只支持支付宝和银行卡
       requires! :account # 要求填写银行卡账号
       requires! :account_memo if params[:account_type].eql?('bank') # 银行卡需要填写银行卡类型
-      Services::Wallets::Withdrawal_service.call(@current_user, user_params)
+      Services::Wallets::WithdrawalService.call(@current_user, user_params)
       render_api_success
     end
 

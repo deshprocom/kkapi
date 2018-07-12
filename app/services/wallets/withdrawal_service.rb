@@ -1,6 +1,6 @@
 module Services
   module Wallets
-    class Withdrawal_service
+    class WithdrawalService
       include Serviceable
 
       def initialize(user, params)
