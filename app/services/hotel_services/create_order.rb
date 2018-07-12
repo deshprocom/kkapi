@@ -19,6 +19,7 @@ module HotelServices
       save_order
       update_coupon
       create_checkin_infos
+      OrderMailer.notice_staff_after_paid(@order).deliver_later
       @order
     end
 
