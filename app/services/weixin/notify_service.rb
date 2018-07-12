@@ -82,6 +82,7 @@ module Weixin
                                        option_type: @order.model_name.singular)
     end
 
+    # 酒店订单支付成功，将在model中触发相应的回调
     def order_to_paid
       @order.status = 'paid' if @order.unpaid?
       @order.pay_status = 'paid' if @order.pay_status == 'unpaid'
