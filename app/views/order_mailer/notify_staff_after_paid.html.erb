@@ -1,0 +1,11 @@
+<p>用户名称：<%= @order.user.nick_name %></p>
+<p>联系方式：<%= @order.telephone %></p>
+<p>酒店信息：<%= @room.hotel.title %> - <%= @room.title %> </p>
+<p>房间数量：<%= @order.room_num %> 间</p>
+<p>入住日期：<%= @order.checkin_date %> - <%= @order.checkout_date %> </p>
+<% @order.checkin_infos.each do |info| %>
+  <p>入住人信息：<%= info.last_name %> - <%= info.first_name %> </p>
+<% end %>
+<p>支付金额：<%= @order.final_price %> 元</p>
+<p>支付渠道：<%= @order.pay_channel_text %> </p>
+<p><%= link_to('订单详情，点击此处去后台查看', "https://kkcms.deshpro.com/admin/hotel_orders/#{@order.id}") %></p>
