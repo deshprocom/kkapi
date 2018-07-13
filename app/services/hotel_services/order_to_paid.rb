@@ -23,7 +23,7 @@ module HotelServices
 
     def notify_after_paid
       notify_user_after_paid
-      OrderMailer.notify_staff_after_paid(self).deliver_later
+      OrderMailer.notify_staff_after_paid(@order).deliver_later
     end
 
     # 付款成功，更新每日房间已卖出的数量
@@ -38,7 +38,7 @@ module HotelServices
       room_price = @room.prices.find_by(date: date)
       return room_price if room_price
 
-      wday_price = @room.wday_price(date)
+      wday_price = @room.wday_price(date.to_date)
       @room.prices.create(date: date,
                           price: wday_price.price,
                           room_num_limit: wday_price.room_num_limit,
@@ -53,7 +53,7 @@ module HotelServices
       hotel = @room.hotel
       title = "#{hotel.title}#{date}入住#{@room.title}#{@order.room_num}间#{@order.nights_num}晚"
       sms_content = format(NOTICE_USER_AFTER_PAID_SMS, title)
-      SendMobileIsmsJob.perform_later(telephone, sms_content)
+      SendMobileIsmsJob.perform_later(@order.telephone, sms_content)
     end
   end
 end
