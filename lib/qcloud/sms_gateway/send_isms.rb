@@ -63,11 +63,11 @@ module Qcloud
         status = params['result'].zero? ? 'success' : 'failed'
         Rails.logger.info "log_id=#{log_id}----sms=#{sms}, sid=#{sid}, error_msg=#{error_msg}, fee=#{fee}"
         update_params = {
-            sid: sid,
-            error_msg: error_msg,
-            fee: fee,
-            status: status,
-            arrival_time: Time.zone.now
+          sid: sid,
+          error_msg: error_msg,
+          fee: fee,
+          status: status,
+          arrival_time: Time.zone.now
         }
         sms.update!(update_params)
       end
@@ -75,8 +75,8 @@ module Qcloud
       def app_config
         raise '需要配置sdkappid或appkey' if ENV['APPID'].blank? || ENV['APPKEY'].blank?
         {
-            appid: ENV['APPID'],
-            appkey: ENV['APPKEY']
+          appid: ENV['APPID'],
+          appkey: ENV['APPKEY']
         }
       end
     end

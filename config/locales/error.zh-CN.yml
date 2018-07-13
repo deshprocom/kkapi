@@ -48,4 +48,10 @@
     under_stock: '库存不足'
     under_integral: '积分不足'
 
+    # 钱包部分
+    withdraw_min_limit: '单次提现最少要求满50元'
+    withdraw_max_limit: '单次提现最多不超过1000元'
+    withdraw_month_limit: '单月提现最多不超过1000元'
+    withdraw_account_limit: '账户余额不足'
+
 
