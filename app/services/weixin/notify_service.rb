@@ -21,6 +21,9 @@ module Weixin
       # 记录的微信账单
       bill_create_or_update
 
+      # 该订单已经支付过，就不需要接下来的验证了
+      return if @order.pay_status == 'paid'
+
       # 检查订单是否存在，订单的金额是否和数据库一致
       return raise_error_msg('订单金额不匹配') unless result_accord_with_order?
 
@@ -82,12 +85,12 @@ module Weixin
                                        option_type: @order.model_name.singular)
     end
 
-    # 酒店订单支付成功，将在model中触发相应的回调
     def order_to_paid
-      @order.status = 'paid' if @order.unpaid?
-      @order.pay_status = 'paid' if @order.pay_status == 'unpaid'
-      @order.pay_channel = 'weixin'
-      @order.save
+      if @order.class.name == 'HotelOrder'
+        HotelServices::OrderToPaid.call(@order, 'weixin')
+      else
+        Shop::OrderToPaidService.call(@order, 'weixin')
+      end
     end
 
     def bill_create_or_update
