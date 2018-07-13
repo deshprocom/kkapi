@@ -8,6 +8,7 @@ json.data do
     json.tags   @room.tags
     json.notes  @room.notes
     json.images @room.images.map(&:original)
+    json.saleable_num @min_saleable_num
   end
 
   json.order do
