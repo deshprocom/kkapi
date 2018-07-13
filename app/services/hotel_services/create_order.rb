@@ -9,20 +9,22 @@ module HotelServices
       @room = HotelRoom.published.find(params[:hotel_room_id])
       @order = HotelOrder.new(params)
       @coupon_id = coupon_id
+      @room_prices = []
     end
 
     def call
       raise_error_msg('入住人信息数量应与房间数一致') if @checkin_infos.size != @order.room_num
 
       collect_room_items
-      use_coupon
+      check_room_saleable!
+      use_coupon!
       save_order
       update_coupon
       create_checkin_infos
       @order
     end
 
-    def use_coupon
+    def use_coupon!
       return if @coupon_id.blank?
 
       @coupon = Coupon.find_by!(coupon_number: @coupon_id)
@@ -58,14 +60,28 @@ module HotelServices
 
     def collect_room_items
       days_num = (@order.checkout_date - @order.checkin_date).to_i
-      @order.room_items = (0...days_num).map do |i|
-        date = @order.checkin_date + i.days
-        wday = HotelRoomPrice::WDAYS[date.wday]
-        # 找到相应日期或相应星期几的价格
-        room_price = @room.prices.find_by(date: date) || @room.send("#{wday}_price")
-        { date: date, price: room_price.price * @order.room_num }
-      end
+      @order.room_items = (0...days_num).map { |i| room_item(i) }
       @order.total_price = @order.total_price_from_items
+    end
+
+    # 获取对应日期或默认的房间信息
+    def room_item(i)
+      date = @order.checkin_date + i.days
+      wday = HotelRoomPrice::WDAYS[date.wday]
+      # 找到相应日期或相应星期几的价格
+      room_price = @room.prices.find_by(date: date) || @room.send("#{wday}_price")
+      @room_prices << room_price
+      { date: date, price: room_price.price * @order.room_num }
+    end
+
+    # 购买的房间数量大于 最小的可购买数量 则不能购买
+    def check_room_saleable!
+      raise_error_msg('房间数量不足') if @order.room_num > min_saleable_num
+    end
+
+    # 所有日期中最小的可购买数量
+    def min_saleable_num
+      @min_saleable_num ||= @room_prices.map(&:saleable_num).min
     end
   end
 end
