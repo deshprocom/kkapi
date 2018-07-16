@@ -11,9 +11,14 @@ module Services
 
       def call
         check_amount
-        Withdrawal.create!(init_create_params)
-        @user.decrease_pocket_money(@amount)
-        @user.increase_freeze_pocket_money(@amount)
+        # 生成提款单
+        withdraw = Withdrawal.create!(init_create_params)
+        # 生成零钱明细
+        # 记录明细
+        PocketMoney.create_withdraw_record(user: @user,
+                                           target: withdraw,
+                                           status: 'pending',
+                                           amount: @amount)
       end
 
       def init_create_params
