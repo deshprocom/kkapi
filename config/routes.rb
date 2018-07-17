@@ -23,6 +23,7 @@ Rails.application.routes.draw do
           post :award,     on: :collection
         end
         resources :coupons, only: [:index]
+        resources :novice_task, only: [:index]
       end
       resources :address, only: [:index, :create, :update, :destroy] do
         post :default, on: :member
