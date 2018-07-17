@@ -12,6 +12,7 @@ module V1
                      .yield_self { |it| region ? it.where_region(region) : it }
                      .yield_self { |it| order == 'price_desc' ? it.price_desc(@date) : it }
                      .yield_self { |it| order == 'price_asc' ? it.price_asc(@date) : it }
+                     .position_desc
     end
 
     def show; end

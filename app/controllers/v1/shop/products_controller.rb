@@ -4,6 +4,7 @@ module V1::Shop
       keyword = params[:keyword].presence
       category_id = params[:category_id].presence
       @products = product_scope.page(params[:page]).per(params[:page_size])
+                               .position_desc
                                .yield_self { |it| keyword ? it.search_keyword(keyword) : it }
                                .yield_self { |it| category_id ? it.in_category(category_id) : it }
     end
