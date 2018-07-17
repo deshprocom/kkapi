@@ -13,4 +13,5 @@ json.signature          user.signature.to_s
 json.mark               user.mark.to_s
 json.following_count    user.following_count
 json.followers_count    user.followers_count
+json.new_user           user.new_user
 json.created_at         user.created_at.to_i
