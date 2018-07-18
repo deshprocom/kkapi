@@ -45,6 +45,11 @@ module Services
         gender = wx_user[:sex].to_i.eql?(1) ? 1 : 0
         user.update(nick_name: wx_user[:nick_name], wx_avatar: wx_user[:head_img], gender: gender)
 
+        # 新用户送优惠券
+        Services::Account::AwardCouponService.call(user)
+        # 微信注册的用户也要记录等级
+        UserRelationCreator.call(user, nil)
+
         # 绑定用户
         bind_wx_user(user, wx_user)
       end
