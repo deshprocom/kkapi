@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :test, only: [:index]
 
   namespace :v1 do
+    resources :app_versions, only:[:index]
     namespace :account do
       post 'login', to: 'sessions#create'
       post 'logout', to: 'sessions#destroy'
