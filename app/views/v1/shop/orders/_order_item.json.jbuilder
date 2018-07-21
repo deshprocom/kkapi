@@ -5,6 +5,6 @@ json.original_price item.original_price
 json.price          item.price
 json.number         item.number
 json.sku_value      item.sku_value
-json.returnable     item.returnable
+json.returnable     item.can_returnable?
 json.image          item.variant_image
 json.return_status_text item.recent_return&.return_status_text.to_s
