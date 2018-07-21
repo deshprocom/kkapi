@@ -104,6 +104,9 @@ Rails.application.routes.draw do
     resources :banners, only: [:index]
     resources :recommends, only: [:index]
 
+    # 用户反馈
+    resources :feedbacks, only: [:create]
+
     # 获取位置服务
     resources :locations, only: [:index]
 
