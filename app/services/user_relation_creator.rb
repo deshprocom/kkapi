@@ -9,12 +9,13 @@ class UserRelationCreator
   end
 
   def call
-    # 判断是否生成0级的用户
-    return zero_level_user if @p_user.present? && @p_user.generate_zero_level?
     # 没有人邀请的情况下
-    return from_nobody if @p_user.blank? || @p_user.r_level.zero?
+    return from_nobody if @p_user.blank?
+
     # 查询p_user用户的等级
     p_level = @p_user.r_level
+
+    return from_our_user if p_level.zero? # 我们后台生成的用户 为普通用户 不参与三级分销模式
 
     from_first_level_user if p_level.eql?(1)
     # 被2级用户邀请
@@ -23,12 +24,12 @@ class UserRelationCreator
     from_third_level_user if p_level.eql?(3)
   end
 
-  def zero_level_user
-    create_record(level: 0)
-  end
-
   def from_nobody
     create_record(level: 1)
+  end
+
+  def from_our_user
+    create_record(pid: @p_user.id, level: 1)
   end
 
   # 邀请人是1级用户，那么当前用户就是2级
