@@ -52,22 +52,24 @@ module Services
         user_info
       end
 
-      def check_wx_user(wx_user)
-        w_user = WeixinUser.find_by(open_id: wx_user[:openid])
-        w_user.nil? ? record_data(wx_user) : return_data(w_user)
+      # unionid 用户统一标识。针对一个微信开放平台帐号下的应用，同一用户的unionid是唯一的。
+      def check_wx_user(info)
+        wx_user = WeixinUser.find_by(union_id: info[:unionid])
+        wx_user.nil? ? record_and_return_data(info) : update_and_return_data(wx_user, info)
       end
 
-      def record_data(data)
+      def record_and_return_data(params)
         # 数据库中没有该用户的记录
-        create_weixin_user(data)
+        WeixinUser.create(wx_user_params(params))
         # 返回access_token, open_id等信息给前端
-        return_access_token(data[:access_token])
+        return_access_token(params[:access_token])
       end
 
-      def return_data(data)
+      def update_and_return_data(wx_user, params)
+        wx_user.update(wx_user_params(params))
         # 判断该记录是否有绑定过用户，如果有记录但是没有绑定用户，那么返回access_token给前端
-        user = data.user
-        return return_access_token(data[:access_token]) if user.nil?
+        user = wx_user.user
+        return return_access_token(wx_user[:access_token]) if user.nil?
 
         # 刷新上次访问时间
         user.touch_visit!
@@ -81,20 +83,19 @@ module Services
         ApiResult.success_with_data(type: 'register', data: { access_token: access_token })
       end
 
-      def create_weixin_user(data)
-        create_params = { open_id: data[:openid],
-                          nick_name: data[:nickname],
-                          sex: data[:sex],
-                          province: data[:province],
-                          city: data[:city],
-                          country: data[:country],
-                          head_img: data[:headimgurl],
-                          privilege: JSON(data[:privilege]),
-                          union_id: data[:unionid],
-                          access_token: data[:access_token],
-                          expires_in: data[:expires_in],
-                          refresh_token: data[:refresh_token] }
-        WeixinUser.create(create_params)
+      def wx_user_params(params)
+        { open_id: params[:openid],
+          nick_name: params[:nickname],
+          sex: params[:sex],
+          province: params[:province],
+          city: params[:city],
+          country: params[:country],
+          head_img: params[:headimgurl],
+          privilege: JSON(params[:privilege]),
+          union_id: params[:unionid],
+          access_token: params[:access_token],
+          expires_in: params[:expires_in],
+          refresh_token: params[:refresh_token] }
       end
 
       def login_result(user, access_token)

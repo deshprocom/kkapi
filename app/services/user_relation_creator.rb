@@ -9,6 +9,8 @@ class UserRelationCreator
   end
 
   def call
+    # 判断是否生成0级的用户
+    return zero_level_user if @p_user.present? && @p_user.generate_zero_level?
     # 没有人邀请的情况下
     return from_nobody if @p_user.blank? || @p_user.r_level.zero?
     # 查询p_user用户的等级
@@ -19,6 +21,10 @@ class UserRelationCreator
     from_second_level_user if p_level.eql?(2)
     # 被3级用户邀请
     from_third_level_user if p_level.eql?(3)
+  end
+
+  def zero_level_user
+    create_record(level: 0)
   end
 
   def from_nobody

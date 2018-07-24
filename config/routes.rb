@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :test, only: [:index]
 
   namespace :v1 do
+    resources :app_versions, only:[:index]
     namespace :account do
       post 'login', to: 'sessions#create'
       post 'logout', to: 'sessions#destroy'
@@ -102,6 +103,9 @@ Rails.application.routes.draw do
     # app 首页相关
     resources :banners, only: [:index]
     resources :recommends, only: [:index]
+
+    # 用户反馈
+    resources :feedbacks, only: [:create]
 
     # 获取位置服务
     resources :locations, only: [:index]
