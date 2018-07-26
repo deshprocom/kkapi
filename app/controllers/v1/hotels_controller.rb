@@ -19,11 +19,19 @@ module V1
 
     def rooms
       requires! :date
-      @date = params[:date].to_date
-      @rooms = @hotel.published_rooms.includes(:images, HotelRoom.s_wday_price(@date))
-      @prices = HotelRoomPrice.where(hotel_room_id: @rooms.map(&:id),
-                                     date: params[:date],
-                                     is_master: false)
+      date = params[:date].to_date
+      rooms = @hotel.published_rooms.includes(:images, HotelRoom.s_wday_price(date))
+      prices = HotelRoomPrice.where(hotel_room_id: rooms.map(&:id),
+                                    date: params[:date],
+                                    is_master: false)
+      @rooms_with_prices = rooms_with_prices(rooms, prices, date)
+    end
+
+    def rooms_with_prices(rooms, prices, date)
+      rooms.map do |room|
+        room_price = prices.find { |p| p.hotel_room_id == room.id } || room.wday_price(date)
+        { room: room, room_price: room_price }
+      end.sort_by { |obj| obj[:room_price].price }
     end
 
     def regions; end
