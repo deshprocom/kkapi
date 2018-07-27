@@ -12,6 +12,7 @@ module Shop
       @order.pay_status = 'paid' if @order.pay_status == 'unpaid'
       @order.pay_channel = @pay_channel
       @order.save
+      OrderMailer.notify_shop_staff(@order).deliver_later
     end
   end
 end
