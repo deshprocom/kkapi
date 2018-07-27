@@ -23,7 +23,7 @@ module HotelServices
 
     def notify_after_paid
       notify_user_after_paid
-      OrderMailer.notify_staff_after_paid(@order).deliver_later
+      OrderMailer.notify_hotel_staff(@order).deliver_later
     end
 
     # 付款成功，更新每日房间已卖出的数量
