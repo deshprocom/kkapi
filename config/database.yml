@@ -16,8 +16,8 @@ default: &default
   collation: utf8mb4_unicode_ci
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: <%= ENV['KK_DATABASE_HOST'] || 'localhost' %>
-  username: <%= ENV['KK_DATABASE_USERNAME'] %>
-  password: <%= ENV['KK_DATABASE_PASSWORD'] %>
+  username: <%= ENV['KK_DATABASE_USERNAME'] || root %>
+  password: <%= ENV['KK_DATABASE_PASSWORD'] || 123456 %>
   socket:   <%= ENV['KK_DATABASE_SOCKET'] || '/tmp/mysql.sock' %>
 
 development:

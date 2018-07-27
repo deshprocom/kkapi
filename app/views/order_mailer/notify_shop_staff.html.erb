@@ -1,0 +1,8 @@
+<p>用户名称：<%= @user.nick_name %></p>
+<p>联系方式：<%= @user.mobile %></p>
+<% @order.order_items.each do |item| %>
+  <p>商品信息：<%= item.product.title %> - <%= item.number %>件 </p>
+<% end %>
+<p>支付金额：<%= @order.final_price %> 元</p>
+<p>支付渠道：<%= @order.pay_channel %> </p>
+<p><%= link_to('订单详情，点击此处去后台查看', "#{ENV['CMS_HOST_URL']}/shop/orders/#{@order.id}") %></p>
