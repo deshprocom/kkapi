@@ -30,11 +30,13 @@ class UserRelationCreator
 
   def from_our_user
     create_record(pid: @p_user.id, level: 1)
+    @p_user.increase_invite_users
   end
 
   # 邀请人是1级用户，那么当前用户就是2级
   def from_first_level_user
     create_record(pid: @p_user.id, level: 2)
+    @p_user.increase_invite_users
   end
 
   # 邀请人是2级用户，那么当前用户就是3级
@@ -42,11 +44,13 @@ class UserRelationCreator
     # 找出2级对应的用户
     g_user = @p_user.p_user
     create_record(pid: @p_user.id, gid: g_user.id, level: 3)
+    @p_user.increase_invite_users
   end
 
   # 邀请人是3级用户，那么当前用户也是3级
   def from_third_level_user
     create_record(level: 3, pid: @p_user.id)
+    @p_user.increase_invite_users
   end
 
   def create_record(params)
