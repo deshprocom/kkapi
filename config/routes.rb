@@ -23,7 +23,7 @@ Rails.application.routes.draw do
           get  :details,   on: :collection
           post :award,     on: :collection
         end
-        resources :coupons, only: [:index]
+        resources :coupons, only: [:index, :show]
         resources :novice_task, only: [:index]
       end
       resources :address, only: [:index, :create, :update, :destroy] do

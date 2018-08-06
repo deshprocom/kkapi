@@ -28,7 +28,7 @@ module V1
       if Coupon.user_received?(@current_user.id, params[:coupon_id])
         raise_error'coupon_already_receive'
       end
-      
+
       coupon_temp = CouponTemp.find(params[:coupon_id])
       Coupon.create(coupon_temp: coupon_temp).received_by_user(@current_user)
       render_api_success

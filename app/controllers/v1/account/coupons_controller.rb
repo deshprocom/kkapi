@@ -14,6 +14,10 @@ module V1
           end
         @coupons = @coupons.order(receive_time: :desc).page(params[:page]).per(params[:page_size])
       end
+
+      def show
+        @coupon = @current_user.coupons.find_by(coupon_number: params[:id])
+      end
     end
   end
 end
