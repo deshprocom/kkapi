@@ -57,7 +57,10 @@ Rails.application.routes.draw do
     end
 
     # 资讯相关
-    resources :infos, only: [:show]
+    resources :infos, only: [:show] do
+      get :coupons, on: :member
+      post :receive_coupon, on: :member
+    end
     resources :info_types, only: [] do
       resources :infos, only: [:show, :index] do
         get :stickied, on: :collection
