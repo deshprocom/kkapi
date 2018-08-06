@@ -8,6 +8,8 @@ json.data do
     json.image         @info.image.url
     json.preview_image @info.preview_image
     json.description   @info.description
+    json.audio_link    @info.audio_link
+    json.exist_coupon  @info.coupon_ids.present?
 
     json.type do
       json.slug  @info.info_type.slug

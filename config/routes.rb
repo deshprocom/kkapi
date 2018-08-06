@@ -23,7 +23,7 @@ Rails.application.routes.draw do
           get  :details,   on: :collection
           post :award,     on: :collection
         end
-        resources :coupons, only: [:index]
+        resources :coupons, only: [:index, :show]
         resources :novice_task, only: [:index]
       end
       resources :address, only: [:index, :create, :update, :destroy] do
@@ -57,7 +57,10 @@ Rails.application.routes.draw do
     end
 
     # 资讯相关
-    resources :infos, only: [:show]
+    resources :infos, only: [:show] do
+      get :coupons, on: :member
+      post :receive_coupon, on: :member
+    end
     resources :info_types, only: [] do
       resources :infos, only: [:show, :index] do
         get :stickied, on: :collection
