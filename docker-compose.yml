@@ -1,0 +1,26 @@
+version: '3.0'
+services:
+  web:
+    tty: true
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    volumes:
+      - .:/app
+    command: bundle exec rails s -b '0.0.0.0' -p 3000
+    ports:
+      - 9090:3000
+    depends_on:
+      - db
+      - redis
+  db:
+    image: mysql:5.7.18
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - 33066:3306
+    volumes:
+      - /usr/local/var/mysql:/var/lib/mysql
+  redis:
+    image: redis:3.2

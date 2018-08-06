@@ -54,4 +54,7 @@
     withdraw_month_limit: '单月提现最多不超过1000元'
     withdraw_account_limit: '账户余额不足'
 
+    # 优惠券
+    coupon_not_exist: '优惠券不存在'
+    coupon_already_receive: '已领取优惠券'
 
