@@ -16,7 +16,7 @@ module V1
       end
 
       def show
-        @coupon = @current_user.coupons.find_by(coupon_number: params[:id])
+        @coupon = @current_user.coupons.find_by!(coupon_number: params[:id])
       end
     end
   end

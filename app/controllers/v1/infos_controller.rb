@@ -23,7 +23,7 @@ module V1
     end
 
     def receive_coupon
-      coupon_ids = @info.coupon_ids.split(',')
+      coupon_ids = @info.coupon_ids.to_s.split(',')
       raise_error'coupon_not_exist' unless params[:coupon_id].in?(coupon_ids)
       if Coupon.user_received?(@current_user.id, params[:coupon_id])
         raise_error'coupon_already_receive'
