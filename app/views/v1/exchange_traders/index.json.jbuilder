@@ -4,6 +4,7 @@ json.data do
   json.items do
     json.array! @traders do |trader|
       user = trader.user
+      json.score     trader.score
       json.user_id   user.user_uuid
       json.nick_name user.nick_name
       json.mobile    user.mobile
