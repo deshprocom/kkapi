@@ -23,7 +23,7 @@ Rails.application.routes.draw do
           get  :details,   on: :collection
           post :award,     on: :collection
         end
-        resources :coupons, only: [:index]
+        resources :coupons, only: [:index, :show]
         resources :novice_task, only: [:index]
       end
       resources :address, only: [:index, :create, :update, :destroy] do
@@ -57,7 +57,10 @@ Rails.application.routes.draw do
     end
 
     # 资讯相关
-    resources :infos, only: [:show]
+    resources :infos, only: [:show] do
+      get :coupons, on: :member
+      post :receive_coupon, on: :member
+    end
     resources :info_types, only: [] do
       resources :infos, only: [:show, :index] do
         get :stickied, on: :collection
@@ -87,9 +90,6 @@ Rails.application.routes.draw do
       post :image, on: :collection
       get :essence, on: :collection
     end
-
-    resources :exchange_rates, only: [:index]
-    resources :exchange_traders, only: [:index]
 
     # 评论和回复
     resources :comments, only: [:index, :create, :destroy] do
@@ -172,5 +172,9 @@ Rails.application.routes.draw do
         get :express_tracking, on: :member
       end
     end
+
+    resources :exchange_rates, only: [:index]
+    resources :exchange_traders, only: [:index]
+    resources :hotlines, only: [:index]
   end
 end
