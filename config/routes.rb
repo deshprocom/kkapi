@@ -176,5 +176,6 @@ Rails.application.routes.draw do
     resources :exchange_rates, only: [:index]
     resources :exchange_traders, only: [:index]
     resources :hotlines, only: [:index]
+    resources :contacts, only: [:index]
   end
 end
