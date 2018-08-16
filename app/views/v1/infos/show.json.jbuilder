@@ -7,6 +7,7 @@ json.data do
     json.date          @info.date
     json.image         @info.image.url
     json.preview_image @info.preview_image
+    json.intro         @info.intro.to_s
     json.description   @info.description
     json.audio_link    @info.audio_link
     json.exist_coupon  @info.coupon_ids.present?
