@@ -6,8 +6,8 @@ module V1
     # 1级和2级用户均可查看此接口
     def index
       raise_error 'access_denied' if @current_user.r_level >= 3
-      # @invite_users = @current_user.user_relation.s_users.order(created_at: :desc).page(params[:page]).per(params[:page_size])
-      @invite_users = @current_user.user_relation.s_users.order(created_at: :desc)
+      @invite_users = @current_user.user_relation.s_users.order(created_at: :desc).page(params[:page]).per(params[:page_size])
+      # @invite_users = @current_user.user_relation.s_users.order(created_at: :desc)
     end
 
     # 只有1级用户才有间接用户列表
@@ -17,8 +17,8 @@ module V1
       @target = User.find_by!(user_uuid: params[:target_id])
       # 判断这个用户是否是当前用户推荐的
       raise_error 'access_denied' unless @target.user_relation.p_user&.user.eql?(@current_user)
-      # @invite_users = @target.user_relation.s_users.order(created_at: :desc).page(params[:page]).per(params[:page_size])
-      @invite_users = @target.user_relation.s_users.order(created_at: :desc)
+      @invite_users = @target.user_relation.s_users.order(created_at: :desc).page(params[:page]).per(params[:page_size])
+      # @invite_users = @target.user_relation.s_users.order(created_at: :desc)
     end
 
     # 查看是否显示 邀请用户的菜单
