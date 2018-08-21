@@ -9,5 +9,6 @@ json.data do
       json.avatar    item.user.avatar_path.to_s
     end
   end
+  json.count @count
   json.next_step @current_user.r_level.eql?(1) # 只有1级用户才可查看indirect
 end
