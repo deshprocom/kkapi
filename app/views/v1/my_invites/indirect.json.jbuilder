@@ -8,6 +8,6 @@ json.data do
       json.nick_name "#{item.user.nick_name} #{mark}"
       json.avatar    item.user.avatar_path.to_s
     end
-    json.count @count
   end
+  json.count @count
 end
