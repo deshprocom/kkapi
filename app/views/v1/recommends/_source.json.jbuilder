@@ -9,6 +9,9 @@ if source.class.name == 'Info'
       json.slug  source.info_type.slug
       json.name  source.info_type.name
     end
+    json.comments_count source.comments_count
+    json.likes_count source.likes_count
+    json.total_views source.total_views
   end
 else
   json.hotel do
