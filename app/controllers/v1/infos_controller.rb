@@ -16,7 +16,10 @@ module V1
       render 'index'
     end
 
-    def show; end
+    def show
+      # 浏览量 +1
+      @info.increase_page_views
+    end
 
     def coupons
       @coupons = @info.coupons
