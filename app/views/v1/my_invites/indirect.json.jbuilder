@@ -9,4 +9,5 @@ json.data do
       json.avatar    item.user.avatar_path.to_s
     end
   end
+  json.count @count
 end

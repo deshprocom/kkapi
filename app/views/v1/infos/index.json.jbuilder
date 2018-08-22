@@ -7,6 +7,9 @@ json.data do
       json.title   info.title
       json.date    info.date
       json.image   info.preview_image
+      json.comments_count info.comments_count
+      json.likes_count info.likes_count
+      json.total_views info.total_views
     end
   end
 end
