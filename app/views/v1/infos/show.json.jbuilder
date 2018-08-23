@@ -11,10 +11,14 @@ json.data do
     json.description   @info.description
     json.audio_link    @info.audio_link
     json.exist_coupon  @info.coupon_ids.present?
+    json.comments_count @info.comments_count
+    json.likes_count @info.likes_count
+    json.total_views @info.total_views
 
     json.type do
       json.slug  @info.info_type.slug
       json.name  @info.info_type.name
     end
+    json.current_user_liked @current_user&.find_action(:like, target: @info).present?
   end
 end
