@@ -6,6 +6,7 @@ json.data do # rubocop:disable Metrics/BlockLength
     json.id             @product.id
     json.category_id    @product.category_id
     json.title          @product.title
+    json.intro          @product.intro
     json.icon           @product.preview_icon
     json.price          @product.master.price
     json.description    @product.description
