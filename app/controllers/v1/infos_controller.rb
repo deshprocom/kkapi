@@ -4,6 +4,7 @@ module V1
     before_action :set_type, only: [:stickied, :index]
     before_action :set_info, only: [:show, :coupons, :receive_coupon]
     before_action :login_required, only: [:coupons, :receive_coupon]
+    before_action :current_user, only: [:show]
 
     def index
       keyword = params[:keyword]
