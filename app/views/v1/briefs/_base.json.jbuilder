@@ -13,7 +13,6 @@ when 'info'
     json.id            target.id
     json.title         target.title
     json.date          target.date
-    json.description   target.description.to_s
     json.preview_image target.preview_image
   end
 when 'hotel'
