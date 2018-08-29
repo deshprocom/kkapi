@@ -21,9 +21,9 @@ json.data do
       json.tags   room.tags
       json.notes  room.notes
       json.images room.images.map(&:original)
-
-      json.price        room_price.price.to_s
-      json.saleable_num room_price.saleable_num
+      json.price  room_price.price.to_s
+      json.discount_amount HotelServices::MaxDiscount.call(@current_user, room_price.price)
+      json.saleable_num    room_price.saleable_num
     end
   end
 end

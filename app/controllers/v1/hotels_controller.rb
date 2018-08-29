@@ -1,6 +1,8 @@
 module V1
   class HotelsController < ApplicationController
+    include UserAuthorize
     before_action :set_hotel, only: [:show, :rooms]
+    before_action :current_user
 
     def index
       keyword = params[:keyword].presence
