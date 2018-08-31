@@ -177,5 +177,10 @@ Rails.application.routes.draw do
     resources :exchange_traders, only: [:index]
     resources :hotlines, only: [:index]
     resources :contacts, only: [:index]
+
+    # Merchant 商户模块
+    namespace :merchant do
+      resources :sale_room_requests
+    end
   end
 end
