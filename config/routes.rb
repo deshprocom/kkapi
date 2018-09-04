@@ -181,6 +181,12 @@ Rails.application.routes.draw do
     # Merchant 商户模块
     namespace :merchant do
       resources :sale_room_requests
+      resource  :v_codes, only: [:create]
+      resource  :verify_vcode, only: [:create]
+      resources :account, only: [] do
+        post :register, on: :collection
+        post :login, on: :collection
+      end
     end
   end
 end
