@@ -186,6 +186,7 @@ Rails.application.routes.draw do
       resources :account, only: [] do
         post :register, on: :collection
         post :login, on: :collection
+        put :update, on: :collection
       end
     end
   end
