@@ -13,7 +13,7 @@ module V1::Merchant
       Rails.logger.info "send [#{sms_content}] to #{params[:mobile]} in queue"
 
       # 测试则不实际发出去
-      return ApiResult.success_result if Rails.env.to_s.eql?('test') || ENV['AC_TEST'].present?
+      return render_api_success if Rails.env.to_s.eql?('test') || ENV['AC_TEST'].present?
 
       SendMobileIsmsJob.perform_later(params[:mobile], sms_content, ext: params[:ext])
       render_api_success
