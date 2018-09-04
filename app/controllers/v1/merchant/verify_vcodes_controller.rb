@@ -1,6 +1,7 @@
 module V1::Merchant
   # 校验验证码是否正确
   class VerifyVcodesController < MerchantApplicationController
+    skip_before_action :login_required
     def create
       requires! :option_type, values: %w[register login]
       requires! :mobile
