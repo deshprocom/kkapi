@@ -22,8 +22,8 @@ module V1::Merchant
     private
 
     def check_permission
-      raise_error 'user_not_found' unless params[:option_type].eql?('login') || MerchantUser.mobile_exist?(params[:mobile])
       raise_error 'user_already_exist' if params[:option_type].eql?('register') && MerchantUser.mobile_exist?(params[:mobile])
+      raise_error 'user_not_found' if params[:option_type].eql?('login') && !MerchantUser.mobile_exist?(params[:mobile])
     end
   end
 end
