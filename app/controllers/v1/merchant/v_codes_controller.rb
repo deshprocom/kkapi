@@ -1,5 +1,6 @@
 module V1::Merchant
   class VCodesController < MerchantApplicationController
+    skip_before_action :login_required
     SMS_TEMPLATE = '【澳门旅行APP】您的验证码是：%s，请不要把验证码泄漏给其他人。'.freeze
 
     def create
