@@ -1,7 +1,6 @@
 module V1::Merchant
   class AccountController < MerchantApplicationController
-    include MerchantUserAuthorize
-    before_action :login_required, only: [:update]
+    skip_before_action :login_required, except: [:update]
 
     def register
       requires! :mobile
