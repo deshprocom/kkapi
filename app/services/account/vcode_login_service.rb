@@ -19,8 +19,8 @@ module Services
         user = User.by_mobile(mobile)
         raise_error 'user_not_found' if user.nil?
 
-        if ENV['SKIP_LOGIN_MOBILES'].split(',').include?(mobile) && !vcode.eql?('907188') && !VCode.check_vcode('login', "+#{ext}#{mobile}", vcode)
-          raise_error 'vcode_not_match' unless VCode.check_vcode('login', "+#{ext}#{mobile}", vcode)
+        unless ENV['SKIP_LOGIN_MOBILES']&.split(',')&.include?(mobile) && vcode.eql?('907188') || VCode.check_vcode('login', "+#{ext}#{mobile}", vcode)
+          raise_error 'vcode_not_match'
         end
 
         # 刷新上次访问时间
