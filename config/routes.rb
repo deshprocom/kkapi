@@ -180,7 +180,9 @@ Rails.application.routes.draw do
 
     # Merchant 商户模块
     namespace :merchant do
-      resources :sale_room_requests
+      resources :sale_room_requests, only: [:index, :update, :create] do
+        post :cancel, on: :member
+      end
       resource  :v_codes, only: [:create]
       resource  :verify_vcode, only: [:create]
       resources :account, only: [] do
