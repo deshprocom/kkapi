@@ -3,7 +3,8 @@ class OrderMailer < ApplicationMailer
   def notify_hotel_staff(order)
     @order = order
     @room = order.hotel_room
-    mail(to: ENV['HOTEL_STAFF_EMAILS'],subject: title)
+    title = "用户购买了酒店：#{@room.hotel.title}"
+    mail(to: ENV['HOTEL_STAFF_EMAILS'], subject: title)
   end
 
   def notify_shop_staff(order)
