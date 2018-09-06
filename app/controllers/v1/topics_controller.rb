@@ -6,7 +6,7 @@ module V1
 
     # 获取广场列表
     def index
-      @topics = Topic.order(created_at: :desc).page(params[:page]).per(params[:page_size])
+      @topics = Topic.displayable.order(created_at: :desc).page(params[:page]).per(params[:page_size])
     end
 
     # 获取精华列表

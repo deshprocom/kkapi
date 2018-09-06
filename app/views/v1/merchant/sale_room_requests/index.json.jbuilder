@@ -13,9 +13,9 @@ json.data do
       json.status         request.status
       json.is_sold        request.is_sold
       json.is_withdrawn   request.is_withdrawn
-      json.created_at     request.created_at
-      json.passed_time    request.passed_time
-      json.withdrawn_time request.withdrawn_time
+      json.created_at     request.created_at.to_i
+      json.passed_time    request.passed_time.to_i
+      json.withdrawn_time request.withdrawn_time.to_i
       json.refused_memo   request.refused_memo
     end
   end
