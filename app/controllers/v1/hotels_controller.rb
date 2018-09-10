@@ -26,14 +26,16 @@ module V1
       prices = HotelRoomPrice.where(hotel_room_id: rooms.map(&:id),
                                     date: params[:date],
                                     is_master: false)
+                 .order(price: :asc).group_by(&:hotel_room_id)
       @rooms_with_prices = rooms_with_prices(rooms, prices, date)
     end
 
     def rooms_with_prices(rooms, prices, date)
       rooms.map do |room|
-        room_price = prices.find { |p| p.hotel_room_id == room.id } || room.wday_price(date)
-        { room: room, room_price: room_price }
-      end.sort_by { |obj| obj[:room_price].price }
+        # room_price = prices.find { |p| p.hotel_room_id == room.id } || room.wday_price(date)
+        room_prices = prices[room.id] || [ room.wday_price(date) ]
+        { room: room, room_prices: room_prices }
+      end.sort_by { |obj| obj[:room_prices].first.price }
     end
 
     def regions; end
