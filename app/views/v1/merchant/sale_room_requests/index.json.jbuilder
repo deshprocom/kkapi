@@ -11,6 +11,7 @@ json.data do
       json.card_img       request.card_img.url
       json.checkin_date   request.checkin_date
       json.status         request.status
+      json.price          request.price.to_s
       json.is_sold        request.is_sold
       json.is_withdrawn   request.is_withdrawn
       json.created_at     request.created_at.to_i
