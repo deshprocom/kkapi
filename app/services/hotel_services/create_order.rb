@@ -7,6 +7,7 @@ module HotelServices
       @user = user
       @checkin_infos = params.delete(:checkin_infos)
       @room = HotelRoom.published.find(params[:hotel_room_id])
+      @room_price = HotelRoomPrice.find(params.delete :room_price_id)
       @order = HotelOrder.new(params)
       @coupon_id = coupon_id
       @room_prices = []
@@ -67,11 +68,36 @@ module HotelServices
     # 获取对应日期或默认的房间信息
     def room_item(i)
       date = @order.checkin_date + i.days
-      wday = HotelRoomPrice::WDAYS[date.wday]
-      # 找到相应日期或相应星期几的价格
-      room_price = @room.prices.find_by(date: date) || @room.send("#{wday}_price")
+      if i == 0
+        room_price = checkin_room_price(date)
+      else
+        # 找到相应日期或相应星期几的价格
+        room_price = find_or_create_price(date)
+      end
       @room_prices << room_price
-      { date: date, price: room_price.price * @order.room_num }
+      { date: date, price: room_price.price * @order.room_num, price_id: room_price.id }
+    end
+
+    def checkin_room_price(date)
+      return @room_price unless @room_price.is_master
+
+      find_or_create_price(date)
+    end
+
+    # 找到相应日期或者创建相应日期价格信息(创建时同步当天星期几价格信息的数据)
+    def find_or_create_price(date)
+      room_price = @room.prices.price_asc.find_by(date: date)
+      return room_price if room_price
+
+      create_date_price(date)
+    end
+
+    def create_date_price(date)
+      wday_price = @room.wday_price(date.to_date)
+      @room.prices.create(date: date,
+                          price: wday_price.price,
+                          room_num_limit: wday_price.room_num_limit,
+                          hotel_id: @room.hotel_id)
     end
 
     # 购买的房间数量大于 最小的可购买数量 则不能购买
