@@ -29,21 +29,21 @@ module HotelServices
     # 付款成功，更新每日房间已卖出的数量
     def update_sales_room
       @order.room_items.each do |item|
-        find_or_create_price(item['date']).increase_sales(@order.room_num)
+        HotelRoomPrice.find(item['price_id']).increase_sales(@order.room_num)
       end
     end
 
-    # 找到相应日期或者创建相应日期价格信息(创建时同步当天星期几价格信息的数据)
-    def find_or_create_price(date)
-      room_price = @room.prices.find_by(date: date)
-      return room_price if room_price
-
-      wday_price = @room.wday_price(date.to_date)
-      @room.prices.create(date: date,
-                          price: wday_price.price,
-                          room_num_limit: wday_price.room_num_limit,
-                          hotel_id: @room.hotel_id)
-    end
+    # # 找到相应日期或者创建相应日期价格信息(创建时同步当天星期几价格信息的数据)
+    # def find_or_create_price(date)
+    #   room_price = @room.prices.find_by(date: date)
+    #   return room_price if room_price
+    #
+    #   wday_price = @room.wday_price(date.to_date)
+    #   @room.prices.create(date: date,
+    #                       price: wday_price.price,
+    #                       room_num_limit: wday_price.room_num_limit,
+    #                       hotel_id: @room.hotel_id)
+    # end
 
     # "[澳门旅行]预定成功:澳门金沙城中心假日酒店7月14日入住假日高级房2间1晚，入住人请携带有效证件及入境标签联系客服：#{ENV['HOTEL_STAFF_TEL']}办理入住。"
     NOTICE_USER_AFTER_PAID_SMS = "[澳门旅行]预定成功:%s，入住人请携带有效证件及入境标签联系客服: #{ENV['HOTEL_STAFF_TEL']} 办理入住。"

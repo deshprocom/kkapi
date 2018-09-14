@@ -96,7 +96,7 @@ module V1
     end
 
     def order_params
-      params.permit(:hotel_room_id, :checkin_date, :checkout_date,
+      params.permit(:hotel_room_id, :checkin_date, :checkout_date, :room_price_id,
                     :room_num, :telephone, checkin_infos: [:last_name, :first_name])
     end
   end
