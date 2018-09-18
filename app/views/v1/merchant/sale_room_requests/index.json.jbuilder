@@ -18,6 +18,7 @@ json.data do
       json.passed_time    request.passed_time.to_i
       json.withdrawn_time request.withdrawn_time.to_i
       json.refused_memo   request.refused_memo
+      json.withdrawn_status request.withdrawn_status
     end
   end
 end
