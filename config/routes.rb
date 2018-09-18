@@ -183,9 +183,11 @@ Rails.application.routes.draw do
       resources :sale_room_requests, only: [:index, :update, :create] do
         post :cancel, on: :member
       end
+      resource  :room_withdrawals, only: [:create]
       resource  :v_codes, only: [:create]
       resource  :verify_vcode, only: [:create]
       resources :account, only: [] do
+        get :me, on: :collection
         post :register, on: :collection
         post :login, on: :collection
         put :update, on: :collection

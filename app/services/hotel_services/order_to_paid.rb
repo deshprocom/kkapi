@@ -29,7 +29,9 @@ module HotelServices
     # 付款成功，更新每日房间已卖出的数量
     def update_sales_room
       @order.room_items.each do |item|
-        HotelRoomPrice.find(item['price_id']).increase_sales(@order.room_num)
+        room_price = HotelRoomPrice.find(item['price_id'])
+        room_price.increase_sales(@order.room_num)
+        room_price.sale_room_request&.to_sold
       end
     end
 
