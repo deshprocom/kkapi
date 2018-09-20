@@ -26,7 +26,8 @@ module V1::Merchant
       requires! :price
       @sale_request.update(price: params[:price])
       if !@sale_request.is_sold
-        @sale_request.hotel_room_price&.update(price: params[:price])
+        @sale_request.hotel_room_price&.destroy
+        @sale_request.create_room_price
       end
       render_api_success
     end

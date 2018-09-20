@@ -68,6 +68,7 @@ module V1
     end
 
     def wx_pay
+      check_order_payable
       # 获取用户真实ip
       #  需要在nginx中设置 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       client_ip = request.env['HTTP_X_FORWARDED_FOR']
@@ -80,12 +81,23 @@ module V1
       render_api_success
     end
 
+    def check_order_payable
+      @order.room_items.each do |item|
+        room_price = HotelRoomPrice.find_by(id: item['price_id'])
+        next if room_price&.saleable_num.to_i > 0
+
+        @order.canceled!
+        raise_error '该订单已失效，请重新下单', false
+      end
+    end
+
     def refund
       HotelServices::RefundOrder.call(@order, @current_user, params[:memo])
       render_api_success
     end
 
     def alipay
+      check_order_payable
       @payment_params = ::Ali::PayService.call(@order)
     end
 
