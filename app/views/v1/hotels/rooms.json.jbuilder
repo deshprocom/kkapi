@@ -17,6 +17,7 @@ json.data do
           json.room_price_id   room_price.id
           json.saleable_num    room_price.saleable_num
           json.price           room_price.price.to_s
+          json.is_official     room_price.sale_room_request_id.nil?
         end
       end
     end
