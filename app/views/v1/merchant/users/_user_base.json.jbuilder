@@ -3,5 +3,7 @@ json.nick_name          user.nick_name
 json.mobile             user.mobile
 json.contact            user.contact
 json.ext                user.ext
+json.revenue            user.revenue
+json.withdrawal_amount  user.withdrawal_amount
 json.last_visit         user.last_visit.to_i
 json.created_at         user.created_at.to_i

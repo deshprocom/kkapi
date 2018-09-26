@@ -1,6 +1,8 @@
 module V1::Merchant
   class AccountController < MerchantApplicationController
-    skip_before_action :login_required, except: [:update]
+    skip_before_action :login_required, except: [:update, :me]
+
+    def me; end
 
     def register
       requires! :mobile

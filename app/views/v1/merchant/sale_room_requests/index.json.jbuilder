@@ -11,12 +11,14 @@ json.data do
       json.card_img       request.card_img.url
       json.checkin_date   request.checkin_date
       json.status         request.status
+      json.price          request.price.to_s
       json.is_sold        request.is_sold
       json.is_withdrawn   request.is_withdrawn
       json.created_at     request.created_at.to_i
       json.passed_time    request.passed_time.to_i
       json.withdrawn_time request.withdrawn_time.to_i
       json.refused_memo   request.refused_memo
+      json.withdrawn_status request.withdrawn_status
     end
   end
 end

@@ -25,7 +25,10 @@ module V1::Merchant
     def update
       requires! :price
       @sale_request.update(price: params[:price])
-      # TODO 如果状态为passed，应把产生的售卖日期的房间价格给修改了
+      if !@sale_request.is_sold
+        @sale_request.hotel_room_price&.destroy
+        @sale_request.create_room_price
+      end
       render_api_success
     end
 
@@ -33,14 +36,14 @@ module V1::Merchant
       if @sale_request.can_cancel?
         @sale_request.canceled!
         render_api_success
-        # TODO 如果状态为passed，应把产生售卖日期的房间记录给删除
+        @sale_request.hotel_room_price&.destroy
       else
         render_api_error('目前状态不允许取消')
       end
     end
 
     def set_sale_request
-      @sale_request =  SaleRoomRequest.find(params[:id])
+      @sale_request = SaleRoomRequest.find(params[:id])
     end
 
     def request_params
