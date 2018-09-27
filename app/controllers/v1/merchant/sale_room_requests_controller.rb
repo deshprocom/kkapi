@@ -7,6 +7,7 @@ module V1::Merchant
       REQUIRES_CREATE_PARAMS.each { |param| requires! param }
       request = @current_user.sale_room_requests.build(request_params)
       if request.save
+        Services::Merchants::SaleRoomSms.call(@current_user, request_params) unless ENV['SALE_ROOM_SMS_URI'].blank?
         render_api_success
       else
         render_api_error("创建失败: #{request.errors.full_messages.join(',')}")
