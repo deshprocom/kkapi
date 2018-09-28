@@ -8,6 +8,7 @@ json.data do
         json.partial! 'v1/users/user_brief', user: topic.user
       end
       json.current_user_liked @current_user&.find_action(:like, target: topic).present?
+      json.current_user_favorite @current_user.blank? ? false : @current_user.favorite?(topic)
     end
   end
 end

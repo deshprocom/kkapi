@@ -58,3 +58,5 @@
     coupon_not_exist: '优惠券不存在'
     coupon_already_receive: '已领取优惠券'
 
+    already_favorite: '您已收藏过该内容，无需再次收藏'
+
