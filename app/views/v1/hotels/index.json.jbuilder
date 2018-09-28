@@ -15,6 +15,7 @@ json.data do
       json.region          Hotel::REGIONS_MAP[hotel.region]
       json.amap_navigation_url hotel.amap_navigation_url
       json.amap_location       hotel.amap_location
+      json.favorites_count hotel.favorites_count
     end
   end
 end

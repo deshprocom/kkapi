@@ -20,5 +20,6 @@ json.data do
         json.image     image.original
       end
     end
+    json.current_user_favorite @current_user.blank? ? false : @current_user.favorite?(@hotel)
   end
 end
