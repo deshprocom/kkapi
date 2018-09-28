@@ -6,7 +6,10 @@ json.data do
       next unless item.view_visible?
 
       option_type = item.option_type
+      next if option_type.eql? 'favorite'
+
       json.option_type option_type
+
 
       if option_type.eql? 'follow'
         json.partial! 'v1/briefs/base', model_type: 'user', target: item.target

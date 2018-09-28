@@ -20,5 +20,6 @@ json.data do
       json.name  @info.info_type.name
     end
     json.current_user_liked @current_user&.find_action(:like, target: @info).present?
+    json.current_user_favorite @current_user.blank? ? false : @current_user.favorite?(@info)
   end
 end

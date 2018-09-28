@@ -47,6 +47,9 @@ Rails.application.routes.draw do
       resources :likes, only: [:index, :create] do
         post :cancel, on: :collection
       end
+      resources :favorites, only: [:index, :create] do
+        post :cancel, on: :collection
+      end
       resources :nearbys, only: [:index, :create]
       resources :jmessage, only: [:index, :create, :destroy]
       resources :login_count, only: [:create]
