@@ -13,6 +13,8 @@ json.data do
     json.region       Hotel::REGIONS_MAP[@hotel.region]
     json.amap_navigation_url @hotel.amap_navigation_url
     json.amap_location       @hotel.amap_location
+    json.start_price     @min_price
+    json.discount_amount @discount_amount
 
     json.images do
       json.array! @hotel.images do |image|
@@ -20,5 +22,6 @@ json.data do
         json.image     image.original
       end
     end
+    json.current_user_favorite @current_user.blank? ? false : @current_user.favorite?(@hotel)
   end
 end

@@ -17,7 +17,11 @@ module V1
                      .position_desc
     end
 
-    def show; end
+    def show
+      date = params[:date].presence ? params[:date].to_date : Date.current
+      @min_price = @hotel.min_price(date)
+      @discount_amount = HotelServices::MaxDiscount.call(@current_user, @min_price)
+    end
 
     def rooms
       requires! :date
