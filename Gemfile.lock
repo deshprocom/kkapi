@@ -125,6 +125,7 @@ GEM
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
     jmessage (0.1.1)
+    jpush (4.0.6)
     jwt (2.1.0)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
@@ -336,6 +337,7 @@ DEPENDENCIES
   harmonious_dictionary
   jbuilder (~> 2.5)
   jmessage
+  jpush
   jwt
   kaminari
   kuaidiniao
