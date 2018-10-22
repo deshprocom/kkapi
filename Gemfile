@@ -62,6 +62,8 @@ gem 'jmessage'
 # 物流查询接口
 gem 'kuaidiniao'
 
+gem 'jpush'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
