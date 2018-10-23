@@ -64,6 +64,8 @@ Rails.application.routes.draw do
       get :coupons, on: :member
       post :receive_coupon, on: :member
     end
+    resources :saunas, only: [:show, :index]
+
     resources :info_types, only: [] do
       resources :infos, only: [:show, :index] do
         get :stickied, on: :collection
