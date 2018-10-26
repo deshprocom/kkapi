@@ -61,6 +61,7 @@ Rails.application.routes.draw do
 
     # 资讯相关
     resources :infos, only: [:show] do
+      get :all, on: :collection
       get :coupons, on: :member
       post :receive_coupon, on: :member
     end
