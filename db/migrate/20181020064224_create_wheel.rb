@@ -9,7 +9,7 @@ class CreateWheel < ActiveRecord::Migration[5.1]
     end
 
     # 使用转盘的统计
-    create_table :wheel_count do |t|
+    create_table :wheel_counts do |t|
       t.date    :date, comment: '日期'
       t.string  :count_type, default: 'daily', comment: 'daily 每日， total 总计'
       t.integer :new_user_count, default: 0, comment: '总的新增人数'
@@ -20,7 +20,7 @@ class CreateWheel < ActiveRecord::Migration[5.1]
     end
 
     # 转盘组成的元素
-    create_table :wheel_element do |t|
+    create_table :wheel_elements do |t|
       t.string  :name,     default: '', comment: '名称，例如：积分，充电宝，谢谢参与'
       t.string  :image,    default: '', comment: '例如：充电宝的图片，红包的图片'
       t.bigint  :position, default: 0,  comment: '用于拖拽排序'
@@ -28,7 +28,7 @@ class CreateWheel < ActiveRecord::Migration[5.1]
     end
 
     # 转盘的奖品
-    create_table :wheel_prize do |t|
+    create_table :wheel_prizes do |t|
       t.references :wheel_element
       t.string  :prize_type,       default: 'cheap', comment: 'cheap 小成本奖品，expensive 大成本奖品 free 无成本奖品'
       t.string  :name,             default: '', comment: '名称，例如：cheap：10元现金，5元现金 expensive：双人星级酒店住宿, 双人澳门塔旋转自助餐  free：50积分，谢谢会顾'
@@ -38,7 +38,7 @@ class CreateWheel < ActiveRecord::Migration[5.1]
     end
 
     # 统计每日小成本奖品的中奖情况
-    create_table :cheap_prize_count do |t|
+    create_table :cheap_prize_counts do |t|
       t.references :wheel_prize
       t.date       :date, comment: '日期'
       t.integer    :prize_number, default: 0, comment: '每日中奖的数量'
@@ -46,7 +46,7 @@ class CreateWheel < ActiveRecord::Migration[5.1]
     end
 
     # 大成本奖品的产生记录
-    create_table :expensive_prize_count do |t|
+    create_table :expensive_prize_counts do |t|
       t.references :wheel_prize
       t.integer    :current_user_num, comment: '当前的用户数量'
       t.boolean    :is_giving, default: false, comment: '是否已被用户中奖'
