@@ -160,6 +160,12 @@ Rails.application.routes.draw do
       post 'withdrawal', on: :collection
     end
 
+    # 转盘活动
+    namespace :wheel do
+      resources :elements, only: [:index]
+      resources :lotteries, only: [:create]
+    end
+
     # 商城模块
     namespace :shop do
       resources :categories, only: [:index] do
