@@ -7,9 +7,12 @@ module Wheel
     end
 
     def call
-      raise_error 'wheel_closed' unless ENV['WHEEL_START']
+      raise_error 'wheel_closed' if ENV['WHEEL_START'].eql?'false'
       raise_error 'wheel_times_limit' unless wheel_times_enough?
       # 开始准备抽奖
+      # 记录用户抽奖次数
+      @user.wheel_user_time.increase_today_times
+
       # 如果该用户中过大奖 或者 大奖的库存为0 那么程序都直接进入小奖抽取
       if expensive_prize_exists? || expensive_prize_lists.count <= 0
         # 小奖
@@ -21,14 +24,9 @@ module Wheel
 
     # 判断用户 抽奖次数是否充足
     def wheel_times_enough?
-      time = create_or_find_wheel_times
+      time = @user.wheel_user_time
       # 总剩余次数 是否大于 已抽取过的次数
       time.total_times > time.today_times
-    end
-
-    def create_or_find_wheel_times
-      time = @user.wheel_user_time
-      time.present? ? time : WheelUserTime.create(user: @user)
     end
 
     # 是否中过大奖
@@ -50,7 +48,9 @@ module Wheel
     end
 
     def giving_free_prize
-      WheelPrize.free.sample
+      prize = WheelPrize.free.sample
+      create_user_prize_record prize
+      prize
     end
 
     def giving_cheap_prize
@@ -60,6 +60,10 @@ module Wheel
       if cheap_prize_count.prize_number >= cheap_prize.limit_per_day
         return giving_free_prize
       end
+      # 将小奖的对应的今日数量+1
+      cheap_prize_count.increase_prize_number
+      # 记录用户中奖情况
+      create_user_prize_record cheap_prize
       # 发放5，10元现金或者餐券
       cheap_prize
     end
@@ -74,7 +78,23 @@ module Wheel
     # 抽取大奖的流程
     def giving_expensive_prize
       prize_count = ExpensivePrizeCount.where(is_giving: false).order(id: :asc).first
-      prize_count.wheel_prize
+
+      # 如果大奖不足 给与免费奖品
+      return giving_free_prize if prize_count.blank?
+
+      wheel_prize = prize_count.wheel_prize
+      # 将大奖标记为已领取
+      prize_count.update(is_giving: true)
+      # 记录用户中了大奖
+      create_user_prize_record wheel_prize
+      wheel_prize
+    end
+
+    # 记录中奖情况
+    def create_user_prize_record(prize)
+      # 是否是大奖
+      is_expensive = prize.expensive?
+      WheelUserPrize.create(wheel_prize: prize, user: @user, is_expensive: is_expensive, memo: prize.name)
     end
   end
 end
