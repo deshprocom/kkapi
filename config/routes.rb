@@ -162,8 +162,11 @@ Rails.application.routes.draw do
 
     # 转盘活动
     namespace :wheel do
+      resources :times, only: [:index]
       resources :elements, only: [:index]
       resources :lotteries, only: [:create]
+      resources :prize_messages, only: [:index]
+      resources :user_prizes, only: [:index]
     end
 
     # 商城模块
