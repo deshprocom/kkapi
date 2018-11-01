@@ -94,7 +94,11 @@ module Wheel
     def create_user_prize_record(prize)
       # 是否是大奖
       is_expensive = prize.expensive?
-      WheelUserPrize.create(wheel_prize: prize, user: @user, is_expensive: is_expensive, memo: prize.name)
+      WheelUserPrize.create(wheel_prize: prize,
+                            user: @user,
+                            is_expensive: is_expensive,
+                            memo: prize.name,
+                            prize_type: prize.prize_type)
     end
   end
 end

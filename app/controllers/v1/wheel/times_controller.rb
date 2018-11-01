@@ -1,11 +1,11 @@
 module V1
   module Wheel
-    class ElementsController < ApplicationController
+    class TimesController < ApplicationController
       include UserAuthorize
       before_action :login_required
-      
+
       def index
-        @elements = WheelElement.position_desc.limit(10)
+        @wheel_time = @current_user.wheel_user_time
       end
     end
   end
