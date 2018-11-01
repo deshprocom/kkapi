@@ -1,0 +1,15 @@
+module V1
+  module Wheel
+    class UserPrizesController < ApplicationController
+      include UserAuthorize
+      before_action :login_required
+
+      def index
+        @prizes = @current_user.wheel_user_prizes
+                               .where('prize_type != ? && memo not like ?', 'free', '%现金%')
+                               .order(created_at: :desc)
+                               .page(params[:page]).per(params[:page_size])
+      end
+    end
+  end
+end
