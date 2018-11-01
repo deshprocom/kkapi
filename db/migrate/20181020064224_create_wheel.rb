@@ -49,7 +49,7 @@ class CreateWheel < ActiveRecord::Migration[5.1]
     create_table :expensive_prize_counts do |t|
       t.references :wheel_prize
       t.integer    :current_user_num, comment: '当前的用户数量'
-      t.boolean    :is_giving, default: false, comment: '是否已被用户中奖'
+      t.boolean    :is_giving, default: false, comment: '是否已被用户抽中'
       t.timestamps
     end
 
