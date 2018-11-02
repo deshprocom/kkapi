@@ -4,4 +4,5 @@ json.data do
   json.id                   @wheel_time.id
   json.user_id              @current_user.user_uuid
   json.wheel_remain_times   @wheel_time.remain_times
+  json.total_points         @current_user.counter.points
 end
