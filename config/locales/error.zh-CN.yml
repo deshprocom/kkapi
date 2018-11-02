@@ -63,4 +63,5 @@
     # 活动转盘
     wheel_closed: '抽奖活动已关闭'
     wheel_times_limit: '抽奖次数不足'
+    wheel_integral_exchange_limit: '积分不足'
 
