@@ -49,7 +49,13 @@ module Wheel
 
     def giving_free_prize
       prize = WheelPrize.free.sample
-      create_user_prize_record prize
+      prize_record = create_user_prize_record prize
+      if prize.face_value.to_i > 0
+        # 说明是积分 需要打给用户
+        Integral.create_wheel_integral(user: @user,
+                                       target: prize_record,
+                                       points: prize.face_value.to_i)
+      end
       prize
     end
 
@@ -63,8 +69,13 @@ module Wheel
       # 将小奖的对应的今日数量+1
       cheap_prize_count.increase_prize_number
       # 记录用户中奖情况
-      create_user_prize_record cheap_prize
+      prize_record = create_user_prize_record cheap_prize
       # 发放5，10元现金或者餐券
+      if cheap_prize.face_value.to_i > 0 && cheap_prize.face_value.to_i < 11
+        PocketMoney.create_wheel_pocket_money(user: @user,
+                                              target: prize_record,
+                                              amount: cheap_prize.face_value.to_i)
+      end
       cheap_prize
     end
 
