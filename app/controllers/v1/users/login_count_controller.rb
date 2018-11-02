@@ -12,7 +12,7 @@ module V1
         # 更新访问时间
         @current_user.touch_visit!
         # 如果是新用户 做完登录活动可以获取奖励
-        @current_user.take_pocket_moneys
+        @current_user.invite_user_completed_awards
         # 判断是否完成新手任务 下发奖励
         render_api_success
       end
