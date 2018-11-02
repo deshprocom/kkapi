@@ -162,7 +162,7 @@ Rails.application.routes.draw do
 
     # 转盘活动
     namespace :wheel do
-      resources :times, only: [:index]
+      resources :times, only: [:index, :create]
       resources :elements, only: [:index]
       resources :lotteries, only: [:create]
       resources :prize_messages, only: [:index]
