@@ -7,5 +7,5 @@ json.data do
   json.invite_limit_times   ENV['WHEEL_INVITE_LIMIT'].to_i
   json.today_share_times    @wheel_task_count&.share_count.to_i
   json.share_limit_times    ENV['WHEEL_SHARE_LIMIT'].to_i
-  json.activity_id          ENV['WHEEL_ACTIVITY_ID'].to_i
+  json.activity_id          Activity.wheel.first&.id.to_i
 end

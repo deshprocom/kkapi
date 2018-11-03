@@ -167,7 +167,7 @@ Rails.application.routes.draw do
       resources :elements, only: [:index]
       resources :lotteries, only: [:create]
       resources :prize_messages, only: [:index]
-      resources :user_prizes, only: [:index]
+      resources :user_prizes, only: [:index, :show]
     end
 
     # 商城模块
