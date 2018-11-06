@@ -7,6 +7,8 @@ json.data do
       json.prize      prize.memo.to_s
       json.prize_img  prize.wheel_prize.image_url.to_s
       json.expired    prize.expired?
+      json.used_time  prize.used_time
+      json.used       prize.used
       json.created_at prize.created_at.to_i
     end
   end
