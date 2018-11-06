@@ -50,12 +50,12 @@ module Wheel
     def giving_free_prize
       prize = WheelPrize.free.sample
       prize_record = create_user_prize_record prize
+      prize_record.to_used
       if prize.face_value.to_i > 0
         # 说明是积分 需要打给用户
         Integral.create_wheel_integral(user: @user,
                                        target: prize_record,
                                        points: prize.face_value.to_i)
-        prize_record.to_used
       end
       prize
     end
