@@ -8,6 +8,7 @@ json.data do
       json.banner      activity.preview_image
       json.status      activity.activity_status
       json.is_wheel    activity.wheel?
+      json.intro       activity.intro.to_s
       json.total_views activity.total_views
     end
   end
