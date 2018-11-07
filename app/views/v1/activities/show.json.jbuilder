@@ -11,5 +11,6 @@ json.data do
   json.likes_count @activity.likes_count
   json.total_views @activity.total_views
   json.is_wheel    @activity.wheel?
+  json.intro       @activity.intro.to_s
   json.created_at  @activity.created_at.to_i
 end
