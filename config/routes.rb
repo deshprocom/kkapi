@@ -61,9 +61,12 @@ Rails.application.routes.draw do
 
     # 资讯相关
     resources :infos, only: [:show] do
+      get :all, on: :collection
       get :coupons, on: :member
       post :receive_coupon, on: :member
     end
+    resources :saunas, only: [:show, :index]
+
     resources :info_types, only: [] do
       resources :infos, only: [:show, :index] do
         get :stickied, on: :collection
@@ -155,6 +158,16 @@ Rails.application.routes.draw do
       get 'account', on: :collection
       get 'account_details', on: :collection
       post 'withdrawal', on: :collection
+    end
+
+    # 转盘活动
+    namespace :wheel do
+      resources :times, only: [:index, :create]
+      resources :task_count, only: [:index]
+      resources :elements, only: [:index]
+      resources :lotteries, only: [:create]
+      resources :prize_messages, only: [:index]
+      resources :user_prizes, only: [:index, :show]
     end
 
     # 商城模块

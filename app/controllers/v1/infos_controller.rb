@@ -12,6 +12,14 @@ module V1
                     .yield_self { |it| keyword ? it.search_keyword(keyword) : it }
     end
 
+    def all
+      keyword = params[:keyword]
+      @infos = Info.where(published: true).order(id: :desc)
+                 .page(params[:page]).per(params[:page_size])
+                 .yield_self { |it| keyword ? it.search_keyword(keyword) : it }
+      render 'index'
+    end
+
     def stickied
       @infos = @type.published_infos.stickied
       render 'index'
