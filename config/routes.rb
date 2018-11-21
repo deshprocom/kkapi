@@ -65,7 +65,9 @@ Rails.application.routes.draw do
       get :coupons, on: :member
       post :receive_coupon, on: :member
     end
-    resources :saunas, only: [:show, :index]
+    resources :saunas, only: [:show, :index] do
+      get :access_permission, on: :collection
+    end
 
     resources :info_types, only: [] do
       resources :infos, only: [:show, :index] do
@@ -196,6 +198,8 @@ Rails.application.routes.draw do
     resources :exchange_traders, only: [:index]
     resources :hotlines, only: [:index]
     resources :contacts, only: [:index]
+
+    resources :sets, only: [:index]
 
     # Merchant 商户模块
     namespace :merchant do
