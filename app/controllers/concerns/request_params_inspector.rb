@@ -9,8 +9,8 @@ module RequestParamsInspector
       raise ApplicationController::CommonError, I18n.t('errors.params_missing')
     end
 
-    check_in_values!(name, opts)
     params[name] ||= opts[:default]
+    check_in_values!(name, opts)
   end
 
   def check_in_values!(name, opts)
