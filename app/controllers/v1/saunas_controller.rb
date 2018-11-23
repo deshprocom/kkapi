@@ -4,6 +4,7 @@ module V1
       requires! :latitude
       requires! :longitude
       @saunas = Sauna.near([params[:latitude], params[:longitude]], 5000)
+                  .page(params[:page]).per(params[:page_size])
     end
 
     def access_permission
