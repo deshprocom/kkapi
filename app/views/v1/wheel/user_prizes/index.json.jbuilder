@@ -9,7 +9,7 @@ json.data do
       json.expired      prize.expired?
       json.used_time    prize.used_time
       json.used         prize.used
-      json.pocket_money prize.wheel_prize.face_value.to_i > 0 && prize.prize_type.eql?('cheap')
+      json.pocket_money prize.pocket_money?
       json.created_at   prize.created_at.to_i
     end
   end
