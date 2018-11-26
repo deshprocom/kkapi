@@ -6,7 +6,7 @@ module V1
 
       def index
         @prizes = @current_user.wheel_user_prizes
-                               .where('prize_type != ? && memo not like ?', 'free', '%现金%')
+                               .where('prize_type != ?', 'free')
                                .order(created_at: :desc)
                                .page(params[:page]).per(params[:page_size])
       end
