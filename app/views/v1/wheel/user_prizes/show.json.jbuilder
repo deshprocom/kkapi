@@ -6,5 +6,6 @@ json.data do
   json.prize_img    @prize.wheel_prize.image_url.to_s
   json.expired      @prize.expired?
   json.description  @prize.wheel_prize.description.to_s
+  json.pocket_money @prize.pocket_money?
   json.created_at   @prize.created_at.to_i
 end
