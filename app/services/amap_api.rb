@@ -9,8 +9,19 @@ class AmapApi
     get_result(url)
   end
 
-  def get_location(location)
+  def get_location(location, platform)
+    Rails.logger.info "AmapApi: current location: #{location}"
+    if platform == 'ios'
+      result = convert_location(location)
+      Rails.logger.info "AmapApi: convert_location result: #{result}"
+      location = result['locations'] if result['locations']
+    end
     url = "http://restapi.amap.com/v3/geocode/regeo?location=#{location}{&key=#{@amap_key}"
+    get_result(url)
+  end
+
+  def convert_location(location)
+    url = "http://restapi.amap.com/v3/assistant/coordinate/convert?locations=#{location}&key=#{@amap_key}&coordsys=gps"
     get_result(url)
   end
 
