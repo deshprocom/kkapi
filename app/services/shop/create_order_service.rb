@@ -33,7 +33,7 @@ module Shop
 
     def call
       raise_error('params_missing') if shipping_info_invalid?
-      @pre_purchase_items = PrePurchaseItems.new(@params[:variants], @shipping_info[:address][:province])
+      @pre_purchase_items = PrePurchaseItems.new(@user, @params[:variants], @shipping_info[:address][:province])
 
       if @pre_purchase_items.check_result != 'ok'
         raise_error_msg @pre_purchase_items.check_result

@@ -9,7 +9,8 @@ json.data do
       json.title             product.title
       json.returnable        product.returnable
       json.icon              product.preview_icon
-      json.price             product.master.price
+      json.first_discounts   product.first_discounts
+      json.price             Shop::FirstDiscountsPrice.call(product, @current_user)
       json.all_stock         product.master.stock
     end
   end
