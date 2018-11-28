@@ -25,7 +25,7 @@ module V1::Shop
     def new
       shipping_info = params[:shipping_info] || {}
       province = shipping_info[:address] && shipping_info[:address][:province]
-      @pre_purchase_items = Shop::PrePurchaseItems.new(params[:variants], province)
+      @pre_purchase_items = Shop::PrePurchaseItems.new(@current_user, params[:variants], province)
       if @pre_purchase_items.check_result != 'ok'
         return render_api_error(@pre_purchase_items.check_result)
       end
