@@ -1,5 +1,8 @@
 module V1::Shop
   class ProductsController < ApplicationController
+    include UserAuthorize
+    before_action :current_user
+
     def index
       keyword = params[:keyword].presence
       category_id = params[:category_id].presence
