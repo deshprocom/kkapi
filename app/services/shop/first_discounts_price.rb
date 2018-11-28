@@ -18,6 +18,7 @@ module Shop
       return true if !product.first_discounts
 
       user.shop_orders.includes(:order_items)
+        .where.not(status: 'canceled')
         .where(shop_order_items: {product_id: product.id}).exists?
     end
   end
