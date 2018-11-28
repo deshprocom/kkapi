@@ -2,7 +2,8 @@ module Shop
   class PrePurchaseItems
     attr_reader :order_items
     attr_reader :invalid_order_items
-    def initialize(variants, province = nil)
+    def initialize(user, variants, province = nil)
+      @user = user
       @province = Province.find_by(name: province)
       @order_items = []
       @invalid_order_items = []
@@ -32,6 +33,9 @@ module Shop
 
       order_items.each do |item|
         return '购买数量不能小于等于0' if item.number <= 0
+
+        first_exists = FirstDiscountsPrice.first_buy_exists?(item.product, @user)
+        return '首次优惠购买时，只能买一件' if !first_exists && item.number > 1
       end
 
       'ok'
@@ -47,7 +51,8 @@ module Shop
 
     def total_product_price
       @total_product_price ||= @order_items.inject(0) do |n, item|
-        (item.variant.price * item.number) + n
+        price = FirstDiscountsPrice.call(item.product, @user, item.variant.price)
+        (price * item.number) + n
       end
     end
 
