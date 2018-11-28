@@ -168,7 +168,9 @@ Rails.application.routes.draw do
       resources :task_count, only: [:index]
       resources :elements, only: [:index]
       resources :lotteries, only: [:create]
-      resources :prize_messages, only: [:index]
+      resources :prize_messages, only: [:index] do
+        get :history, on: :collection
+      end
       resources :user_prizes, only: [:index, :show]
     end
 
