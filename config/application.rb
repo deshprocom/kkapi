@@ -44,5 +44,7 @@ module Kkapi
         Rails.root.join('lib/dp_push'),
         Rails.root.join('lib/geo/**')
     ]
+
+    config.middleware.use Rack::Attack
   end
 end
