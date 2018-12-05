@@ -10,6 +10,7 @@ json.data do
     json.description  @hotel.description
     json.preview_logo @hotel.preview_logo
     json.telephone    @hotel.telephone
+    json.star_level    @hotel.star_level
     json.region       Hotel::REGIONS_MAP[@hotel.region]
     json.amap_navigation_url @hotel.amap_navigation_url
     json.amap_location       @hotel.amap_location
