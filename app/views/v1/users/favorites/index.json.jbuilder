@@ -8,6 +8,7 @@ json.data do
         json.target_type model_name
         json.partial! 'v1/briefs/base', model_type: model_name, target: action.target
       end
+      json.created_at action.created_at.to_i
     end
   end
   json.favorites_count @favorites_actions.count
