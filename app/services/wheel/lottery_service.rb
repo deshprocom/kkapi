@@ -12,7 +12,7 @@ module Wheel
       # 开始准备抽奖
       # 记录用户抽奖次数
       @user.wheel_user_time.increase_today_times
-
+      
       # 如果该用户中过大奖 或者 大奖的库存为0 那么程序都直接进入小奖抽取
       if expensive_prize_exists? || expensive_prize_lists.count <= 0
         # 小奖
@@ -89,8 +89,8 @@ module Wheel
     end
 
     # 抽取大奖的流程
-    def giving_expensive_prize
-      prize_count = ExpensivePrizeCount.where(is_giving: false).order(id: :asc).first
+    def giving_expensive_prize(delay = false)
+      prize_count = ExpensivePrizeCount.where(is_giving: false).where(delay: delay).order(id: :asc).first
 
       # 如果大奖不足 给与免费奖品
       return giving_free_prize if prize_count.blank?
