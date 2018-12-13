@@ -34,8 +34,8 @@ module Shop
       order_items.each do |item|
         return '购买数量不能小于等于0' if item.number <= 0
 
-        first_exists = FirstDiscountsPrice.first_buy_exists?(item.product, @user)
-        return '首次优惠购买时，只能买一件' if !first_exists && item.number > 1
+        able_discounts = FirstDiscountsPrice.able_discounts?(item.product, @user)
+        return '首次优惠购买时，只能买一件' if able_discounts && item.number > 1
       end
 
       'ok'
@@ -94,7 +94,8 @@ module Shop
     def save_to_order(order)
       @order_items.each do |item|
         save_order_item(item, order)
-        item.variant.product.increase_sales_volume(item.number)
+        item.product.increase_sales_volume(item.number)
+        item.product.one_yuan_buy.increase_sales_volume(item.number)
         item.variant.decrease_stock(item.number)
 
         next if item.variant.is_master?
