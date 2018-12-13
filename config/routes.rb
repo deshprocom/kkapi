@@ -184,6 +184,8 @@ Rails.application.routes.draw do
         get 'recommended', on: :collection
       end
 
+      resources :one_yuan_buys, only: [:index]
+
       resources :orders do
         post 'new', on: :collection, as: :new
         post :cancel, on: :member
