@@ -28,14 +28,14 @@ module Services
       end
 
       def wx_user_params(params)
-        { miniprogram_openid: params[:openId],
-          nick_name: params[:nickname],
-          sex: params[:gender],
-          province: params[:province],
-          city: params[:city],
-          country: params[:country],
-          head_img: params[:avatarUrl],
-          union_id: params[:unionId] }
+        { miniprogram_openid: params['openId'],
+          nick_name:          params['nickName'],
+          sex:                params['gender'],
+          province:           params['province'],
+          city:               params['city'],
+          country:            params['country'],
+          head_img:           params['avatarUrl'],
+          union_id:           params['unionId'] }
       end
 
       def login_result(user)
@@ -48,7 +48,7 @@ module Services
 
       def need_register_result(weixin_user)
         # 注册的token一天有效
-        access_token = UserToken.encode(weixin_user.miniprogram_openid, 1.day.to_i)
+        access_token = UserToken.encode(weixin_user.miniprogram_openid, 1.day.since.to_i)
         { status: 'need_register', access_token: access_token }
       end
     end
