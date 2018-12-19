@@ -2,21 +2,17 @@ module V1
   module Weixin
     class BindController < ApplicationController
       ACCOUNT_TYPES = %w[mobile].freeze
-      before_action :set_wx_authorize
 
       def create
         user_params = permit_params.dup
         raise_error 'unsupported_type' unless ACCOUNT_TYPES.include?(user_params[:type])
 
-        @api_result = Services::Weixin::BindService.call(user_params, @wx_authorize)
+        # 从数据库找到该用户的记录
+        wx_user = WeixinUser.find_by!(access_token: params[:access_token])
+        @api_result = Services::Weixin::BindService.call(wx_user, user_params)
       end
 
       private
-
-      def set_wx_authorize
-        @wx_authorize = WeixinAuthorize::Client.new(ENV['WX_APP_ID'], ENV['WX_APP_SECRET'])
-      end
-
       def permit_params
         params.permit(:type, :account, :ext, :code, :access_token, :password)
       end
