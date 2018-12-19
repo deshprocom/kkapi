@@ -13,6 +13,7 @@ default: &default
   type: 'mp'
 
 production:
+  <<: *default
   timeout:    30,
   skip_verify_ssl: true
 
