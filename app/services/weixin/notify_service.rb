@@ -24,12 +24,12 @@ module Weixin
       # 该订单已经支付过，就不需要接下来的验证了
       return if @order.pay_status == 'paid'
 
-      # 检查订单是否存在，订单的金额是否和数据库一致
-      return raise_error_msg('订单金额不匹配') unless result_accord_with_order?
-
       unless result_pay_success?
         raise_error_msg("微信支付失败: #{@result['trade_state_desc'] || @result['err_code_des']}")
       end
+
+      # 检查订单是否存在，订单的金额是否和数据库一致
+      return raise_error_msg('订单金额不匹配') unless result_accord_with_order?
 
       order_to_paid
       got_integral
@@ -52,8 +52,6 @@ module Weixin
     end
 
     def result_pay_success?
-      return false unless result_accord_with_order?
-
       if from_query?
         # 检查查询的支付结果是否成功
         # SUCCESS—支付成功 REFUND—转入退款 NOTPAY—未支付 CLOSED—已关闭 REVOKED—已撤销（刷卡支付）
