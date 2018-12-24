@@ -13,6 +13,7 @@
     account_blocked: '很抱歉，您的账户已被停用！'
     account_silenced: '很抱歉，您的账户已被禁言！'
     access_denied: '无权访问'
+    invalid_signature: '无效的访问方式'
 
     # 登录注册香相关
     email_format_error: '无效的邮箱格式'
