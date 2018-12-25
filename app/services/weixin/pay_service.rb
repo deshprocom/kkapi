@@ -51,7 +51,7 @@ module Weixin
         noncestr: result['nonce_str'],
       }
       if @trade_source == 'miniprogram'
-        WxPay::Service.generate_js_pay_req params.merge(appid: ENV['MINIPROGRAM_APP_ID'])
+        WxPay::Service.generate_js_pay_req params.merge(appId: ENV['MINIPROGRAM_APP_ID'])
       else
         WxPay::Service.generate_app_pay_req params.merge(appid: ENV['WX_APP_ID'])
       end

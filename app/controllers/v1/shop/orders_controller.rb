@@ -66,6 +66,11 @@ module V1::Shop
       #  需要在nginx中设置 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       client_ip = request.env['HTTP_X_FORWARDED_FOR']
       @prepay_result = ::Weixin::PayService.call(@order, client_ip, params[:trade_source])
+      if params[:trade_source] == 'app'
+        render 'wx_pay'
+      else
+        render 'miniprogram_pay_result'
+      end
     end
 
     def alipay
