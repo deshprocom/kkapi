@@ -18,42 +18,43 @@ module Weixin
         raise_error_msg '微信支付失败'
       end
       # 生成唤起支付需要的参数
-      generate_app_pay_req(result)
+      generate_pay_req(result)
     end
 
     private
 
     def pay_params
-      if @trade_source == 'miniprogram'
-        option = {
-          trade_type: 'JSAPI',
-          appid: ENV['MINIPROGRAM_APP_ID'],
-          openid: @order.user.weixin_user.miniprogram_openid
-        }
-      else
-        option = {
-          trade_type: 'APP',
-          appid: ENV['WX_APP_ID']
-        }
-      end
       {
         body: "#{@order.pay_title}：#{@order.order_number}",
         out_trade_no: @order.order_number,
         total_fee: (@order.final_price * 100).to_i,
         spbill_create_ip: @client_ip,
         notify_url: notify_url,
-      }.merge(option)
+      }.merge(pay_option)
     end
 
-    def generate_app_pay_req(result)
-      appid = ENV['WX_APP_ID']
-      appid = ENV['MINIPROGRAM_APP_ID'] if @trade_source == 'miniprogram'
+    def pay_option
+      if @trade_source == 'miniprogram'
+        {
+          trade_type: 'JSAPI',
+          appid: ENV['MINIPROGRAM_APP_ID'],
+          openid: @order.user.weixin_user.miniprogram_openid
+        }
+      else
+        { trade_type: 'APP', appid: ENV['WX_APP_ID'] }
+      end
+    end
+
+    def generate_pay_req(result)
       params = {
         prepayid: result['prepay_id'],
         noncestr: result['nonce_str'],
-        appid: appid
       }
-      WxPay::Service.generate_app_pay_req(params)
+      if @trade_source == 'miniprogram'
+        WxPay::Service.generate_js_pay_req params.merge(appid: ENV['MINIPROGRAM_APP_ID'])
+      else
+        WxPay::Service.generate_app_pay_req params.merge(appid: ENV['WX_APP_ID'])
+      end
     end
 
     def notify_url
