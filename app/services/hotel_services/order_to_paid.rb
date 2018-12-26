@@ -23,7 +23,20 @@ module HotelServices
 
     def notify_after_paid
       notify_user_after_paid
+      notify_dingtalk
       OrderMailer.notify_hotel_staff(@order).deliver_later
+    end
+
+    def notify_dingtalk
+      checkin_infos = @order.checkin_infos.map {|info| "#{info.last_name} #{info.first_name}"}.join(', ')
+      text = "#{@room.hotel&.title} - #{@room.title}\n
+房间数量：#{@order.room_num}间\n
+入住日期：#{@order.checkin_date} - #{@order.checkout_date}\n
+入住人信息：#{checkin_infos}\n
+联系方式：#{@order.telephone}\n
+支付金额：#{@order.final_price}元\n
+支付渠道：#{@order.pay_channel_text}"
+      DingtalkApi.hotel_order_notify(text)
     end
 
     # 付款成功，更新每日房间已卖出的数量
