@@ -3,6 +3,8 @@ module V1
     class ShareCountController < ApplicationController
       include UserAuthorize
       before_action :user_self_required
+      include Signature
+      before_action :signature_required
 
       def create
         return render_api_success if interval_time_limit?

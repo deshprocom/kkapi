@@ -61,10 +61,16 @@ module V1::Shop
     end
 
     def wx_pay
+      optional! :trade_source, values: %w[app miniprogram], default: 'app'
       # 获取用户真实ip
       #  需要在nginx中设置 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       client_ip = request.env['HTTP_X_FORWARDED_FOR']
-      @prepay_result = ::Weixin::PayService.call(@order, client_ip)
+      @prepay_result = ::Weixin::PayService.call(@order, client_ip, params[:trade_source])
+      if params[:trade_source] == 'app'
+        render 'wx_pay'
+      else
+        render 'miniprogram_pay_result'
+      end
     end
 
     def alipay
@@ -72,7 +78,9 @@ module V1::Shop
     end
 
     def wx_paid_result
-      result = WxPay::Service.order_query(out_trade_no: @order.order_number)
+      optional! :trade_source, values: %w[app miniprogram], default: 'app'
+      appid = @trade_source == 'app' ? ENV['WX_APP_ID'] : ENV['MINIPROGRAM_APP_ID']
+      result = WxPay::Service.order_query(out_trade_no: @order.order_number, appid: appid)
       ::Weixin::NotifyService.call(@order, result[:raw]['xml'], 'from_query')
       render_api_success
     end

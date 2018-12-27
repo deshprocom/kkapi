@@ -1,4 +1,11 @@
 class BaseApplicationController < ActionController::API
+  # 使用了gem wechat，会导致Render失效，需增加以下代码来fix
+  # 问题讨论见 https://github.com/Eric-Guo/wechat/issues/165
+  include ActionView::Rendering
+  def render_to_body(options)
+    _render_to_body_with_renderer(options) || super
+  end
+
   include RequestParamsInspector
   class CommonError < StandardError; end
   class AuthorizedError < StandardError; end
