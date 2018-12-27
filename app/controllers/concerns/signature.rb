@@ -11,9 +11,9 @@ module Signature
 
   def generate_signature
     string = "timestamp=#{params[:timestamp]}&random_str=#{params[:random_str]}&token=desh2019"
-    string_base64 = Base64.strict_encode64(string)
-    string_md5 = ::Digest::MD5.hexdigest(string_base64)
-    string_md5.upcase
+    string_md5 = ::Digest::MD5.hexdigest(string)
+    string_md5_repeat = ::Digest::MD5.hexdigest("desh#{string_md5}")
+    string_md5_repeat.upcase
   end
 
   def signature_correct?

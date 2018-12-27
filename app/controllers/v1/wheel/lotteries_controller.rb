@@ -3,6 +3,8 @@ module V1
     class LotteriesController < ApplicationController
       include UserAuthorize
       before_action :login_required
+      include Signature
+      before_action :signature_required
 
       # 用户点击转盘 开始抽奖
       def create
