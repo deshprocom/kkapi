@@ -1,0 +1,61 @@
+default: &default
+#  企业号相关配置
+#  corpid: "corpid"
+#  corpsecret: "corpsecret"
+#  agentid:  1
+  appid: <%= ENV['MINIPROGRAM_APP_ID'] %>
+  secret: <%= ENV['MINIPROGRAM_APP_SECRET'] %>
+  token:    "miniprogram_token"
+  access_token: "./tmp/miniprogram_access_token"
+  encrypt_mode: false # if true must fill encoding_aes_key
+  encoding_aes_key:  "miniprogram_encoding_aes_key"
+  jsapi_ticket: "./tmp/miniprogram_jsapi_ticket"
+  type: 'mp'
+
+production:
+  <<: *default
+  timeout:    30,
+  skip_verify_ssl: true
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+# Multiple Accounts
+#
+# wx2_development:
+#  <<: *default
+#  appid: "my_appid"
+#  secret: "my_secret"
+#  access_token: "tmp/wechat_access_token2"
+#  jsapi_ticket: "tmp/wechat_jsapi_ticket2"
+#
+# wx2_test:
+#  <<: *default
+#  appid: "my_appid"
+#  secret: "my_secret"
+#
+# wx2_production:
+#  <<: *default
+#  appid: "my_appid"
+#  secret: "my_secret"
+#
+# wx3_development:
+#  <<: *default
+#  appid: "my_appid"
+#  secret: "my_secret"
+#  access_token: "tmp/wechat_access_token3"
+#  jsapi_ticket: "tmp/wechat_jsapi_ticket3"
+#
+# wx3_test:
+#  <<: *default
+#  appid: "my_appid"
+#  secret: "my_secret"
+#
+# wx3_production:
+#  <<: *default
+#  appid: "my_appid"
+#  secret: "my_secret"
+#

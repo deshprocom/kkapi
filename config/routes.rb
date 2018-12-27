@@ -80,6 +80,10 @@ Rails.application.routes.draw do
       resources :auth, only: [:create]
       resources :bind, only: [:create]
       resources :js_sign, only: [:create]
+      resources :miniprogram, only: [] do
+        post :login, on: :collection
+        post :bind_mobile, on: :collection
+      end
       resources :notify, only: [] do
         post :shop_order, on: :collection
         post :hotel_order, on: :collection
@@ -183,6 +187,8 @@ Rails.application.routes.draw do
       resources :products do
         get 'recommended', on: :collection
       end
+
+      resources :one_yuan_buys, only: [:index]
 
       resources :orders do
         post 'new', on: :collection, as: :new

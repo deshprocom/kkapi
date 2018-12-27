@@ -8,7 +8,7 @@ json.data do # rubocop:disable Metrics/BlockLength
     json.title           @product.title
     json.intro           @product.intro
     json.icon            @product.preview_icon
-    json.first_discounts @product.first_discounts
+    json.first_discounts Shop::FirstDiscountsPrice.able_discounts?(@product, @current_user)
     json.price           Shop::FirstDiscountsPrice.call(@product, @current_user)
     json.description     @product.description
     json.returnable      @product.returnable

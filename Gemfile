@@ -42,6 +42,7 @@ gem 'mini_magick'
 # 微信相关
 gem 'weixin_authorize'
 gem 'wx_pay'
+gem 'wechat'
 
 # 支付宝相关
 gem 'alipay', '~> 0.15.1'
