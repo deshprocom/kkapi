@@ -186,6 +186,7 @@ Rails.application.routes.draw do
 
       resources :products do
         get 'recommended', on: :collection
+        get 'discounts', on: :collection
       end
 
       resources :one_yuan_buys, only: [:index]

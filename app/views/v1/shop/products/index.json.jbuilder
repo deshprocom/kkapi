@@ -7,6 +7,7 @@ json.data do
       json.id                product.id
       json.category_id       product.category_id
       json.title             product.title
+      json.intro             product.intro
       json.returnable        product.returnable
       json.icon              product.preview_icon
       json.first_discounts   Shop::FirstDiscountsPrice.able_discounts?(product, @current_user)
