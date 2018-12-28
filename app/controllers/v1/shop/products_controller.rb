@@ -16,6 +16,12 @@ module V1::Shop
       render 'index'
     end
 
+    def discounts
+      @products = product_scope.where(visible_discounts_list: true)
+                    .page(params[:page]).per(params[:page_size])
+      render 'index'
+    end
+
     def show
       @product = product_scope.find(params[:id])
     end
