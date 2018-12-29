@@ -34,5 +34,17 @@ json.data do # rubocop:disable Metrics/BlockLength
         json.large   image.large
       end
     end
+
+    merchant = @product.merchant
+    if merchant
+      json.merchant do
+        json.name      merchant.name
+        json.telephone merchant.telephone
+        json.location  merchant.location
+        location_arr = merchant.amap_location.split(',')
+        json.longitude location_arr[0]
+        json.latitude  location_arr[1]
+      end
+    end
   end
 end
