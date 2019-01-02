@@ -11,6 +11,12 @@ module Services
         # {"session_key"=>"MZP57fiMBj7vi6phMTkBvg==", "openid"=>"oVO6l5INNY92KDXDU9Naac-sYp3U", "unionid"=>"o9o1PwuPNP_CALKYFHdDZS2FiNGo"}
         result = Wechat.api.jscode2session(@params[:code])
         wx_user_info = Wechat.decrypt(@params[:encrypted_data], result['session_key'], @params[:iv])
+        Rails.logger.info "MiniprogramLogin result:#{result}"
+        Rails.logger.info "MiniprogramLogin wx_user_info:#{wx_user_info}"
+        # 保证先取到code，再拿到encrypted_data和iv
+        if wx_user_info[:errcode] == 41003
+          raise_error('签名错误：请保证先取到code，再拿到encrypted_data和iv')
+        end
         # 更新或创建weixin user
         weinxin_user = WeixinUser.find_or_initialize_by_session(wx_user_info['unionId'])
         weinxin_user.assign_attributes(wx_user_params(wx_user_info))
