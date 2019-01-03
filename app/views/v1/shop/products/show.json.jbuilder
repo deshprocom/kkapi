@@ -46,5 +46,7 @@ json.data do # rubocop:disable Metrics/BlockLength
         json.latitude  location_arr[1]
       end
     end
+
+    json.one_yuan_buy_status @product.one_yuan_buy&.buy_status
   end
 end

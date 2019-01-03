@@ -10,6 +10,7 @@ json.data do
       json.sales_volume   buy.sales_volume
       json.begin_time     buy.begin_time.to_i
       json.end_time       buy.end_time.to_i
+      json.one_yuan_buy_status buy.buy_status
       json.product_id     product.id
       json.category_id    product.category_id
       json.title          product.title
