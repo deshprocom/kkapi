@@ -47,6 +47,15 @@ json.data do # rubocop:disable Metrics/BlockLength
       end
     end
 
+    one_yuan_buy = @product.one_yuan_buy
+    if one_yuan_buy
+      json.one_yuan_buy do
+        json.saleable_num   one_yuan_buy.saleable_num
+        json.sales_volume   one_yuan_buy.sales_volume
+        json.begin_time     one_yuan_buy.begin_time.to_i
+        json.end_time       one_yuan_buy.end_time.to_i
+      end
+    end
     json.one_yuan_buy_status @product.one_yuan_buy&.buy_status
   end
 end
