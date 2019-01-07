@@ -13,6 +13,7 @@ json.data do # rubocop:disable Metrics/BlockLength
     json.description     @product.description
     json.returnable      @product.returnable
     json.freight_fee     @product.shipping.default_freight_fee(@product).to_s
+    json.sales_volume    @product.counter.sales_volume
 
     json.master do
       json.partial! 'variant', variant: @product.master
@@ -34,5 +35,28 @@ json.data do # rubocop:disable Metrics/BlockLength
         json.large   image.large
       end
     end
+
+    merchant = @product.merchant
+    if merchant
+      json.merchant do
+        json.name      merchant.name
+        json.telephone merchant.telephone
+        json.location  merchant.location
+        location_arr = merchant.amap_location.split(',')
+        json.longitude location_arr[0]
+        json.latitude  location_arr[1]
+      end
+    end
+
+    one_yuan_buy = @product.one_yuan_buy
+    if one_yuan_buy
+      json.one_yuan_buy do
+        json.saleable_num   one_yuan_buy.saleable_num
+        json.sales_volume   one_yuan_buy.sales_volume
+        json.begin_time     one_yuan_buy.begin_time.to_i
+        json.end_time       one_yuan_buy.end_time.to_i
+      end
+    end
+    json.one_yuan_buy_status @product.one_yuan_buy&.buy_status
   end
 end
