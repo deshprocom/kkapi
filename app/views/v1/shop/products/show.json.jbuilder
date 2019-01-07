@@ -13,6 +13,7 @@ json.data do # rubocop:disable Metrics/BlockLength
     json.description     @product.description
     json.returnable      @product.returnable
     json.freight_fee     @product.shipping.default_freight_fee(@product).to_s
+    json.sales_volume    @product.counter.sales_volume
 
     json.master do
       json.partial! 'variant', variant: @product.master
