@@ -14,6 +14,7 @@ json.data do
       json.price             Shop::FirstDiscountsPrice.call(product, @current_user)
       json.original_price    product.master.original_price
       json.all_stock         product.master.stock
+      json.sales_volume      product.counter&.sales_volume
     end
   end
 end
