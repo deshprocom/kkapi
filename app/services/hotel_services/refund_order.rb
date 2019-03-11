@@ -22,6 +22,12 @@ module HotelServices
                          refund_status: 'pending',
                          out_refund_no: SecureRandom.hex(16),
                          memo: @memo )
+      notify_dingtalk
+    end
+
+    def notify_dingtalk
+      text = "用户：#{@user.nick_name}发起了酒店订单退款，请前往后台操作"
+      DingtalkApi.hotel_order_notify(text)
     end
 
     def exist_pending_refund?
